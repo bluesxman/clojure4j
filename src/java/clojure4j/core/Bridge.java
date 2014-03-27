@@ -5,7 +5,7 @@ import java.util.function.BiFunction;
 import clojure.java.api.Clojure;
 import clojure.lang.IFn;
 
-public class Core {
+public class Bridge {
     public static final IFn list = Clojure.var("clojure.core", "list");
     public static final IFn conj = Clojure.var("clojure.core", "conj");
     

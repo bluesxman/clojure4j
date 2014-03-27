@@ -8,18 +8,18 @@ public class PersistentList<T> {
     
     @SafeVarargs
     public PersistentList(T... elements) {
-        internal = (IPersistentList) Core.list.invoke();
+        internal = (IPersistentList) Bridge.list.invoke();
         for(T t : elements) {
-            Core.conj.invoke(internal, t);
+            Bridge.conj.invoke(internal, t);
         }
     }
     
     public IPersistentList map(Object fn) {
-        return (IPersistentList) Core.map.apply(fn, internal);
+        return (IPersistentList) Bridge.map.apply(fn, internal);
     }
     
     @SuppressWarnings("unchecked")
     public <R> R apply(BinaryFn<T, T, R> fn) {
-        return (R) Core.apply.invoke(fn, internal);
+        return (R) Bridge.apply.invoke(fn, internal);
     }
 }
