@@ -1,16 +1,16 @@
 package clojure4j.core;
 
-import java.util.function.BiFunction;
-
 import clojure.java.api.Clojure;
 import clojure.lang.IFn;
 
 public class Bridge {
     public static final IFn list = Clojure.var("clojure.core", "list");
     public static final IFn conj = Clojure.var("clojure.core", "conj");
-    
-    public static final BiFunction<Object, Object, Object> map = 
-            Clojure.var("clojure.core", "map")::invoke;
+    public static final IFn cons = Clojure.var("clojure.core", "cons");
+
+    public static final IFn map = Clojure.var("clojure.core", "map");
+//    public static final BiFunction<Object, Object, Object> map = 
+//            Clojure.var("clojure.core", "map")::invoke;
     public static final IFn apply = (Clojure.var("clojure.core", "apply"));
     public static final IFn filter = Clojure.var("clojure.core", "filter");
 //    public static final IFn  = Clojure.var("clojure.core", "");

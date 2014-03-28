@@ -19,7 +19,15 @@ public class CoreTest {
     @Test
     public void testListComposition(){
         PersistentList<Integer> list123 = new PersistentList<Integer>(1,2,3);
-        assertEquals(6, list123.apply((x, y) -> x + y));        
+        
+        assertEquals(6, list123.apply((x, y) -> x + y));
+        assertEquals(12, 
+                list123.map(x -> x * 2)
+                       .apply((x, y) -> x + y));
+        assertEquals(8, 
+                list123.filter(x -> x % 2 == 1)
+                       .map(x -> x * 2)
+                       .apply((x, y) -> x + y));
     }
 
 }

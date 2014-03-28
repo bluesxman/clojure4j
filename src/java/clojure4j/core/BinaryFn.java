@@ -2,10 +2,8 @@ package clojure4j.core;
 
 import java.util.function.BiFunction;
 
-import clojure.lang.AFn;
 import clojure.lang.IFn;
 import clojure.lang.ISeq;
-import clojure.lang.Util;
 
 public interface BinaryFn <T, U, R> extends BiFunction<T, U, R>, IFn {
 
@@ -158,10 +156,17 @@ public interface BinaryFn <T, U, R> extends BiFunction<T, U, R>, IFn {
     }
 
     @Override
-    default Object applyTo(ISeq arglist) {
-        return AFn.applyToHelper(this, Util.ret1(arglist,arglist = null));
-    }
 //    default Object applyTo(ISeq arglist) {
-//        return invoke(arglist.first(), arglist.next().first());
+//        return AFn.applyToHelper(this, Util.ret1(arglist,arglist = null));
 //    }
+    default Object applyTo(ISeq arglist) {
+        ISeq seq = arglist;
+        Object accum = arglist.first();
+        
+        while((seq = seq.next()) != null) {
+            accum = invoke(accum, seq.first());
+        }
+        
+        return accum;
+    }
 }
