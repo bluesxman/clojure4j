@@ -1,5 +1,5 @@
 package clojure4j.core;
 
-public interface ISeq extends IPersistentCollection {
+public interface ISeq<T> extends IPersistentCollection<T> {
 
 }

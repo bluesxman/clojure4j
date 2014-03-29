@@ -1,5 +1,5 @@
 package clojure4j.core;
 
 
-public interface IPersistentMap extends Associative {
+public interface IPersistentMap<K, V> extends Associative<K, V> {
 }

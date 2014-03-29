@@ -17,17 +17,35 @@ public class CoreTest {
     }
     
     @Test
-    public void testListComposition(){
-        PersistentList<Integer> list123 = new PersistentList<Integer>(1,2,3);
+    public void testListComposition() {
+        PersistentList<Integer> list123 = new PersistentList<Integer>(1, 2, 3);
         
+        // add all the numbers together
         assertEquals(6, list123.apply((x, y) -> x + y));
+        
+        // double the numbers and add them all
         assertEquals(12, 
                 list123.map(x -> x * 2)
                        .apply((x, y) -> x + y));
+        
+        // take the odd numbers, double them, and then add them all
         assertEquals(8, 
                 list123.filter(x -> x % 2 == 1)
                        .map(x -> x * 2)
                        .apply((x, y) -> x + y));
+    }
+    
+    @Test
+    public void testHashMap() {
+        Associative<Integer, String> map = new PersistentHashMap<Integer, String>();
+        
+        map = map.assoc(1, "a").assoc(2, "b").assoc(3, "c");
+        assertEquals("a", map.get(1));
+        assertEquals("c", map.get(3));
+        assertEquals("b", map.get(2));
+        
+        map = map.dissoc(2);
+        assertNull(map.get(2));
     }
 
 }
