@@ -21,22 +21,20 @@ public class CoreTest {
         assertEquals(6L, Bridge.apply.invoke(plus, Bridge.list.invoke(1, 2, 3)));
     }
         
-    private void testComposition(IPersistentCollection<Integer> oneTwoThree) {
-        PersistentList<Integer> list123 = new PersistentList<Integer>(1, 2, 3);
-        
+    private void testComposition(IPersistentCollection<Integer> oneTwoThree) {        
         // add all the numbers together
-        assertEquals(6, list123.apply((x, y) -> x + y));
+        assertEquals(6, oneTwoThree.apply((x, y) -> x + y));
         
         // double the numbers and add them all
         assertEquals(12, 
-                list123.map(x -> x * 2)
-                       .apply((x, y) -> x + y));
+                oneTwoThree.map(x -> x * 2)
+                           .apply((x, y) -> x + y));
         
         // take the odd numbers, double them, and then add them all
         assertEquals(8, 
-                list123.filter(x -> x % 2 == 1)
-                       .map(x -> x * 2)
-                       .apply((x, y) -> x + y));
+                oneTwoThree.filter(x -> x % 2 == 1)
+                           .map(x -> x * 2)
+                           .apply((x, y) -> x + y));
     }
 
     @Test
