@@ -3,7 +3,7 @@ package clojure4j.core;
 import clojure.java.api.Clojure;
 import clojure.lang.IFn;
 
-public class Bridge {
+class Bridge {
     // Create
     public static final IFn hashMap = Clojure.var("clojure.core", "hash-map");
     public static final IFn hashSet = Clojure.var("clojure.core", "hash-set");
