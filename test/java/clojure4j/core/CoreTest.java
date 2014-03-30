@@ -1,6 +1,11 @@
 package clojure4j.core;
 
-import static org.junit.Assert.*;
+import static clojure4j.core.Core.hashSet;
+import static clojure4j.core.Core.list;
+import static clojure4j.core.Core.sortedSet;
+import static clojure4j.core.Core.vector;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 import org.junit.Test;
 
@@ -15,9 +20,8 @@ public class CoreTest {
         
         assertEquals(6L, Bridge.apply.invoke(plus, Bridge.list.invoke(1, 2, 3)));
     }
-    
-    @Test
-    public void testListComposition() {
+        
+    private void testComposition(IPersistentCollection<Integer> oneTwoThree) {
         PersistentList<Integer> list123 = new PersistentList<Integer>(1, 2, 3);
         
         // add all the numbers together
@@ -33,6 +37,26 @@ public class CoreTest {
                 list123.filter(x -> x % 2 == 1)
                        .map(x -> x * 2)
                        .apply((x, y) -> x + y));
+    }
+
+    @Test
+    public void testCompositionForList() {
+        testComposition(list(1, 2, 3));
+    }
+    
+    @Test
+    public void testCompositionForVector() {
+        testComposition(vector(1, 2, 3));
+    }
+    
+    @Test
+    public void testCompositionForHashSet() {
+        testComposition(hashSet(1, 2, 3));
+    }
+    
+    @Test
+    public void testCompositionForSortedSet() {
+        testComposition(sortedSet(1, 2, 3));
     }
     
     @Test

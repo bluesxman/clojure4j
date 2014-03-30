@@ -1,5 +1,5 @@
 package clojure4j.core;
 
-public interface IPersistentList extends IPersistentCollection, Sequential {
+public interface IPersistentList<T> extends IPersistentCollection<T>, Sequential {
     
 }

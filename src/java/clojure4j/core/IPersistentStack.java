@@ -1,5 +1,5 @@
 package clojure4j.core;
 
-public interface IPersistentStack extends IPersistentCollection {
+public interface IPersistentStack<T> extends IPersistentCollection<T> {
 
 }

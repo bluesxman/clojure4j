@@ -1,11 +1,19 @@
 package clojure4j.core;
 
 
-public final class PersistentVector<K, V> 
-    extends AbstractAssociative<K, V> 
-    implements IPersistentMap<K, V> {
+public final class PersistentVector<T> 
+    extends AbstractPersistentVector<T>{
 
     public PersistentVector() {
-        super((clojure.lang.Associative ) Bridge.vector.invoke());
+        super(Bridge.vector.invoke());
+    }
+    
+    public PersistentVector(Object vec) {
+        super(vec);
+    }
+    
+    @SafeVarargs
+    public PersistentVector(T... elements) {
+        super(Util.arrayToClojureVector(elements));
     }
 }

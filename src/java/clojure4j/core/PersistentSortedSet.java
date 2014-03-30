@@ -1,19 +1,19 @@
 package clojure4j.core;
 
-public class PersistentHashSet<T> 
+public class PersistentSortedSet<T> 
     extends AbstractPersistentCollection<T>
     implements IPersistentSet<T> {
 
-    public PersistentHashSet() {
+    public PersistentSortedSet() {
         this(Bridge.hashSet.invoke());
     }
 
-    public PersistentHashSet(Object set) {
+    public PersistentSortedSet(Object set) {
         super(set);
     }
 
     @SafeVarargs
-    public PersistentHashSet(T... elements) {
+    public PersistentSortedSet(T... elements) {
         super(Util.arrayToClojureVector(elements));
     }
 }

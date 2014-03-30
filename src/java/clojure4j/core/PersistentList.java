@@ -1,11 +1,12 @@
 package clojure4j.core;
 
 // TODO: decide if want generic typing
-public class PersistentList<T> extends AbstractPersistentCollection<T> {
+public class PersistentList<T> 
+    extends AbstractPersistentCollection<T> 
+    implements IPersistentList<T> {
     
     @SafeVarargs
     public PersistentList(T... elements) {
-        
         super(arrayToClojureList(elements));
     }
     

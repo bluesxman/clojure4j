@@ -9,5 +9,7 @@ public interface IPersistentCollection<T> {
     public ISeq<T> filter(UnaryFn<T, Boolean> pred);
     
     public <R> ISeq<R> map(UnaryFn<T, R> fn);
+    
+    public IPersistentCollection<T> conj(T value);
 
 }

@@ -12,11 +12,12 @@ class Bridge {
     public static final IFn sortedSet = Clojure.var("clojure.core", "sorted-set");
     public static final IFn vector = Clojure.var("clojure.core", "vector");
     
-    // Transforms
+    // Transform value
     public static final IFn conj = Clojure.var("clojure.core", "conj");
     public static final IFn cons = Clojure.var("clojure.core", "cons");
     public static final IFn assoc = Clojure.var("clojure.core", "assoc");
     public static final IFn dissoc = Clojure.var("clojure.core", "dissoc");
+    public static final IFn seq = Clojure.var("clojure.core", "seq");
     
     // Reads
     public static final IFn get = Clojure.var("clojure.core", "get");

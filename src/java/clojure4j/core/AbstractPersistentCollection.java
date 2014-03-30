@@ -24,4 +24,10 @@ public class AbstractPersistentCollection<T> implements IPersistentCollection<T>
     public <R> R apply(BinaryFn<T, T, R> fn) {
         return (R) Bridge.apply.invoke(fn, internal);
     }
+
+    @Override
+    public IPersistentCollection<T> conj(T value) {
+        // TODO Auto-generated method stub
+        return null;
+    }
 }
