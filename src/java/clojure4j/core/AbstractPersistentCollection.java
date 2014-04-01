@@ -27,7 +27,10 @@ public class AbstractPersistentCollection<T> implements IPersistentCollection<T>
 
     @Override
     public IPersistentCollection<T> conj(T value) {
-        // TODO Auto-generated method stub
-        return null;
+        return Core.conj(this, value);
+    }
+    
+    public Object getInternal() {
+        return internal;
     }
 }

@@ -1,5 +1,6 @@
 package clojure4j.core;
 
+import static clojure4j.core.Core.apply;
 import static clojure4j.core.Core.hashSet;
 import static clojure4j.core.Core.list;
 import static clojure4j.core.Core.sortedSet;
@@ -55,6 +56,23 @@ public class CoreTest {
     @Test
     public void testCompositionForSortedSet() {
         testComposition(sortedSet(1, 2, 3));
+    }
+    
+    private static long addNumLong(Number a,  Long b) {
+        return a.longValue() + b.longValue();
+    }
+    
+    private static long addNumNum(Number a,  Number b) {
+        return a.longValue() + b.longValue();
+    }
+
+    @Test
+    public void testGenericTypes() {
+        long l = list(1L, 2L, 3L, 4L).apply(CoreTest::addNumLong);
+        assertEquals(10L, l);
+        
+        l = apply(CoreTest::addNumNum, list(1, 2L, 3, 4.0));
+        assertEquals(10L, l);
     }
     
     @Test

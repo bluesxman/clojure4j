@@ -18,6 +18,10 @@ class Bridge {
     public static final IFn assoc = Clojure.var("clojure.core", "assoc");
     public static final IFn dissoc = Clojure.var("clojure.core", "dissoc");
     public static final IFn seq = Clojure.var("clojure.core", "seq");
+    public static final IFn first = Clojure.var("clojure.core", "first");
+    public static final IFn rest = Clojure.var("clojure.core", "rest");
+    public static final IFn pop = Clojure.var("clojure.core", "pop");
+    public static final IFn peek = Clojure.var("clojure.core", "peek");
     
     // Reads
     public static final IFn get = Clojure.var("clojure.core", "get");
@@ -26,6 +30,7 @@ class Bridge {
     public static final IFn map = Clojure.var("clojure.core", "map");
     public static final IFn apply = (Clojure.var("clojure.core", "apply"));
     public static final IFn filter = Clojure.var("clojure.core", "filter");
+    public static final IFn remove = Clojure.var("clojure.core", "remove");
 
     //    public static final IFn  = Clojure.var("clojure.core", "");
     
