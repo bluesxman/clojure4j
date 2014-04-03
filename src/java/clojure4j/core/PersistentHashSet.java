@@ -1,5 +1,6 @@
 package clojure4j.core;
 
+
 public class PersistentHashSet<T> 
     extends AbstractPersistentCollection<T>
     implements IPersistentSet<T> {
@@ -16,4 +17,10 @@ public class PersistentHashSet<T>
     public PersistentHashSet(T... elements) {
         super(Util.arrayToClojureVector(elements));
     }
+    
+    @Override
+    public PDSType getType() {
+        return PDSType.HashSet;
+    }
+
 }

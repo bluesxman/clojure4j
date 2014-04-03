@@ -1,5 +1,6 @@
 package clojure4j.core;
 
+
 public final class Core {
     
     // REVIEW edge cases for varargs not considered?
@@ -41,8 +42,24 @@ public final class Core {
     }
 
     @SuppressWarnings("unchecked")
-    public static final <T> IPersistentCollection<T> conj(IPersistentCollection<T> col, T value) {
-        return (IPersistentCollection<T>) Bridge.conj.invoke(col.getInternal(), value);
+    public static final <T extends IPersistentCollection<E>, E> T conj(T col, E value) {
+        Object internal = Bridge.conj.invoke(col.getInternal(), value);
+        switch(col.getType()){
+        case List:
+            return (T) new PersistentList<E>(internal);
+        case HashMap:
+            throw new IllegalArgumentException("Unsupported type: " + col.getClass());
+        case HashSet:
+            return (T) new PersistentHashSet<E>(internal);
+        case SortedMap:
+            throw new IllegalArgumentException("Unsupported type: " + col.getClass());
+        case SortedSet:
+            return (T) new PersistentSortedSet<E>(internal);
+        case Vector:
+            return (T) new PersistentVector<E>(internal);
+        default:
+            throw new IllegalArgumentException("Unsupported type: " + col.getClass());
+        }
     }
-
+    
 }

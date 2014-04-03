@@ -16,4 +16,10 @@ public class PersistentSortedSet<T>
     public PersistentSortedSet(T... elements) {
         super(Util.arrayToClojureVector(elements));
     }
+
+    @Override
+    public PDSType getType() {
+        return PDSType.SortedSet;
+    }
+    
 }

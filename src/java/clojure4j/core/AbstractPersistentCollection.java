@@ -1,7 +1,7 @@
 package clojure4j.core;
 
 
-public class AbstractPersistentCollection<T> implements IPersistentCollection<T> {
+public abstract class AbstractPersistentCollection<T> implements IPersistentCollection<T> {
     protected final Object internal;
     
     protected AbstractPersistentCollection(Object internal) {

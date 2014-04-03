@@ -10,6 +10,10 @@ public class PersistentList<T>
         super(arrayToClojureList(elements));
     }
     
+    public PersistentList(Object internal) {
+        super(internal);
+    }
+    
     private static final Object arrayToClojureList(Object[] elements) {
         Object clojList = Bridge.list.invoke();
         for(int i = elements.length - 1; i >= 0; i--) {
@@ -20,5 +24,11 @@ public class PersistentList<T>
     
     public PersistentList(clojure.lang.ISeq seq) {
         super(seq);
+    }
+
+    @Override
+    public PDSType getType() {
+        // TODO Auto-generated method stub
+        return PDSType.List;
     }
 }
