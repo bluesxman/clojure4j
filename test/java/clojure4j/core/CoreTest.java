@@ -1,6 +1,7 @@
 package clojure4j.core;
 
 import static clojure4j.core.Core.apply;
+import static clojure4j.core.Core.conj;
 import static clojure4j.core.Core.hashSet;
 import static clojure4j.core.Core.list;
 import static clojure4j.core.Core.sortedSet;
@@ -88,6 +89,9 @@ public class CoreTest {
         IPersistentList<Number> numList = new PersistentList<Number>(1, 2L, 3, 4.0);
         l = numList.conj(5.0).apply(addNumNumLambda);
         assertEquals(15L, l);
+        
+        assertEquals(PersistentList.class, conj(numList, 0.5).getClass());
+        assertEquals(PersistentList.class, numList.conj(5.0).getClass());
     }
     
     @Test
