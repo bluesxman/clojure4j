@@ -28,6 +28,10 @@ public final class PersistentVector<T>
         return new PersistentVector<T>(Bridge.conj.invoke(internal, value));
     }
     
+    public IPersistentVector<T> cons(T value) {
+        return new PersistentVector<T>(Bridge.cons.invoke(value, getInternal()));
+    }
+    
     @Override
     public PDSType getType() {
         return PDSType.Vector;

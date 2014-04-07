@@ -28,7 +28,13 @@ public final class PersistentHashMap<K, V>
     @Override
     public <KK extends K> IPersistentMap<K, V> dissoc(KK key) {
         // TODO Auto-generated method stub
-        return new PersistentHashMap<>(Bridge.dissoc.invoke(internal, key));
+        return new PersistentHashMap<K, V>(Bridge.dissoc.invoke(internal, key));
+    }
+    
+    @Override 
+    public IPersistentMap<K, V> cons(IMapEntry<K, V> entry) {
+        //TODO: Do entry right.  Need to make IMapEntry impl Internal
+        return new PersistentHashMap<K, V>(Bridge.cons.invoke(entry, getInternal()));
     }
 
 }

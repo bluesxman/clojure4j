@@ -66,6 +66,13 @@ public final class Core {
         }
     }
     
+    //TODO: Test types and make sure cast is fine
+    //REVIEW: This seems better than the solution used in conj.  avoids the switch
+    @SuppressWarnings("unchecked")
+    public static final <T extends IPersistentCollection<E>, E> T cons(T col, E value) {
+        return (T) col.cons(value);
+    }
+    
     public static <T> T foo(T blah, T meh){
         return blah;
     }

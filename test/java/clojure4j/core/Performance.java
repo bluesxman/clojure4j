@@ -3,7 +3,9 @@ package clojure4j.core;
 import static clojure4j.core.Core.hashMap;
 import static org.junit.Assert.assertEquals;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -78,6 +80,42 @@ public class Performance {
                 }
             };        
             System.out.println("clojure.lang.PersistentHashMap: " + measure(fn).get(":run-time"));
+
+            fn = () -> {
+                int randInt;
+                IPersistentVector<Integer> pds = new PersistentVector<Integer>();
+                Random rand = new Random(seed);
+
+                for(int i = 0; i < size; i++) {
+                    randInt = rand.nextInt();
+                    pds = pds.cons(randInt);
+                }
+            };        
+            System.out.println("clojure4j.core.PersistentVector: " + measure(fn).get(":run-time"));
+
+            fn = () -> {
+                int randInt;
+                List<Integer> util = new ArrayList<Integer>();
+                Random rand = new Random(seed);
+
+                for(int i = 0; i < size; i++) {
+                    randInt = rand.nextInt();
+                    util.add(randInt);
+                }
+            };
+            System.out.println("java.util.ArrayList: " + measure(fn).get(":run-time"));
+            
+            fn = () -> {
+                int randInt;
+                clojure.lang.IPersistentVector clj = clojure.lang.PersistentVector.EMPTY;
+                Random rand = new Random(seed);
+
+                for(int i = 0; i < size; i++) {
+                    randInt = rand.nextInt();
+                    clj = clj.cons(randInt);
+                }
+            };        
+            System.out.println("clojure.lang.PersistentVector: " + measure(fn).get(":run-time"));
 
         }
         

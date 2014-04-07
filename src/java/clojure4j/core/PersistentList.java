@@ -31,4 +31,11 @@ public class PersistentList<T>
         // TODO Auto-generated method stub
         return PDSType.List;
     }
+    
+    @Override 
+    public IPersistentList<T> cons(T value) {
+        return new PersistentList<T>(Bridge.cons.invoke(value, getInternal()));
+    }
+
+
 }
