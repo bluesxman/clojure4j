@@ -32,6 +32,8 @@ class Bridge {
     public static final IFn filter = Clojure.var("clojure.core", "filter");
     public static final IFn remove = Clojure.var("clojure.core", "remove");
 
+    public static final IFn count = Clojure.var("clojure.core", "count");
+    
     //    public static final IFn  = Clojure.var("clojure.core", "");
     
     

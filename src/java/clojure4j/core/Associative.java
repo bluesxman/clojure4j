@@ -1,8 +1,8 @@
 package clojure4j.core;
 
 public interface Associative<K, V> extends Internal {
-    public Associative<K, V> assoc(K key, V value);
-    public Associative<K, V> dissoc(K key);
+    public <KK extends K, VV extends V> Associative<K, V> assoc(KK key, VV value);
+    public <KK extends K> Associative<K, V> dissoc(KK key);
     
     @SuppressWarnings("unchecked")
     default V get(K key) {

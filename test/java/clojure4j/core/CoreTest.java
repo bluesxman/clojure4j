@@ -2,6 +2,7 @@ package clojure4j.core;
 
 import static clojure4j.core.Core.apply;
 import static clojure4j.core.Core.conj;
+import static clojure4j.core.Core.hashMap;
 import static clojure4j.core.Core.hashSet;
 import static clojure4j.core.Core.list;
 import static clojure4j.core.Core.sortedSet;
@@ -92,6 +93,8 @@ public class CoreTest {
         
         assertEquals(PersistentList.class, conj(numList, 0.5).getClass());
         assertEquals(PersistentList.class, numList.conj(5.0).getClass());
+        
+        hashMap().assoc("foo", 1).assoc("bar", 1.0);
     }
     
     @Test

@@ -20,13 +20,13 @@ public final class PersistentHashMap<K, V>
     }
 
     @Override
-    public IPersistentMap<K, V> assoc(K key, V value) {
+    public <KK extends K, VV extends V> IPersistentMap<K, V> assoc(KK key, VV value) {
         // TODO Auto-generated method stub
-        return new PersistentHashMap<>(Bridge.assoc.invoke(internal, key, value));
+        return new PersistentHashMap<K, V>(Bridge.assoc.invoke(internal, key, value));
     }
 
     @Override
-    public IPersistentMap<K, V> dissoc(K key) {
+    public <KK extends K> IPersistentMap<K, V> dissoc(KK key) {
         // TODO Auto-generated method stub
         return new PersistentHashMap<>(Bridge.dissoc.invoke(internal, key));
     }

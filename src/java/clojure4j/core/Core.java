@@ -23,6 +23,10 @@ public final class Core {
     public static final <T> IPersistentSet<T> sortedSet(T... elements){
         return new PersistentSortedSet<T>(elements);
     }
+    
+    public static final <K, V> IPersistentMap<K, V> hashMap() {
+        return new PersistentHashMap<K, V>();
+    }
 
     public static final <T, R> ISeq<R> map(UnaryFn<T, R> fn, IPersistentCollection<T> col) {
         return new Seq<R>((clojure.lang.ISeq) Bridge.map.invoke(fn, col.getInternal()));
@@ -62,4 +66,34 @@ public final class Core {
         }
     }
     
+    public static <T> T foo(T blah, T meh){
+        return blah;
+    }
+    
+    public static <T, TT extends T> T foofoo(TT blah, TT meh) {
+        return meh;
+    }
+    
+//    public static final Number bar() {
+//        foofoo(10, "ten");
+//        return foo(10, "ten");   // This won't compile
+//    }
+    
+    @SuppressWarnings("unchecked")
+    public static final <K, V, T extends Associative<K, V>, KK extends K, VV extends V>
+        T assoc(T col, KK key, VV val) {
+
+        Object internal = Bridge.assoc.invoke(col.getInternal(), key, val);
+        
+        switch(col.getType()){
+        case HashMap:
+            return (T) new PersistentHashMap<K, V>(internal);
+        case SortedMap:
+            return (T) new PersistentSortedMap<K, V>(internal);
+        case Vector:
+            return (T) new PersistentVector<V>(internal);
+        default:
+            throw new IllegalArgumentException("Unsupported type: " + col.getClass());
+        }
+    }
 }

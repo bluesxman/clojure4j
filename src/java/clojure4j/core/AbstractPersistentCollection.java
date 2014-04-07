@@ -30,6 +30,11 @@ public abstract class AbstractPersistentCollection<T> implements IPersistentColl
         return Core.conj(this, value);
     }
     
+    @Override
+    public int count() {
+        return (int) Bridge.count.invoke(getInternal());
+    }
+    
     public Object getInternal() {
         return internal;
     }

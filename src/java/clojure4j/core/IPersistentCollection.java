@@ -11,5 +11,7 @@ public interface IPersistentCollection<T> extends Internal {
     public <R> ISeq<R> map(UnaryFn<T, R> fn);
     
     public IPersistentCollection<T> conj(T value);
+    
+    public int count();
 
 }
