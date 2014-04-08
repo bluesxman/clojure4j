@@ -5,10 +5,12 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.Set;
 
 import org.junit.Test;
 
@@ -106,18 +108,6 @@ public class Performance {
 
         fn = () -> {
             int randInt;
-            List<Integer> util = new LinkedList<Integer>();
-            Random rand = new Random(seed);
-
-            for(int i = 0; i < size; i++) {
-                randInt = rand.nextInt();
-                util.add(randInt);
-            }
-        };
-        System.out.println("java.util.LinkedList: " + measure(fn, iterations, warmup).get(":run-time"));
-
-        fn = () -> {
-            int randInt;
             clojure.lang.IPersistentVector clj = clojure.lang.PersistentVector.EMPTY;
             Random rand = new Random(seed);
 
@@ -127,18 +117,6 @@ public class Performance {
             }
         };        
         System.out.println("clojure.lang.PersistentVector: " + measure(fn, iterations, warmup).get(":run-time"));
-
-        fn = () -> {
-            int randInt;
-            clojure.lang.IPersistentList clj = clojure.lang.PersistentList.EMPTY;
-            Random rand = new Random(seed);
-
-            for(int i = 0; i < size; i++) {
-                randInt = rand.nextInt();
-                clj = (clojure.lang.IPersistentList) Bridge.conj.invoke(clj, randInt);
-            }
-        };        
-        System.out.println("clojure.lang.PersistentList: " + measure(fn, iterations, warmup).get(":run-time"));
 
         fn = () -> {
             int randInt;
@@ -154,6 +132,30 @@ public class Performance {
 
         fn = () -> {
             int randInt;
+            List<Integer> util = new LinkedList<Integer>();
+            Random rand = new Random(seed);
+
+            for(int i = 0; i < size; i++) {
+                randInt = rand.nextInt();
+                util.add(randInt);
+            }
+        };
+        System.out.println("java.util.LinkedList: " + measure(fn, iterations, warmup).get(":run-time"));
+
+        fn = () -> {
+            int randInt;
+            clojure.lang.IPersistentList clj = clojure.lang.PersistentList.EMPTY;
+            Random rand = new Random(seed);
+
+            for(int i = 0; i < size; i++) {
+                randInt = rand.nextInt();
+                clj = (clojure.lang.IPersistentList) Bridge.conj.invoke(clj, randInt);
+            }
+        };        
+        System.out.println("clojure.lang.PersistentList: " + measure(fn, iterations, warmup).get(":run-time"));
+
+        fn = () -> {
+            int randInt;
             IPersistentList<Integer> pds = new PersistentList<Integer>();
             Random rand = new Random(seed);
 
@@ -163,6 +165,42 @@ public class Performance {
             }
         };        
         System.out.println("clojure4j.core.PersistentList: " + measure(fn, iterations, warmup).get(":run-time"));            
+
+        fn = () -> {
+            int randInt;
+            Set<Integer> util = new HashSet<Integer>();
+            Random rand = new Random(seed);
+
+            for(int i = 0; i < size; i++) {
+                randInt = rand.nextInt();
+                util.add(randInt);
+            }
+        };
+        System.out.println("java.util.HashSet: " + measure(fn, iterations, warmup).get(":run-time"));
+
+        fn = () -> {
+            int randInt;
+            clojure.lang.IPersistentSet clj = clojure.lang.PersistentHashSet.EMPTY;
+            Random rand = new Random(seed);
+
+            for(int i = 0; i < size; i++) {
+                randInt = rand.nextInt();
+                clj = (clojure.lang.IPersistentSet) Bridge.conj.invoke(clj, randInt);
+            }
+        };        
+        System.out.println("clojure.lang.PersistentSet: " + measure(fn, iterations, warmup).get(":run-time"));
+
+        fn = () -> {
+            int randInt;
+            IPersistentSet<Integer> pds = new PersistentHashSet<Integer>();
+            Random rand = new Random(seed);
+
+            for(int i = 0; i < size; i++) {
+                randInt = rand.nextInt();
+                pds = pds.conj(randInt);
+            }
+        };        
+        System.out.println("clojure4j.core.PersistentHashSet: " + measure(fn, iterations, warmup).get(":run-time"));            
 
 
 

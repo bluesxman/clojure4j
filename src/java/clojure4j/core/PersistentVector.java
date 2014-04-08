@@ -23,7 +23,8 @@ public final class PersistentVector<T>
     public T get(Long key) {
         return (T) Bridge.get.invoke(internal, key);
     }
-    
+   
+    @Override
     public IPersistentVector<T> conj(T value) {
         return new PersistentVector<T>(Bridge.conj.invoke(getInternal(), value));
     }
