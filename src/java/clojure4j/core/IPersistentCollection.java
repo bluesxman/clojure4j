@@ -12,7 +12,7 @@ public interface IPersistentCollection<T> extends Internal {
     
     public IPersistentCollection<T> conj(T value);
     
-    public IPersistentCollection<T> cons(T value);
+    public ISeq<T> cons(T value);
     
     public int count();
 

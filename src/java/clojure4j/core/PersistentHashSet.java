@@ -22,12 +22,4 @@ public class PersistentHashSet<T>
     public PDSType getType() {
         return PDSType.HashSet;
     }
-    
-    @Override 
-    public IPersistentSet<T> cons(T value) {
-        return new PersistentHashSet<T>(Bridge.cons.invoke(value, getInternal()));
-    }
-
-
-
 }

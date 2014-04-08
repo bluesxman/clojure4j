@@ -25,11 +25,7 @@ public final class PersistentVector<T>
     }
     
     public IPersistentVector<T> conj(T value) {
-        return new PersistentVector<T>(Bridge.conj.invoke(internal, value));
-    }
-    
-    public IPersistentVector<T> cons(T value) {
-        return new PersistentVector<T>(Bridge.cons.invoke(value, getInternal()));
+        return new PersistentVector<T>(Bridge.conj.invoke(getInternal(), value));
     }
     
     @Override

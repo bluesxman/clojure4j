@@ -20,6 +20,10 @@ public abstract class AbstractPersistentCollection<T> implements IPersistentColl
         return new Seq<R>((clojure.lang.ISeq) Bridge.map.invoke(fn, internal));
     }
     
+    public ISeq<T> cons(T value) {
+        return new Seq<T>(Bridge.cons.invoke(value, getInternal()));
+    }
+    
     @SuppressWarnings("unchecked")
     public <R> R apply(BinaryFn<T, T, R> fn) {
         return (R) Bridge.apply.invoke(fn, internal);

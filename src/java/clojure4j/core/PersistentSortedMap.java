@@ -31,11 +31,4 @@ public final class PersistentSortedMap<K, V>
         // TODO Auto-generated method stub
         return new PersistentSortedMap<>(Bridge.dissoc.invoke(internal, key));
     }
-
-    @Override 
-    public IPersistentMap<K, V> cons(IMapEntry<K, V> entry) {
-        return new PersistentSortedMap<K, V>(Bridge.cons.invoke(entry, getInternal()));
-    }
-
-
 }

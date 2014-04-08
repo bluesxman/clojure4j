@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -16,136 +17,182 @@ public class Performance {
 
     public Performance() {
         // TODO Auto-generated constructor stub
+        
+        // baseline, 
     }
 
-    public IPersistentMap<Object, Object> measure(Runnable fn) {
-        fn.run();
+    public IPersistentMap<Object, Object> measure(Runnable fn, int iterations, int warmup) {
+        long start, stop;
         
-        long start = System.nanoTime();
-        fn.run();
-        return hashMap().assoc(":run-time", ((System.nanoTime() - start) / 1e9));
+        for(int i = 0; i < warmup; i++) {
+            fn.run();
+        }
+        
+        start = System.nanoTime();
+        for(int i = 0; i < iterations; i++) {
+            fn.run();
+        }
+        stop = System.nanoTime();
+        
+        return hashMap().assoc(":run-time", ((stop - start) / 1e9));
     }
     
     @Test
     public void testMapAdd() {
         int size = 100000;
+        int iterations = 100;
+        int warmup = 20;
         Runnable fn;
-        
+
         fn = () -> {
             int randInt;
-            Map<Integer, String> util = new HashMap<Integer, String>();
+            Map<Integer, Integer> util = new HashMap<Integer, Integer>();
             Random rand = new Random(seed);
 
             for(int i = 0; i < size; i++) {
                 randInt = rand.nextInt();
-                util.put(randInt, String.valueOf(randInt));
+                util.put(randInt, randInt);
             }            
         };
-        System.out.println("java.util.HashMap: " + measure(fn).get(":run-time"));
+        System.out.println("java.util.HashMap: " + measure(fn, iterations, warmup).get(":run-time"));
 
-        for(int j = 0; j < 10; j++) {
+        fn = () -> {
+            int randInt;
+            Map<Integer, Integer> util = new HashMap<Integer, Integer>();
+            Random rand = new Random(seed);
 
-            fn = () -> {
-                int randInt;
-                IPersistentMap<Integer, String> pds = new PersistentHashMap<Integer, String>();
-                Random rand = new Random(seed);
+            for(int i = 0; i < size; i++) {
+                randInt = rand.nextInt();
+                util.put(randInt, randInt);
+            }
+        };
+        System.out.println("java.util.HashMap: " + measure(fn, iterations, warmup).get(":run-time"));
 
-                for(int i = 0; i < size; i++) {
-                    randInt = rand.nextInt();
-                    pds = pds.assoc(randInt, String.valueOf(randInt));
-                }
-            };        
-            System.out.println("clojure4j.core.PersistentHashMap: " + measure(fn).get(":run-time"));
+        fn = () -> {
+            int randInt;
+            clojure.lang.IPersistentMap clj = clojure.lang.PersistentHashMap.EMPTY;
+            Random rand = new Random(seed);
 
-            fn = () -> {
-                int randInt;
-                Map<Integer, String> util = new HashMap<Integer, String>();
-                Random rand = new Random(seed);
+            for(int i = 0; i < size; i++) {
+                randInt = rand.nextInt();
+                clj = clj.assoc(randInt, randInt);
+            }
+        };        
+        System.out.println("clojure.lang.PersistentHashMap: " + measure(fn, iterations, warmup).get(":run-time"));
 
-                for(int i = 0; i < size; i++) {
-                    randInt = rand.nextInt();
-                    util.put(randInt, String.valueOf(randInt));
-                }
-            };
-            System.out.println("java.util.HashMap: " + measure(fn).get(":run-time"));
-            
-            fn = () -> {
-                int randInt;
-                clojure.lang.IPersistentMap clj = clojure.lang.PersistentHashMap.EMPTY;
-                Random rand = new Random(seed);
+        fn = () -> {
+            int randInt;
+            IPersistentMap<Integer, Integer> pds = new PersistentHashMap<Integer, Integer>();
+            Random rand = new Random(seed);
 
-                for(int i = 0; i < size; i++) {
-                    randInt = rand.nextInt();
-                    clj = clj.assoc(randInt, String.valueOf(randInt));
-                }
-            };        
-            System.out.println("clojure.lang.PersistentHashMap: " + measure(fn).get(":run-time"));
+            for(int i = 0; i < size; i++) {
+                randInt = rand.nextInt();
+                pds = pds.assoc(randInt, randInt);
+            }
+        };        
+        System.out.println("clojure4j.core.PersistentHashMap: " + measure(fn, iterations, warmup).get(":run-time"));
 
-            fn = () -> {
-                int randInt;
-                IPersistentVector<Integer> pds = new PersistentVector<Integer>();
-                Random rand = new Random(seed);
+        fn = () -> {
+            int randInt;
+            List<Integer> util = new ArrayList<Integer>();
+            Random rand = new Random(seed);
 
-                for(int i = 0; i < size; i++) {
-                    randInt = rand.nextInt();
-                    pds = pds.cons(randInt);
-                }
-            };        
-            System.out.println("clojure4j.core.PersistentVector: " + measure(fn).get(":run-time"));
+            for(int i = 0; i < size; i++) {
+                randInt = rand.nextInt();
+                util.add(randInt);
+            }
+        };
+        System.out.println("java.util.ArrayList: " + measure(fn, iterations, warmup).get(":run-time"));
 
-            fn = () -> {
-                int randInt;
-                List<Integer> util = new ArrayList<Integer>();
-                Random rand = new Random(seed);
+        fn = () -> {
+            int randInt;
+            List<Integer> util = new LinkedList<Integer>();
+            Random rand = new Random(seed);
 
-                for(int i = 0; i < size; i++) {
-                    randInt = rand.nextInt();
-                    util.add(randInt);
-                }
-            };
-            System.out.println("java.util.ArrayList: " + measure(fn).get(":run-time"));
-            
-            fn = () -> {
-                int randInt;
-                clojure.lang.IPersistentVector clj = clojure.lang.PersistentVector.EMPTY;
-                Random rand = new Random(seed);
+            for(int i = 0; i < size; i++) {
+                randInt = rand.nextInt();
+                util.add(randInt);
+            }
+        };
+        System.out.println("java.util.LinkedList: " + measure(fn, iterations, warmup).get(":run-time"));
 
-                for(int i = 0; i < size; i++) {
-                    randInt = rand.nextInt();
-                    clj = clj.cons(randInt);
-                }
-            };        
-            System.out.println("clojure.lang.PersistentVector: " + measure(fn).get(":run-time"));
+        fn = () -> {
+            int randInt;
+            clojure.lang.IPersistentVector clj = clojure.lang.PersistentVector.EMPTY;
+            Random rand = new Random(seed);
 
-        }
-        
-//
-//        for(int j = 0; j < 10; j++) {
-//
-//            fn = () -> {
-//                int randInt;
-//                IPersistentMap<String, Integer> pds = new PersistentHashMap<String, Integer>();
-//                Random rand = new Random(seed);
-//
-//                for(int i = 0; i < size; i++) {
-//                    randInt = rand.nextInt();
-//                    pds = pds.assoc(String.valueOf(randInt), randInt);
-//                }
-//            };        
-//            System.out.println("clojure4j.core.PersistentHashMap: " + measure(fn).get(":run-time"));
-//
-//            fn = () -> {
-//                int randInt;
-//                Map<String, Integer> util = new HashMap<String, Integer>();
-//                Random rand = new Random(seed);
-//
-//                for(int i = 0; i < size; i++) {
-//                    randInt = rand.nextInt();
-//                    util.put(String.valueOf(randInt), randInt);
-//                }
-//            };
-//            System.out.println("java.util.HashMap: " + measure(fn).get(":run-time"));
-//        }
+            for(int i = 0; i < size; i++) {
+                randInt = rand.nextInt();
+                clj = (clojure.lang.IPersistentVector) Bridge.conj.invoke(clj, randInt);
+            }
+        };        
+        System.out.println("clojure.lang.PersistentVector: " + measure(fn, iterations, warmup).get(":run-time"));
+
+        fn = () -> {
+            int randInt;
+            clojure.lang.IPersistentList clj = clojure.lang.PersistentList.EMPTY;
+            Random rand = new Random(seed);
+
+            for(int i = 0; i < size; i++) {
+                randInt = rand.nextInt();
+                clj = (clojure.lang.IPersistentList) Bridge.conj.invoke(clj, randInt);
+            }
+        };        
+        System.out.println("clojure.lang.PersistentList: " + measure(fn, iterations, warmup).get(":run-time"));
+
+        fn = () -> {
+            int randInt;
+            IPersistentVector<Integer> pds = new PersistentVector<Integer>();
+            Random rand = new Random(seed);
+
+            for(int i = 0; i < size; i++) {
+                randInt = rand.nextInt();
+                pds = pds.conj(randInt);
+            }
+        };        
+        System.out.println("clojure4j.core.PersistentVector: " + measure(fn, iterations, warmup).get(":run-time"));
+
+        fn = () -> {
+            int randInt;
+            IPersistentList<Integer> pds = new PersistentList<Integer>();
+            Random rand = new Random(seed);
+
+            for(int i = 0; i < size; i++) {
+                randInt = rand.nextInt();
+                pds = pds.conj(randInt);
+            }
+        };        
+        System.out.println("clojure4j.core.PersistentList: " + measure(fn, iterations, warmup).get(":run-time"));            
+
+
+
+        //
+        //        for(int j = 0; j < 10; j++) {
+        //
+        //            fn = () -> {
+        //                int randInt;
+        //                IPersistentMap<String, Integer> pds = new PersistentHashMap<String, Integer>();
+        //                Random rand = new Random(seed);
+        //
+        //                for(int i = 0; i < size; i++) {
+        //                    randInt = rand.nextInt();
+        //                    pds = pds.assoc(String.valueOf(randInt), randInt);
+        //                }
+        //            };        
+        //            System.out.println("clojure4j.core.PersistentHashMap: " + measure(fn).get(":run-time"));
+        //
+        //            fn = () -> {
+        //                int randInt;
+        //                Map<String, Integer> util = new HashMap<String, Integer>();
+        //                Random rand = new Random(seed);
+        //
+        //                for(int i = 0; i < size; i++) {
+        //                    randInt = rand.nextInt();
+        //                    util.put(String.valueOf(randInt), randInt);
+        //                }
+        //            };
+        //            System.out.println("java.util.HashMap: " + measure(fn).get(":run-time"));
+        //        }
 
     }
     

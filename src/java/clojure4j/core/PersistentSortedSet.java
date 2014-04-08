@@ -20,11 +20,5 @@ public class PersistentSortedSet<T>
     @Override
     public PDSType getType() {
         return PDSType.SortedSet;
-    }
-    
-    @Override 
-    public IPersistentSet<T> cons(T value) {
-        return new PersistentSortedSet<T>(Bridge.cons.invoke(value, getInternal()));
-    }
-    
+    }    
 }

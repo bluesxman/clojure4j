@@ -33,9 +33,8 @@ public class PersistentList<T>
     }
     
     @Override 
-    public IPersistentList<T> cons(T value) {
-        return new PersistentList<T>(Bridge.cons.invoke(value, getInternal()));
+    public IPersistentList<T> conj(T value) {
+        return new PersistentList<T>(Bridge.conj.invoke(getInternal(), value));
     }
-
 
 }
