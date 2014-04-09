@@ -12,5 +12,5 @@ interface Internal {
     };
     
     Object getInternal();
-    PDSType getType();
+    PDSType getType();  // TODO: get rid of getType()
 }

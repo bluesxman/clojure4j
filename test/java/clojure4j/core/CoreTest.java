@@ -109,5 +109,29 @@ public class CoreTest {
         map = map.dissoc(2);
         assertNull(map.get(2));
     }
+    
+    @Test 
+    public void testAtom() {
+        Atom<Integer> intAtom = new Atom<Integer>(0);
+        Atom<IPersistentMap<String, Integer>> mapAtom = 
+                new Atom<IPersistentMap<String, Integer>>(new PersistentHashMap<String, Integer>());
+        
+        assertEquals(new Integer(2), intAtom.swap(x -> x + 2));
+        assertEquals(new Integer(2), intAtom.deref());
+        assertEquals(new Integer(6), intAtom.swap(x -> x * 3));
+        assertEquals(new Integer(6), intAtom.deref());
+        assertEquals(new Integer(13), intAtom.reset(13));
+        assertEquals(new Integer(13), intAtom.deref());
+        
+        
+        mapAtom.swap(Core::assoc, "one", 1);
+        assertEquals(new Integer(1), mapAtom.deref().get("one"));
+        mapAtom.swap(Core::assoc, "two", 2);
+        assertEquals(new Integer(1), mapAtom.deref().get("one"));
+        assertEquals(new Integer(2), mapAtom.deref().get("two"));
+        mapAtom.reset(new PersistentHashMap<String, Integer>());
+        assertNull(mapAtom.deref().get("one"));
+        assertNull(mapAtom.deref().get("two"));
+    }
 
 }
