@@ -18,11 +18,6 @@ public class PersistentSortedSet<T>
     }
 
     @Override
-    public PDSType getType() {
-        return PDSType.SortedSet;
-    }    
-    
-    @Override
     public IPersistentSet<T> conj(T value) {
         return new PersistentSortedSet<T>(Bridge.conj.invoke(getInternal(), value));
     }

@@ -6,13 +6,12 @@ public class Seq<T> extends AbstractSeq<T> {
     }
 
     @Override
-    public PDSType getType() {
-        // TODO Auto-generated method stub
-        return PDSType.Seq;
-    }
-    
-    @Override
-    public ISeq<T> cons(T value) {
+    public final ISeq<T> cons(final T value) {
         return new Seq<T>(Bridge.cons.invoke(value, getInternal()));
+    }
+
+    @Override
+    public final ISeq<T> conj(T value) {
+        return new Seq<T>(Bridge.conj.invoke(getInternal(), value));
     }
 }

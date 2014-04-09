@@ -36,11 +36,4 @@ public class Atom<T> implements Internal {
     public Object getInternal() {
         return internal;
     }
-
-    @Override
-    public PDSType getType() {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
 }

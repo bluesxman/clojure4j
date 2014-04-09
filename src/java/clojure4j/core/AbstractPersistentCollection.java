@@ -28,11 +28,6 @@ public abstract class AbstractPersistentCollection<T> implements IPersistentColl
     public <R> R apply(BinaryFn<T, T, R> fn) {
         return (R) Bridge.apply.invoke(fn, internal);
     }
-
-    @Override
-    public IPersistentCollection<T> conj(T value) {
-        return Core.conj(this, value);
-    }
     
     @Override
     public int count() {

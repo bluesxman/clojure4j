@@ -19,11 +19,6 @@ public class PersistentHashSet<T>
     }
     
     @Override
-    public PDSType getType() {
-        return PDSType.HashSet;
-    }
-    
-    @Override
     public IPersistentSet<T> conj(T value) {
         return new PersistentHashSet<T>(Bridge.conj.invoke(getInternal(), value));
     }

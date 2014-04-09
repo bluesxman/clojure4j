@@ -40,37 +40,17 @@ public final class Core {
         return new Seq<T>((clojure.lang.ISeq) Bridge.remove.invoke(pred, col.getInternal()));
     }
     
-    @SuppressWarnings("unchecked")
     public static final <T, R> R apply(BinaryFn<T, T, R> fn, IPersistentCollection<T> col) {
-        return (R) Bridge.apply.invoke(fn, col.getInternal());
+        return col.apply(fn);
     }
 
     @SuppressWarnings("unchecked")
     public static final <T extends IPersistentCollection<E>, E> T conj(T col, E value) {
-        Object internal = Bridge.conj.invoke(col.getInternal(), value);
-        switch(col.getType()){
-        case List:
-            return (T) new PersistentList<E>(internal);
-        case HashMap:
-            throw new IllegalArgumentException("Unsupported type: " + col.getClass());
-        case HashSet:
-            return (T) new PersistentHashSet<E>(internal);
-        case SortedMap:
-            throw new IllegalArgumentException("Unsupported type: " + col.getClass());
-        case SortedSet:
-            return (T) new PersistentSortedSet<E>(internal);
-        case Vector:
-            return (T) new PersistentVector<E>(internal);
-        default:
-            throw new IllegalArgumentException("Unsupported type: " + col.getClass());
-        }
+        return (T) col.conj(value);
     }
     
-    //TODO: Test types and make sure cast is fine
-    //REVIEW: This seems better than the solution used in conj.  avoids the switch
-    @SuppressWarnings("unchecked")
-    public static final <T extends IPersistentCollection<E>, E> T cons(T col, E value) {
-        return (T) col.cons(value);
+    public static final <T extends IPersistentCollection<E>, E> ISeq<E> cons(E value, T col) {
+        return col.cons(value);
     }
     
     public static <T> T foo(T blah, T meh){
@@ -89,18 +69,7 @@ public final class Core {
     @SuppressWarnings("unchecked")
     public static final <K, V, T extends Associative<K, V>, KK extends K, VV extends V>
         T assoc(T col, KK key, VV val) {
-
-        Object internal = Bridge.assoc.invoke(col.getInternal(), key, val);
-        
-        switch(col.getType()){
-        case HashMap:
-            return (T) new PersistentHashMap<K, V>(internal);
-        case SortedMap:
-            return (T) new PersistentSortedMap<K, V>(internal);
-        case Vector:
-            return (T) new PersistentVector<V>(internal);
-        default:
-            throw new IllegalArgumentException("Unsupported type: " + col.getClass());
-        }
+        return (T) col.assoc(key, val);
     }
+    
 }

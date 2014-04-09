@@ -25,15 +25,9 @@ public class PersistentList<T>
     public PersistentList(clojure.lang.ISeq seq) {
         super(seq);
     }
-
-    @Override
-    public PDSType getType() {
-        // TODO Auto-generated method stub
-        return PDSType.List;
-    }
     
     @Override 
-    public IPersistentList<T> conj(T value) {
+    public final IPersistentList<T> conj(final T value) {
         return new PersistentList<T>(Bridge.conj.invoke(getInternal(), value));
     }
 

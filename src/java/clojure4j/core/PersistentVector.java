@@ -25,15 +25,10 @@ public final class PersistentVector<T>
     }
    
     @Override
-    public IPersistentVector<T> conj(T value) {
+    public final IPersistentVector<T> conj(final T value) {
         return new PersistentVector<T>(Bridge.conj.invoke(getInternal(), value));
     }
     
-    @Override
-    public PDSType getType() {
-        return PDSType.Vector;
-    }
-
     @Override
     public <KK extends Long, VV extends T> IPersistentVector<T> assoc(KK key, VV value) {
         return new PersistentVector<T>(Bridge.assoc.invoke(getInternal(), key, value));
