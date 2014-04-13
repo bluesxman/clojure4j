@@ -38,6 +38,11 @@ public final class PersistentVector<T>
     public IPersistentVector<T> dissoc(Long key) {
         return new PersistentVector<T>(Bridge.dissoc.invoke(getInternal(), key));
     }
+
+    @Override
+    public boolean containsIndex(long idx) {
+        return (boolean) Bridge.contains.invoke(getInternal(), idx);
+    }
     
 
 }

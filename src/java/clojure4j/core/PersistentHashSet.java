@@ -1,9 +1,6 @@
 package clojure4j.core;
 
-
-public class PersistentHashSet<T> 
-    extends AbstractPersistentCollection<T>
-    implements IPersistentSet<T> {
+public class PersistentHashSet<T> extends AbstractPersistentSet<T> {
 
     public PersistentHashSet() {
         this(Bridge.hashSet.invoke());
@@ -19,8 +16,8 @@ public class PersistentHashSet<T>
     }
     
     @Override
-    public IPersistentSet<T> conj(T value) {
-        return new PersistentHashSet<T>(Bridge.conj.invoke(getInternal(), value));
+    public IPersistentSet<T> wrap(Object internal) {
+        return new PersistentHashSet<T>(internal);
     }
 
 }

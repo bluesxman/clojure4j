@@ -34,7 +34,9 @@ public abstract class AbstractPersistentCollection<T> implements IPersistentColl
         return (int) Bridge.count.invoke(getInternal());
     }
     
+    @Override
     public Object getInternal() {
         return internal;
     }
+    
 }

@@ -1,7 +1,6 @@
 package clojure4j.core;
 
 import static clojure4j.core.Core.hashMap;
-import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,7 +35,7 @@ public class Performance {
         }
         stop = System.nanoTime();
         
-        return hashMap().assoc(":run-time", ((stop - start) / 1e9));
+        return hashMap(":run-time", ((stop - start) / 1e9));
     }
     
     @Test

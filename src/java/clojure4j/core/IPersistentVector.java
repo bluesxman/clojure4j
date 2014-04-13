@@ -5,5 +5,6 @@ public interface IPersistentVector<T> extends IPersistentStack<T>, Associative<L
     // REVIEW Probably handling generics badly
     public <KK extends Long, TT extends T> IPersistentVector<T> assoc(KK key, TT value);
     public IPersistentVector<T> dissoc(Long key);
+    public boolean containsIndex(long idx);
 
 }

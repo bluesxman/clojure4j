@@ -11,9 +11,12 @@ public interface IPersistentCollection<T> extends Internal {
     public <R> ISeq<R> map(UnaryFn<T, R> fn);
     
     public IPersistentCollection<T> conj(T value);
+//    @SuppressWarnings("unchecked")
+//    public IPersistentCollection<T> conj(T... values);
     
     public ISeq<T> cons(T value);
     
     public int count();
-
+    
+//    public IPersistentCollection<T> wrap(Object internal);
 }

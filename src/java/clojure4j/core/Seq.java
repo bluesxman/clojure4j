@@ -14,4 +14,9 @@ public class Seq<T> extends AbstractSeq<T> {
     public final ISeq<T> conj(T value) {
         return new Seq<T>(Bridge.conj.invoke(getInternal(), value));
     }
+
+    @Override
+    public boolean containsIndex(int idx) {
+        return (boolean) Bridge.contains.invoke(getInternal(), idx);
+    }
 }

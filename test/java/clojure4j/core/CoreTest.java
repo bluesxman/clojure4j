@@ -2,11 +2,18 @@ package clojure4j.core;
 
 import static clojure4j.core.Core.apply;
 import static clojure4j.core.Core.conj;
+import static clojure4j.core.Core.contains;
+import static clojure4j.core.Core.count;
+import static clojure4j.core.Core.disj;
 import static clojure4j.core.Core.hashMap;
 import static clojure4j.core.Core.hashSet;
 import static clojure4j.core.Core.list;
 import static clojure4j.core.Core.sortedSet;
 import static clojure4j.core.Core.vector;
+import static clojure4j.core.Set.difference;
+import static clojure4j.core.Set.intersection;
+import static clojure4j.core.Set.select;
+import static clojure4j.core.Set.union;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
@@ -92,9 +99,7 @@ public class CoreTest {
         assertEquals(15L, l);
         
         assertEquals(PersistentList.class, conj(numList, 0.5).getClass());
-        assertEquals(PersistentList.class, numList.conj(5.0).getClass());
-        
-        hashMap().assoc("foo", 1).assoc("bar", 1.0);
+        assertEquals(PersistentList.class, numList.conj(5.0).getClass());        
     }
     
     @Test
@@ -133,5 +138,120 @@ public class CoreTest {
         assertNull(mapAtom.deref().get("one"));
         assertNull(mapAtom.deref().get("two"));
     }
+    
+    private void testSet(
+            IPersistentSet<Integer> emptyInt, 
+            IPersistentSet<String> emptyString,
+            IPersistentSet<IPersistentMap<? extends Object, ? extends Object>> emptyMaps) {
+        
+        IPersistentSet<Integer> set1234 = emptyInt.conj(1).conj(2).conj(3).conj(4).conj(2);
+        IPersistentSet<String> animals = emptyString.conj("dog").conj("cat").conj("bat").conj("rat");
+        IPersistentSet<String> animals2 = emptyString.conj("owl").conj("fox").conj("elk").conj("frog");
+        
+        // count & contains
+        assertEquals(4, count(set1234));
+        assertEquals(true, contains(set1234, 2));
+        assertEquals(false, contains(set1234, 5));
+        assertEquals(4, set1234.count());
+        assertEquals(true, set1234.contains(2));
+        assertEquals(false, set1234.contains(5));
+        
+        // conj & disj
+        assertEquals(true, contains(conj(set1234, 13), 13));
+        assertEquals(true, contains(disj(set1234, 2), 4));
+        assertEquals(false, contains(disj(set1234, 2), 2));
+        assertEquals(4, count(disj(set1234, 7)));
+        assertEquals(1, count(disj(set1234, 2, 3, 4)));
+        assertEquals(true, contains(disj(set1234, 2, 3, 4), 1));        
+        assertEquals(true, set1234.conj(5).contains(5));
+        assertEquals(true, set1234.disj(2).contains(4));
+        assertEquals(false, set1234.disj(2).contains(2));
+        assertEquals(3, set1234.disj(2).count());
+        assertEquals(1, set1234.disj(2,3,4).count());
+        assertEquals(true, set1234.disj(2,3,4).contains(1));
+        
+        // select
+        assertEquals(true, set1234.select(x -> x % 2 == 0).contains(4));
+        assertEquals(true, contains(select(x -> x % 2 == 1, set1234), 1));
+        assertEquals(false, animals.select(x -> x.endsWith("at")).contains("dog"));
+        assertEquals(false, contains(select(x -> x.endsWith("at"), animals), "dog"));
+        
+        // union
+        IPersistentSet<String> animalsSuper = union(animals, animals2);
+        assertEquals(true, animalsSuper.contains("dog"));
+        assertEquals(true, animalsSuper.contains("elk"));
+        assertEquals(false, animalsSuper.contains("rock"));
+        assertEquals(count(animals) + count(animals2), count(animalsSuper));
+        
+        // difference
+        IPersistentSet<String> animalsMinus = difference(animalsSuper, hashSet("dog", "elk"));
+        assertEquals(true, animalsMinus.contains("cat"));
+        assertEquals(false, animalsMinus.contains("dog"));
+        assertEquals(false, animalsMinus.contains("elk"));
+        
+        // intersection
+        IPersistentSet<String> animalsInt = intersection(animalsMinus, animals2);
+        assertEquals(true, animalsInt.contains("fox"));
+        assertEquals(true, animalsInt.contains("owl"));
+        assertEquals(true, animalsInt.contains("frog"));
+        assertEquals(false, animalsInt.contains("dog"));
+        assertEquals(false, animalsInt.contains("elk"));
+        
+        // subset
+        assertEquals(true, animalsInt.isSubset(animalsSuper));
+        assertEquals(true, animalsMinus.isSubset(animalsSuper));
+        assertEquals(false, animalsSuper.isSubset(animalsInt));
+        assertEquals(false, animalsSuper.isSubset(animalsMinus));
+        assertEquals(false, animals.isSubset(animals2));
+        assertEquals(false, animals2.isSubset(animals));
+        assertEquals(false, animals2.isSubset(animalsInt));
+        assertEquals(true, animalsInt.isSubset(animals2));
+        
+        // superset
+        assertEquals(false, animalsInt.isSuperset(animalsSuper));
+        assertEquals(false, animalsMinus.isSuperset(animalsSuper));
+        assertEquals(true, animalsSuper.isSuperset(animalsInt));
+        assertEquals(true, animalsSuper.isSuperset(animalsMinus));
+        assertEquals(false, animals.isSuperset(animals2));
+        assertEquals(false, animals2.isSuperset(animals));
+        assertEquals(false, animals2.isSubset(animalsInt));
+        assertEquals(false, animalsInt.isSuperset(animals2));
+  
+        // REVIEW Should API take ? extends Object?  Similar to Brian's issue earlier
+//        IPersistentSet<IPersistentMap<? extends Object, ? extends Object>> livestock =
+//                emptyMaps.
+//                conj(hashMap("name", "betsy").assoc("owner", "brian").assoc("kind", "cow")).
+//                conj(hashMap("name", "betsy").assoc("owner", "brian").assoc("kind", "cow")).
+//                conj(hashMap("name", "betsy").assoc("owner", "brian").assoc("kind", "cow"));
+//        IPersistentSet<IPersistentMap<? extends Object, ? extends Object>> kinds =
+//                emptyMaps.
+//                conj(hashMap("kind", "cow").assoc("personality", "stoic")).
+//                conj(hashMap("kind", "horse").assoc("personality", "skittish"));
+//        IPersistentSet<IPersistentMap<? extends Object, ? extends Object>> species =
+//                emptyMaps.
+//                conj(hashMap("species", "cow").assoc("personality", "stoic")).
+//                conj(hashMap("species", "horse").assoc("personality", "skittish"));
+//
 
+        
+        // TODO Figure out types for join and project
+        // join
+//        Set.join(livestock, kinds);
+        
+        // project
+    }
+
+    @Test
+    public void testPersistentHashSet() {
+        testSet(new PersistentHashSet<Integer>(),
+                new PersistentHashSet<String>(),
+                new PersistentHashSet<IPersistentMap<? extends Object, ? extends Object>>());
+    }
+    
+    @Test
+    public void testPersistentSortedSet() {
+        testSet(new PersistentSortedSet<Integer>(),
+                new PersistentSortedSet<String>(),
+                new PersistentSortedSet<IPersistentMap<? extends Object, ? extends Object>>());        
+    }
 }

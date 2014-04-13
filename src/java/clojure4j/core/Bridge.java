@@ -4,7 +4,12 @@ import clojure.java.api.Clojure;
 import clojure.lang.IFn;
 
 class Bridge {
+    public static final IFn require = Clojure.var("clojure.core", "require");
     
+    // Have to explicitly require namespaces other than clojure.core
+    static {
+        require.invoke(Clojure.read("clojure.set"));
+    }
     
     // Create Persistent Data Structure
     public static final IFn hashMap = Clojure.var("clojure.core", "hash-map");
@@ -44,20 +49,19 @@ class Bridge {
     public static final IFn count = Clojure.var("clojure.core", "count");
     
     //    public static final IFn  = Clojure.var("clojure.core", "");
+
+    // Set fns
+    public static final IFn join = Clojure.var("clojure.set", "join");
+    public static final IFn select = Clojure.var("clojure.set", "select");
+    public static final IFn project = Clojure.var("clojure.set", "project");
+    public static final IFn union = Clojure.var("clojure.set", "union");
+    public static final IFn difference = Clojure.var("clojure.set", "difference");
+    public static final IFn intersection = Clojure.var("clojure.set", "intersection");
+    public static final IFn disj = Clojure.var("clojure.core", "disj");
+    public static final IFn isSubset = Clojure.var("clojure.set", "subset?");
+    public static final IFn isSuperset = Clojure.var("clojure.set", "superset?");
+    public static final IFn contains = Clojure.var("clojure.core", "contains?");
     
+
     
-    
-    /*
-     * Binding is just methods that are pass-throughs to a clojure type/record/protocol
-     * that has all the right methods of interest.  Create a bunch of *4J version of the clojure 
-     * interfaces in clojure and then use clojure's new Java API to bring them into Java.  
-     * 
-     * These clojure classes would impl the clojure protocols (<- that wont work)
-     * plus read-only impls of java.util
-     * 
-     * If going with clojure core fns on all the java versions of PDS's, then may have to create
-     * a conversion from java.util.functional to IFn.  In clojure would gen class impls of all the
-     * java.util.functional interfaces that also impl IFn.  This only matters if we want to support
-     * generics in the api.
-     */
 }

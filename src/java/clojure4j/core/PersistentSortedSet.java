@@ -1,11 +1,9 @@
 package clojure4j.core;
 
-public class PersistentSortedSet<T> 
-    extends AbstractPersistentCollection<T>
-    implements IPersistentSet<T> {
+public class PersistentSortedSet<T> extends AbstractPersistentSet<T> {
 
     public PersistentSortedSet() {
-        this(Bridge.hashSet.invoke());
+        this(Bridge.sortedSet.invoke());
     }
 
     public PersistentSortedSet(Object set) {
@@ -18,8 +16,7 @@ public class PersistentSortedSet<T>
     }
 
     @Override
-    public IPersistentSet<T> conj(T value) {
-        return new PersistentSortedSet<T>(Bridge.conj.invoke(getInternal(), value));
+    public IPersistentSet<T> wrap(Object internal) {
+        return new PersistentSortedSet<T>(internal);
     }
-
 }

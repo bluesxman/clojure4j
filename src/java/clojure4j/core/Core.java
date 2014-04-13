@@ -24,8 +24,12 @@ public final class Core {
         return new PersistentSortedSet<T>(elements);
     }
     
-    public static final <K, V> IPersistentMap<K, V> hashMap() {
-        return new PersistentHashMap<K, V>();
+    public static final <K, V> IPersistentMap<K, V> hashMap(K key, V val) {
+        return new PersistentHashMap<K, V>(key, val);
+    }
+
+    public static final <K, V> IPersistentMap<K, V> sortedMap(K key, V val) {
+        return new PersistentSortedMap<K, V>(key, val);
     }
 
     public static final <T, R> ISeq<R> map(UnaryFn<T, R> fn, IPersistentCollection<T> col) {
@@ -49,27 +53,52 @@ public final class Core {
         return (T) col.conj(value);
     }
     
+//    @SuppressWarnings("unchecked")
+//    public static final <T extends IPersistentCollection<E>, E> T conj(T col, E... values) {
+//        return (T) col.conj(values);
+//    }
+//    
     public static final <T extends IPersistentCollection<E>, E> ISeq<E> cons(E value, T col) {
         return col.cons(value);
     }
     
-    public static <T> T foo(T blah, T meh){
-        return blah;
+    public static final <T> IPersistentSet<T> disj(IPersistentSet<T> set, T key) {
+        return set.disj(key);
     }
     
-    public static <T, TT extends T> T foofoo(TT blah, TT meh) {
-        return meh;
+    @SafeVarargs
+    public static final <T> IPersistentSet<T> disj(IPersistentSet<T> set, T... keys) {
+        return set.disj(keys);
     }
     
-//    public static final Number bar() {
-//        foofoo(10, "ten");
-//        return foo(10, "ten");   // This won't compile
-//    }
+    public static final <T> boolean contains(IPersistentSet<T> set, T value) {
+        return set.contains(value);
+    }
     
+    // TODO Figure out best policy on generics
     @SuppressWarnings("unchecked")
     public static final <K, V, T extends Associative<K, V>, KK extends K, VV extends V>
-        T assoc(T col, KK key, VV val) {
+    T assoc(T col, KK key, VV val) {
         return (T) col.assoc(key, val);
     }
     
+    public static final <T> int count(IPersistentCollection<T> col) {
+        return col.count();
+    }
+    
+    public static final boolean isOdd(int n) {
+        return n % 2 == 0; // TODO use faster method than modulo
+    }
+    
+    public static final boolean isOdd(long n) {
+        return n % 2 == 0;
+    }
+    
+    public static final boolean isEven(int n) {
+        return n % 2 == 0;
+    }
+
+    public static final boolean isEven(long n) {
+        return n % 2 == 0;
+    }
 }
