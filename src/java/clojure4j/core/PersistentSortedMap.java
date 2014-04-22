@@ -5,7 +5,11 @@ package clojure4j.core;
 public final class PersistentSortedMap<K, V> extends AbstractPersistentMap<K, V> {
     
     public PersistentSortedMap() {
-        super((clojure.lang.Associative ) Bridge.sortedMap.invoke());
+        super(Bridge.sortedMap.invoke());
+    }
+    
+    public PersistentSortedMap(BinaryFn<K, K, Boolean> comparator) {
+        super(Bridge.sortedMapBy.invoke(comparator));
     }
     
     @SafeVarargs

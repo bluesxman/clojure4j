@@ -86,6 +86,10 @@ public final class Core {
         return col.count();
     }
     
+    public static final <T> T first(IPersistentCollection<T> col) {
+        return col.first();
+    }
+    
     public static final boolean isOdd(int n) {
         return n % 2 == 0; // TODO use faster method than modulo
     }
@@ -101,4 +105,10 @@ public final class Core {
     public static final boolean isEven(long n) {
         return n % 2 == 0;
     }
+
+    // TODO: Does F# have an equiv?  If so, what's the typing look like?
+//    public <K, V> IPersistentMap<K, V> assocIn(IPersistentMap<K, V> map, IPersistentVector<K> ks, V value){}
+//    public <K, V> IPersistentMap<K, V> updateIn(IPersistentMap<K, V> map, IPersistentVector<K> ks, UnaryFn<V, V> fn){}
+//    public V getIn(IPersistentVector<K> ks);
+
 }

@@ -24,6 +24,11 @@ public abstract class AbstractPersistentCollection<T> implements IPersistentColl
         return new Seq<T>(Bridge.cons.invoke(value, getInternal()));
     }
     
+//    @SuppressWarnings("hiding")
+//    public <T extends Internal> ISeq<T> cons(T value) {
+//        return new Seq<T>(Bridge.cons.invoke(value.getInternal(), getInternal()));        
+//    }
+    
     @SuppressWarnings("unchecked")
     public <R> R apply(BinaryFn<T, T, R> fn) {
         return (R) Bridge.apply.invoke(fn, internal);
@@ -34,6 +39,12 @@ public abstract class AbstractPersistentCollection<T> implements IPersistentColl
         return (int) Bridge.count.invoke(getInternal());
     }
     
+    @SuppressWarnings("unchecked")
+    @Override
+    public T first() {
+        return (T) Bridge.first.invoke(getInternal());
+    }
+
     @Override
     public Object getInternal() {
         return internal;

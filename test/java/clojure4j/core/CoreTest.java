@@ -5,7 +5,6 @@ import static clojure4j.core.Core.conj;
 import static clojure4j.core.Core.contains;
 import static clojure4j.core.Core.count;
 import static clojure4j.core.Core.disj;
-import static clojure4j.core.Core.hashMap;
 import static clojure4j.core.Core.hashSet;
 import static clojure4j.core.Core.list;
 import static clojure4j.core.Core.sortedSet;
@@ -142,7 +141,7 @@ public class CoreTest {
     private void testSet(
             IPersistentSet<Integer> emptyInt, 
             IPersistentSet<String> emptyString,
-            IPersistentSet<IPersistentMap<? extends Object, ? extends Object>> emptyMaps) {
+            IPersistentSet<IPersistentMap<String, String>> emptyMaps) {
         
         IPersistentSet<Integer> set1234 = emptyInt.conj(1).conj(2).conj(3).conj(4).conj(2);
         IPersistentSet<String> animals = emptyString.conj("dog").conj("cat").conj("bat").conj("rat");
@@ -217,41 +216,43 @@ public class CoreTest {
         assertEquals(false, animals2.isSubset(animalsInt));
         assertEquals(false, animalsInt.isSuperset(animals2));
   
-        // REVIEW Should API take ? extends Object?  Similar to Brian's issue earlier
-//        IPersistentSet<IPersistentMap<? extends Object, ? extends Object>> livestock =
+//        IPersistentSet<IPersistentMap<String, String>> root = new PersistentHashSet<>();
+//        IPersistentSet<IPersistentMap<String, String>> livestock =
 //                emptyMaps.
 //                conj(hashMap("name", "betsy").assoc("owner", "brian").assoc("kind", "cow")).
-//                conj(hashMap("name", "betsy").assoc("owner", "brian").assoc("kind", "cow")).
-//                conj(hashMap("name", "betsy").assoc("owner", "brian").assoc("kind", "cow"));
-//        IPersistentSet<IPersistentMap<? extends Object, ? extends Object>> kinds =
+//                conj(hashMap("name", "jake").assoc("owner", "brian").assoc("kind", "horse")).
+//                conj(hashMap("name", "josie").assoc("owner", "dawn").assoc("kind", "cow"));
+//        IPersistentSet<IPersistentMap<String, String>> kinds =
 //                emptyMaps.
 //                conj(hashMap("kind", "cow").assoc("personality", "stoic")).
 //                conj(hashMap("kind", "horse").assoc("personality", "skittish"));
-//        IPersistentSet<IPersistentMap<? extends Object, ? extends Object>> species =
+//        IPersistentSet<IPersistentMap<String, String>> species =
 //                emptyMaps.
 //                conj(hashMap("species", "cow").assoc("personality", "stoic")).
 //                conj(hashMap("species", "horse").assoc("personality", "skittish"));
-//
 
         
         // TODO Figure out types for join and project
         // join
-//        Set.join(livestock, kinds);
+//        root = Set.join(livestock, kinds);
+//        String personality = Core.first(filter(x -> x.get("name").equals("betsy"), root)).get("personality");
+//        assertEquals("stoic", personality);
         
         // project
+        //TODO
     }
 
     @Test
     public void testPersistentHashSet() {
         testSet(new PersistentHashSet<Integer>(),
                 new PersistentHashSet<String>(),
-                new PersistentHashSet<IPersistentMap<? extends Object, ? extends Object>>());
+                new PersistentHashSet<IPersistentMap<String, String>>());
     }
     
     @Test
     public void testPersistentSortedSet() {
         testSet(new PersistentSortedSet<Integer>(),
                 new PersistentSortedSet<String>(),
-                new PersistentSortedSet<IPersistentMap<? extends Object, ? extends Object>>());        
+                new PersistentSortedSet<IPersistentMap<String, String>>());        
     }
 }

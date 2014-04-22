@@ -50,5 +50,24 @@ extends AbstractPersistentCollection<IMapEntry<K, V>> implements IPersistentMap<
         return (boolean) Bridge.contains.invoke(getInternal(), key);
     }
 
-
+    @Override
+    public IPersistentMap<K, V> selectKeys(ISeq<K> keys) {
+        return wrap(Bridge.selectKeys.invoke(getInternal(), keys.getInternal()));
+    }
+    
+    @Override
+    public ISeq<K> keys() {
+        return new Seq<>(Bridge.keys.invoke(getInternal()));
+    }
+    
+    @Override
+    public ISeq<V> vals() {
+        return new Seq<>(Bridge.vals.invoke(getInternal()));
+    }
+    
+    @Override
+    public IMapEntry<K, V> find(K key) {
+        return new MapEntry<>(Bridge.find.invoke(getInternal(), key));
+    }
+    
 }

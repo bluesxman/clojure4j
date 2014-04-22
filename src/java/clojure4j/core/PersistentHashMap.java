@@ -4,7 +4,7 @@ package clojure4j.core;
 public final class PersistentHashMap<K, V> extends AbstractPersistentMap<K, V> {
     
     public PersistentHashMap() {
-        super((clojure.lang.Associative ) Bridge.hashMap.invoke());
+        super(Bridge.hashMap.invoke());
     }
 
     @SafeVarargs

@@ -16,6 +16,7 @@ class Bridge {
     public static final IFn hashSet = Clojure.var("clojure.core", "hash-set");
     public static final IFn list = Clojure.var("clojure.core", "list");
     public static final IFn sortedMap = Clojure.var("clojure.core", "sorted-map");
+    public static final IFn sortedMapBy = Clojure.var("clojure.core", "sorted-map-by");
     public static final IFn sortedSet = Clojure.var("clojure.core", "sorted-set");
     public static final IFn vector = Clojure.var("clojure.core", "vector");
     
@@ -62,6 +63,8 @@ class Bridge {
     public static final IFn isSuperset = Clojure.var("clojure.set", "superset?");
     public static final IFn contains = Clojure.var("clojure.core", "contains?");
     
-
-    
+    public static final IFn selectKeys = Clojure.var("clojure.core", "select-keys");
+    public static final IFn keys = Clojure.var("clojure.core", "keys");
+    public static final IFn vals = Clojure.var("clojure.core", "vals");
+    public static final IFn find = Clojure.var("clojure.core", "find");
 }
