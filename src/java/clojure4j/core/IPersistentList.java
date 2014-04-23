@@ -1,5 +1,7 @@
 package clojure4j.core;
 
-public interface IPersistentList<T> extends IPersistentCollection<T>, Sequential {
+public interface IPersistentList<T> extends IPersistentStack<T>, Sequential<T> {
     public IPersistentList<T> conj(T value);
+    @Override
+    public IPersistentList<T> pop();
 }

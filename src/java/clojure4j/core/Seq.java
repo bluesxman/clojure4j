@@ -1,6 +1,6 @@
 package clojure4j.core;
 
-public class Seq<T> extends AbstractSeq<T> {
+public class Seq<T> extends AbstractSequential<T> implements ISeq<T>{
     Seq(Object internal) {
         super(internal);
     }
@@ -13,10 +13,5 @@ public class Seq<T> extends AbstractSeq<T> {
     @Override
     public final ISeq<T> conj(T value) {
         return new Seq<T>(Bridge.conj.invoke(getInternal(), value));
-    }
-
-    @Override
-    public boolean containsIndex(int idx) {
-        return (boolean) Bridge.contains.invoke(getInternal(), idx);
     }
 }

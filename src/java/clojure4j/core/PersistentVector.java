@@ -3,7 +3,7 @@ package clojure4j.core;
 
 
 public final class PersistentVector<T> 
-    extends AbstractPersistentCollection<T>
+    extends AbstractSequential<T>
     implements IPersistentVector<T> {
     
     public PersistentVector(Object internal) {
@@ -21,7 +21,7 @@ public final class PersistentVector<T>
     
     @SuppressWarnings("unchecked")
     public T get(Long key) {
-        return (T) Bridge.get.invoke(internal, key);
+        return (T) Bridge.get.invoke(getInternal(), key);
     }
    
     @Override
@@ -40,9 +40,24 @@ public final class PersistentVector<T>
     }
 
     @Override
-    public boolean containsIndex(long idx) {
-        return (boolean) Bridge.contains.invoke(getInternal(), idx);
+    public IPersistentVector<T> pop() {
+        return new PersistentVector<>(Bridge.pop.invoke(getInternal()));
     }
-    
 
+    @Override
+    public IPersistentVector<T> subvec(int start) {
+        return new PersistentVector<>(Bridge.subvec.invoke(getInternal(), start));
+    }
+
+    @Override
+    public IPersistentVector<T> subvec(int start, int end) {
+        return new PersistentVector<>(Bridge.subvec.invoke(getInternal(), start, end));
+    }
+
+    @Override
+    public IPersistentVector<T> replace(IPersistentVector<Integer> keys) {
+        return new PersistentVector<>(Bridge.replace.invoke(getInternal(), keys.getInternal()));
+    }
+
+    
 }

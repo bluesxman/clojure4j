@@ -2,7 +2,7 @@ package clojure4j.core;
 
 // TODO: decide if want generic typing
 public class PersistentList<T> 
-    extends AbstractPersistentCollection<T> 
+    extends AbstractSequential<T> 
     implements IPersistentList<T> {
     
     @SafeVarargs
@@ -31,4 +31,8 @@ public class PersistentList<T>
         return new PersistentList<T>(Bridge.conj.invoke(getInternal(), value));
     }
 
+    @Override
+    public IPersistentList<T> pop() {
+        return new PersistentList<>(Bridge.pop.invoke(getInternal()));
+    }
 }

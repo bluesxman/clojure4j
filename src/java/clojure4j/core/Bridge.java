@@ -49,8 +49,6 @@ class Bridge {
 
     public static final IFn count = Clojure.var("clojure.core", "count");
     
-    //    public static final IFn  = Clojure.var("clojure.core", "");
-
     // Set fns
     public static final IFn join = Clojure.var("clojure.set", "join");
     public static final IFn select = Clojure.var("clojure.set", "select");
@@ -62,9 +60,18 @@ class Bridge {
     public static final IFn isSubset = Clojure.var("clojure.set", "subset?");
     public static final IFn isSuperset = Clojure.var("clojure.set", "superset?");
     public static final IFn contains = Clojure.var("clojure.core", "contains?");
-    
+
+    // Map Fns
     public static final IFn selectKeys = Clojure.var("clojure.core", "select-keys");
     public static final IFn keys = Clojure.var("clojure.core", "keys");
     public static final IFn vals = Clojure.var("clojure.core", "vals");
     public static final IFn find = Clojure.var("clojure.core", "find");
+
+    // Vector fns
+    public static final IFn subvec = Clojure.var("clojure.core", "subvec");
+    public static final IFn replace = Clojure.var("clojure.core", "replace");
+    public static final IFn nth = Clojure.var("clojure.core", "nth");
+
+    //    public static final IFn  = Clojure.var("clojure.core", "");
+
 }

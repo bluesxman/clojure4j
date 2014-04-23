@@ -4,7 +4,7 @@ package clojure4j.core;
 public abstract class AbstractPersistentCollection<T> implements IPersistentCollection<T> {
     protected final Object internal;
     
-    protected AbstractPersistentCollection(Object internal) {
+    AbstractPersistentCollection(Object internal) {
         this.internal = internal;
     }
         
@@ -50,4 +50,8 @@ public abstract class AbstractPersistentCollection<T> implements IPersistentColl
         return internal;
     }
     
+    @Override
+    public ISeq<T> seq() {
+        return new Seq<T>(Bridge.seq.invoke(getInternal()));
+    }
 }
