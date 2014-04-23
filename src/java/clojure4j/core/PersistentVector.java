@@ -57,5 +57,15 @@ public final class PersistentVector<T>
         return new PersistentVector<>(Bridge.replace.invoke(getInternal(), keys.getInternal()));
     }
 
+    @Override
+    public ISeq<T> reverse() {
+        return new Seq<>(Bridge.reverse.invoke(getInternal()));
+    }
+
+    @Override
+    public ISeq<T> rseq() {
+        return new Seq<>(Bridge.rseq.invoke(getInternal()));
+    }
+
     
 }

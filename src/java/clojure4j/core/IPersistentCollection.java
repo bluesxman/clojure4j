@@ -10,6 +10,9 @@ public interface IPersistentCollection<T> extends Internal {
     
     public <R> ISeq<R> map(UnaryFn<T, R> fn);
     
+    public <R> R reduce(BinaryFn<T, T, R> fn);
+    public <R> R reduce(BinaryFn<T, T, R> fn, T initial);
+    
     public IPersistentCollection<T> conj(T value);
     
 //    @SuppressWarnings("unchecked")
@@ -26,6 +29,8 @@ public interface IPersistentCollection<T> extends Internal {
     public ISeq<T> seq();
     
     public ISeq<T> cycle();
+    
+    public ISeq<T> take(int n);
     
 //    public IPersistentCollection<T> wrap(Object internal);
 }

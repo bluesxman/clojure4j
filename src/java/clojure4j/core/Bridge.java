@@ -37,6 +37,7 @@ class Bridge {
     public static final IFn rest = Clojure.var("clojure.core", "rest");
     public static final IFn pop = Clojure.var("clojure.core", "pop");
     public static final IFn peek = Clojure.var("clojure.core", "peek");
+    public static final IFn take = Clojure.var("clojure.core", "take");
     
     // Reads
     public static final IFn get = Clojure.var("clojure.core", "get");
@@ -44,6 +45,7 @@ class Bridge {
     // Higher order fns
     public static final IFn map = Clojure.var("clojure.core", "map");
     public static final IFn apply = (Clojure.var("clojure.core", "apply"));
+    public static final IFn reduce = (Clojure.var("clojure.core", "reduce"));
     public static final IFn filter = Clojure.var("clojure.core", "filter");
     public static final IFn remove = Clojure.var("clojure.core", "remove");
 
@@ -71,7 +73,10 @@ class Bridge {
     public static final IFn subvec = Clojure.var("clojure.core", "subvec");
     public static final IFn replace = Clojure.var("clojure.core", "replace");
     public static final IFn nth = Clojure.var("clojure.core", "nth");
+    public static final IFn reverse = Clojure.var("clojure.core", "reverse");
+    public static final IFn rseq = Clojure.var("clojure.core", "rseq");
 
+    // ranges, repetition, infinite seqs
     public static final IFn repeat = Clojure.var("clojure.core", "repeat");
     public static final IFn range = Clojure.var("clojure.core", "range");
     public static final IFn iterate = Clojure.var("clojure.core", "iterate");

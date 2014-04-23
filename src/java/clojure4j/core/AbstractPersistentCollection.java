@@ -12,10 +12,12 @@ public abstract class AbstractPersistentCollection<T> implements IPersistentColl
         internal = list;
     }
     
+    @Override
     public ISeq<T> filter(UnaryFn<T, Boolean> pred) {
         return new Seq<T>((clojure.lang.ISeq) Bridge.filter.invoke(pred, internal));
     }
     
+    @Override
     public <R> ISeq<R> map(UnaryFn<T, R> fn) {
         return new Seq<R>((clojure.lang.ISeq) Bridge.map.invoke(fn, internal));
     }
@@ -31,8 +33,21 @@ public abstract class AbstractPersistentCollection<T> implements IPersistentColl
 //    }
     
     @SuppressWarnings("unchecked")
+    @Override
     public <R> R apply(BinaryFn<T, T, R> fn) {
-        return (R) Bridge.apply.invoke(fn, internal);
+        return (R) Bridge.apply.invoke(fn, getInternal());
+    }
+    
+    @SuppressWarnings("unchecked")
+    @Override
+    public <R> R reduce(BinaryFn<T, T, R> fn) {
+        return (R) Bridge.reduce.invoke(fn, getInternal());
+    }
+    
+    @SuppressWarnings("unchecked")
+    @Override
+    public <R> R reduce(BinaryFn<T, T, R> fn, T initial) {
+        return (R) Bridge.reduce.invoke(fn, initial, getInternal());
     }
     
     @Override
@@ -64,5 +79,10 @@ public abstract class AbstractPersistentCollection<T> implements IPersistentColl
     @Override
     public ISeq<T> cycle() {
         return new Seq<T>(Bridge.cycle.invoke(getInternal()));
+    }
+
+    @Override
+    public ISeq<T> take(int n) {
+        return new Seq<T>(Bridge.take.invoke(n, getInternal()));
     }
 }

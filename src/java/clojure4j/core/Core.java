@@ -48,6 +48,14 @@ public final class Core {
         return col.apply(fn);
     }
 
+    public static final <T, R> R reduce(BinaryFn<T, T, R> fn, IPersistentCollection<T> col) {
+        return col.reduce(fn);
+    }
+    
+    public static final <T, R> R reduce(BinaryFn<T, T, R> fn, T initial, IPersistentCollection<T> col) {
+        return col.reduce(fn, initial);
+    }
+    
     @SuppressWarnings("unchecked")
     public static final <T extends IPersistentCollection<E>, E> T conj(T col, E value) {
         return (T) col.conj(value);
@@ -146,4 +154,18 @@ public final class Core {
     public static final <T> ISeq<T> cycle(IPersistentCollection<T> col) {
         return col.cycle();
     }
+    
+    public static final <T> ISeq<T> reverse(Reversible<T> rev) {
+        return rev.reverse();
+    }
+    
+    public static final <T> ISeq<T> rseq(Reversible<T> rev) {
+        return rev.rseq();
+    }
+    
+    public static final <T> ISeq<T> take(int n, IPersistentCollection<T> col) {
+        return col.take(n);
+    }
+    
+    
 }
