@@ -20,6 +20,7 @@ public abstract class AbstractPersistentCollection<T> implements IPersistentColl
         return new Seq<R>((clojure.lang.ISeq) Bridge.map.invoke(fn, internal));
     }
     
+    @Override
     public ISeq<T> cons(T value) {
         return new Seq<T>(Bridge.cons.invoke(value, getInternal()));
     }

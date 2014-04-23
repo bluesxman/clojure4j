@@ -6,11 +6,6 @@ public class Seq<T> extends AbstractSequential<T> implements ISeq<T>{
     }
 
     @Override
-    public final ISeq<T> cons(final T value) {
-        return new Seq<T>(Bridge.cons.invoke(value, getInternal()));
-    }
-
-    @Override
     public final ISeq<T> conj(T value) {
         return new Seq<T>(Bridge.conj.invoke(getInternal(), value));
     }
