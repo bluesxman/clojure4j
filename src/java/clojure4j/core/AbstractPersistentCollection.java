@@ -44,6 +44,11 @@ public abstract class AbstractPersistentCollection<T> implements IPersistentColl
     public T first() {
         return (T) Bridge.first.invoke(getInternal());
     }
+    
+    @Override 
+    public ISeq<T> rest() {
+        return new Seq<>(Bridge.rest.invoke(getInternal()));
+    }
 
     @Override
     public Object getInternal() {

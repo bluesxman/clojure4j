@@ -1,7 +1,5 @@
 package clojure4j.core;
 
-
-
 public final class PersistentVector<T> 
     extends AbstractSequential<T>
     implements IPersistentVector<T> {

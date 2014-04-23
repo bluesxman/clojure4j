@@ -21,6 +21,8 @@ public interface IPersistentCollection<T> extends Internal {
     
     public T first();
     
+    public ISeq<T> rest();
+    
     public ISeq<T> seq();
     
 //    public IPersistentCollection<T> wrap(Object internal);
