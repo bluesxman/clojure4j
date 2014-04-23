@@ -25,5 +25,7 @@ public interface IPersistentCollection<T> extends Internal {
     
     public ISeq<T> seq();
     
+    public ISeq<T> cycle();
+    
 //    public IPersistentCollection<T> wrap(Object internal);
 }

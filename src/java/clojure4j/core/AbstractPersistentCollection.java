@@ -60,4 +60,9 @@ public abstract class AbstractPersistentCollection<T> implements IPersistentColl
     public ISeq<T> seq() {
         return new Seq<T>(Bridge.seq.invoke(getInternal()));
     }
+    
+    @Override
+    public ISeq<T> cycle() {
+        return new Seq<T>(Bridge.cycle.invoke(getInternal()));
+    }
 }

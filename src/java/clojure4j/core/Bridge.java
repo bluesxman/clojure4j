@@ -72,6 +72,11 @@ class Bridge {
     public static final IFn replace = Clojure.var("clojure.core", "replace");
     public static final IFn nth = Clojure.var("clojure.core", "nth");
 
-    //    public static final IFn  = Clojure.var("clojure.core", "");
+    public static final IFn repeat = Clojure.var("clojure.core", "repeat");
+    public static final IFn range = Clojure.var("clojure.core", "range");
+    public static final IFn iterate = Clojure.var("clojure.core", "iterate");
+    public static final IFn repeatedly = Clojure.var("clojure.core", "repeatedly");
+    public static final IFn cycle = Clojure.var("clojure.core", "cycle");
 
+    //    public static final IFn  = Clojure.var("clojure.core", "");
 }

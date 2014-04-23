@@ -111,4 +111,39 @@ public final class Core {
 //    public <K, V> IPersistentMap<K, V> updateIn(IPersistentMap<K, V> map, IPersistentVector<K> ks, UnaryFn<V, V> fn){}
 //    public V getIn(IPersistentVector<K> ks);
 
+    public static final <T> ISeq<T> repeat(T value) {
+        return new Seq<>(Bridge.repeat.invoke(value));
+    }
+
+    public static final <T extends Number> ISeq<T> range(T num) {
+        return new Seq<>(Bridge.range.invoke(num));
+    }
+
+    public static final <T extends Number> ISeq<T> range(T num, int end) {
+        return new Seq<>(Bridge.range.invoke(num, end));
+    }
+
+    public static final <T extends Number> ISeq<T> range(T num, int start, int end) {
+        return new Seq<>(Bridge.range.invoke(num, start, end));
+    }
+
+    public static final <T extends Number> ISeq<T> range(T num, int start, int end, int step) {
+        return new Seq<>(Bridge.range.invoke(num, start, end, step));
+    }
+
+    public static final <T> ISeq<T> iterate(UnaryFn<T, T> fn, T initial) {
+        return new Seq<>(Bridge.iterate.invoke(fn, initial));
+    }
+    
+    public static final <T> ISeq<T> repeatedly(NullaryFn<T> fn) {
+        return new Seq<>(Bridge.repeatedly.invoke(fn));
+    }
+    
+    public static final <T> ISeq<T> repeatedly(int length, NullaryFn<T> fn) {
+        return new Seq<>(Bridge.repeatedly.invoke(length, fn));
+    }
+    
+    public static final <T> ISeq<T> cycle(IPersistentCollection<T> col) {
+        return col.cycle();
+    }
 }
