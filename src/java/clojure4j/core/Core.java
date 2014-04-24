@@ -1,5 +1,7 @@
 package clojure4j.core;
 
+import java.util.Comparator;
+
 
 public final class Core {
     
@@ -167,5 +169,23 @@ public final class Core {
         return col.take(n);
     }
     
+    public static final <T> ISeq<T> takeWhile(UnaryFn<? super T, Boolean> pred, IPersistentCollection<T> col) {
+        return col.takeWhile(pred);
+    }
+
+    public static final <T> ISeq<T> distinct(IPersistentCollection<T> col) {
+        return col.distinct();
+    }
+
+    public static final <T extends Comparable<T>> int compare(T x, T y) {
+        return x.compareTo(y);
+    }
     
+    public static final <T extends Comparable<T>> ISeq<T> sort(IPersistentCollection<T> col) {
+        return new Seq<>(Bridge.sort.invoke(col));
+    }
+
+    public static final <T> ISeq<T> sort(Comparator<T> comp, IPersistentCollection<T> col) {
+        return col.sort(comp);
+    }
 }

@@ -1,5 +1,7 @@
 package clojure4j.core;
 
+import java.util.Comparator;
+
 
 public abstract class AbstractPersistentCollection<T> implements IPersistentCollection<T> {
     protected final Object internal;
@@ -85,4 +87,20 @@ public abstract class AbstractPersistentCollection<T> implements IPersistentColl
     public ISeq<T> take(int n) {
         return new Seq<T>(Bridge.take.invoke(n, getInternal()));
     }
+    
+    @Override
+    public ISeq<T> takeWhile(UnaryFn<? super T, Boolean> pred) {
+        return new Seq<T>(Bridge.takeWhile.invoke(pred, getInternal()));
+    }
+
+    @Override
+    public ISeq<T> distinct() {
+        return new Seq<T>(Bridge.distinct.invoke(getInternal()));
+    }
+
+    @Override
+    public ISeq<T> sort(Comparator<T> comp) {
+        return new Seq<T>(Bridge.sort.invoke(comp, getInternal()));
+    }
+
 }

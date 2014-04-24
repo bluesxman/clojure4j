@@ -38,6 +38,8 @@ class Bridge {
     public static final IFn pop = Clojure.var("clojure.core", "pop");
     public static final IFn peek = Clojure.var("clojure.core", "peek");
     public static final IFn take = Clojure.var("clojure.core", "take");
+    public static final IFn takeWhile = Clojure.var("clojure.core", "take-while");
+    public static final IFn distinct = Clojure.var("clojure.core", "distinct");
     
     // Reads
     public static final IFn get = Clojure.var("clojure.core", "get");
@@ -83,5 +85,8 @@ class Bridge {
     public static final IFn repeatedly = Clojure.var("clojure.core", "repeatedly");
     public static final IFn cycle = Clojure.var("clojure.core", "cycle");
 
+//    public static final IFn compare = Clojure.var("clojure.core", "compare");  // We just call java directly
+    public static final IFn sort = Clojure.var("clojure.core", "sort");
+    public static final IFn sortBy = Clojure.var("clojure.core", "sort-by");
     //    public static final IFn  = Clojure.var("clojure.core", "");
 }
