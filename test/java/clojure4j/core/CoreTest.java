@@ -5,8 +5,11 @@ import static clojure4j.core.Core.conj;
 import static clojure4j.core.Core.contains;
 import static clojure4j.core.Core.count;
 import static clojure4j.core.Core.disj;
+import static clojure4j.core.Core.first;
 import static clojure4j.core.Core.hashSet;
 import static clojure4j.core.Core.list;
+import static clojure4j.core.Core.rest;
+import static clojure4j.core.Core.seq;
 import static clojure4j.core.Core.sortedSet;
 import static clojure4j.core.Core.vector;
 import static clojure4j.core.Set.difference;
@@ -254,5 +257,48 @@ public class CoreTest {
         testSet(new PersistentSortedSet<Integer>(),
                 new PersistentSortedSet<String>(),
                 new PersistentSortedSet<IPersistentMap<String, String>>());        
+    }
+    
+    @Test
+    public void testComparableFns() {
+//        assertEquals(false, list("a", "b", "c").apply(Ext::gt));
+        assertEquals(false, Ext.gt("a", "b", "c"));
+        assertEquals(true, Ext.gt("c", "b", "a"));
+        assertEquals(true, Ext.gt(list("c", "b", "a")));
+        
+//        IPersistentList<String> l = list("c", "b", "a");
+//        assertEquals(true, l.apply(Ext::gt));
+    }
+    
+    @Test 
+    public void testNumberFns() {
+//        (map + [1 2 3] [4 5 6])
+//        => '(5 7 9)
+    }
+    
+    @Test
+    public void testNullAndEmpty() {
+        assertNull(vector().seq());
+        assertNull(vector(1).rest().seq());
+        assertNull(seq(null));
+        
+        assertNull(vector().first());
+        assertEquals(true, vector().rest() != null);
+        assertEquals(true, vector().rest() instanceof ISeq<?>);
+        assertNull(rest(null));
+        assertNull(first(null));
+        
+        assertEquals(0, count(null));
+    }
+    
+    // TODO Fix apply.  Definitely not right.  impl'd like reduce at the moment
+    @Test
+    public void testApplyVsReduce() {
+        // (apply > [4 3 2 1) vs (reduce > [4 3 2 1])
+        
+//        (apply hash-map [:a 5 :b 6])
+//        ;= {:a 5, :b 6}
+//        (reduce hash-map [:a 5 :b 6])
+//        ;= {{{:a 5} :b} 6}
     }
 }

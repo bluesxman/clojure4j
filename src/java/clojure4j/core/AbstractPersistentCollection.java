@@ -57,6 +57,11 @@ public abstract class AbstractPersistentCollection<T> implements IPersistentColl
         return (int) Bridge.count.invoke(getInternal());
     }
     
+    @Override
+    public boolean isEmpty() {
+        return (boolean) Bridge.isEmpty.invoke(getInternal());
+    }
+    
     @SuppressWarnings("unchecked")
     @Override
     public T first() {
@@ -69,13 +74,13 @@ public abstract class AbstractPersistentCollection<T> implements IPersistentColl
     }
 
     @Override
-    public Object getInternal() {
+    public final Object getInternal() {
         return internal;
     }
     
     @Override
     public ISeq<T> seq() {
-        return new Seq<T>(Bridge.seq.invoke(getInternal()));
+        return isEmpty() ? null : new Seq<T>(Bridge.seq.invoke(getInternal()));
     }
     
     @Override
@@ -101,6 +106,11 @@ public abstract class AbstractPersistentCollection<T> implements IPersistentColl
     @Override
     public ISeq<T> sort(Comparator<T> comp) {
         return new Seq<T>(Bridge.sort.invoke(comp, getInternal()));
+    }
+    
+    @Override
+    public String toString() {
+        return getInternal() == null ? "null" : getInternal().toString();
     }
 
 }

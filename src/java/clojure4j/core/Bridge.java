@@ -52,6 +52,7 @@ class Bridge {
     public static final IFn remove = Clojure.var("clojure.core", "remove");
 
     public static final IFn count = Clojure.var("clojure.core", "count");
+    public static final IFn isEmpty = Clojure.var("clojure.core", "empty?");
     
     // Set fns
     public static final IFn join = Clojure.var("clojure.set", "join");
@@ -85,8 +86,10 @@ class Bridge {
     public static final IFn repeatedly = Clojure.var("clojure.core", "repeatedly");
     public static final IFn cycle = Clojure.var("clojure.core", "cycle");
 
+    // sorting
 //    public static final IFn compare = Clojure.var("clojure.core", "compare");  // We just call java directly
     public static final IFn sort = Clojure.var("clojure.core", "sort");
     public static final IFn sortBy = Clojure.var("clojure.core", "sort-by");
     //    public static final IFn  = Clojure.var("clojure.core", "");
+
 }

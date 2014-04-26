@@ -24,6 +24,8 @@ public interface IPersistentCollection<T> extends Internal {
     
     public int count();
     
+    public boolean isEmpty();
+    
     public T first();
     
     public ISeq<T> rest();

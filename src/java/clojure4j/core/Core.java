@@ -93,11 +93,19 @@ public final class Core {
     }
     
     public static final <T> int count(IPersistentCollection<T> col) {
-        return col.count();
+        return col == null ? 0 : col.count();
     }
     
     public static final <T> T first(IPersistentCollection<T> col) {
-        return col.first();
+        return col == null ? null : col.first();
+    }
+    
+    public static final <T> IPersistentCollection<T> rest(IPersistentCollection<T> col) {
+        return col == null ? null : col.rest();
+    }
+    
+    public static final <T> ISeq<T> seq(IPersistentCollection<T> col) {
+        return col == null ? null : col.seq();
     }
     
     public static final boolean isOdd(int n) {
@@ -187,5 +195,132 @@ public final class Core {
 
     public static final <T> ISeq<T> sort(Comparator<T> comp, IPersistentCollection<T> col) {
         return col.sort(comp);
+    }
+    
+    public static final <T extends Comparable<T>> boolean gt(T left, T right) {
+        return left.compareTo(right) > 0;
+    }
+
+    @SuppressWarnings("unchecked")
+    public static final <T extends Comparable<T>> boolean gt(T... comps){
+        if(comps.length > 0) {
+            boolean result = true;
+            
+            for(int i = 1; i < comps.length; i++) {
+                result = result && gt(comps[--i], comps[i]);
+            }
+            
+            return result;
+        }
+        else {
+            throw new IllegalArgumentException("1 or more arguments expected");
+        }
+    }
+    
+    public static final <T extends Comparable<T>> boolean gteq(T left, T right) {
+        return left.compareTo(right) >= 0;
+    }
+
+    public static final <T extends Comparable<T>> boolean lt(T left, T right) {
+        return left.compareTo(right) < 0;
+    }
+
+    public static final <T extends Comparable<T>> boolean lteq(T left, T right) {
+        return left.compareTo(right) <= 0;
+    }
+    
+    public static final <T extends Comparable<T>> boolean eq(T left, T right) {
+        return left.compareTo(right) <= 0;
+    }
+    
+    public static final <T extends Comparable<T>> boolean noteq(T left, T right) {
+        return left.compareTo(right) <= 0;
+    }
+    
+    public static final int add(int... ints) {
+        int result = 0;
+        for(int i : ints) {
+            result += i;
+        }
+        return result;
+    }
+    
+    public static final int sub(int... ints) {
+        if(ints.length > 0) {
+            int result = 0;
+            for(int i : ints) {
+                result -= i;
+            }
+            return result;
+        }
+        else {
+            throw new IllegalArgumentException("1 or more arguments expected");
+        }
+    }
+    
+    public static final int mul(int... ints) {
+        int result = 1;
+        for(int i : ints) {
+            result *= i;
+        }
+        return result;
+    }
+    
+    public static final int div(int... ints) {
+        if(ints.length > 0) {
+            int result = 1;
+            for(int i : ints) {
+                result /= i;
+            }
+            return result;
+        }
+        else {
+            throw new IllegalArgumentException("1 or more arguments expected");
+        }
+    }
+    
+    @SuppressWarnings("unchecked")
+    public static final <T extends Number> double add(T... nums) {
+        double result = 0;
+        for(T i : nums) {
+            result += i.doubleValue();
+        }
+        return result;        
+    }
+    
+    public static final long add(long... nums) {
+        int result = 0;
+        for(long i : nums) {
+            result += i;
+        }
+        return result;
+    }
+    
+    public static final int inc(int n) {
+        return n++;
+    }
+    
+    public static final int dec(int n) {
+        return n--;
+    }
+    
+    public static final int min(int x, int y) {
+        return x < y ? x : y;
+    }
+    
+    public static final int max(int x, int y) {
+        return x > y ? x : y;
+    }
+    
+    public static final boolean isZero(int n) {
+        return n == 0;
+    }
+    
+    public static final boolean isNeg(int n) {
+        return n < 0;
+    }
+    
+    public static final boolean isPos(int n) {
+        return n > 0;
     }
 }
