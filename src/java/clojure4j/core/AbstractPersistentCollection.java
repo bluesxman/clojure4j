@@ -39,14 +39,14 @@ implements IPersistentCollection<T> {
     
     @SuppressWarnings("unchecked")
     @Override
-    public <R> R reduce(BinaryFn<T, T, R> fn) {
-        return (R) Bridge.reduce.invoke(fn, getInternal());
+    public T reduce(BinaryFn<T, T, T> fn) {
+        return (T) Bridge.reduce.invoke(fn, getInternal());
     }
     
     @SuppressWarnings("unchecked")
     @Override
-    public <R> R reduce(BinaryFn<T, T, R> fn, T initial) {
-        return (R) Bridge.reduce.invoke(fn, initial, getInternal());
+    public T reduce(BinaryFn<T, T, T> fn, T initial) {
+        return (T) Bridge.reduce.invoke(fn, initial, getInternal());
     }
     
     @Override

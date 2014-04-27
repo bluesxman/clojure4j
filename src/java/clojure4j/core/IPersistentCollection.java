@@ -12,8 +12,8 @@ public interface IPersistentCollection<T> extends Internal {
     
     public <R> ISeq<R> map(UnaryFn<T, R> fn);
     
-    public <R> R reduce(BinaryFn<T, T, R> fn);
-    public <R> R reduce(BinaryFn<T, T, R> fn, T initial);
+    public T reduce(BinaryFn<T, T, T> fn);
+    public T reduce(BinaryFn<T, T, T> fn, T initial);
     
     public IPersistentCollection<T> conj(T value);
     

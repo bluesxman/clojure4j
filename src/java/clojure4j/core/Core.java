@@ -69,11 +69,11 @@ public final class Core {
         return col.apply(fn);
     }
 
-    public static final <T, R> R reduce(BinaryFn<T, T, R> fn, IPersistentCollection<T> col) {
+    public static final <T> T reduce(BinaryFn<T, T, T> fn, IPersistentCollection<T> col) {
         return col.reduce(fn);
     }
     
-    public static final <T, R> R reduce(BinaryFn<T, T, R> fn, T initial, IPersistentCollection<T> col) {
+    public static final <T> T reduce(BinaryFn<T, T, T> fn, T initial, IPersistentCollection<T> col) {
         return col.reduce(fn, initial);
     }
     
