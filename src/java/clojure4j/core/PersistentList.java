@@ -35,4 +35,10 @@ public class PersistentList<T>
     public IPersistentList<T> pop() {
         return new PersistentList<>(Bridge.pop.invoke(getInternal()));
     }
+    
+    @SuppressWarnings("unchecked")
+    @Override
+    public IPersistentList<T> into(IPersistentCollection<T> from) {
+        return (IPersistentList<T>) Bridge.into.invoke(getInternal(), from);
+    }
 }

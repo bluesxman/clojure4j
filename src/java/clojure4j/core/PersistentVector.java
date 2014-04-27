@@ -67,5 +67,10 @@ public final class PersistentVector<T>
         return new Seq<>(Bridge.rseq.invoke(getInternal()));
     }
 
-    
+    @SuppressWarnings("unchecked")
+    @Override
+    public IPersistentVector<T> into(IPersistentCollection<T> from) {
+        return (IPersistentVector<T>) Bridge.into.invoke(getInternal(), from);
+    }
+
 }

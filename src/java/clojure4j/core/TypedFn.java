@@ -1,5 +1,6 @@
 package clojure4j.core;
 
+import clojure.lang.AFn;
 import clojure.lang.IFn;
 import clojure.lang.ISeq;
 
@@ -154,7 +155,7 @@ public interface TypedFn<R> extends IFn {
 
     @Override
 //    default Object applyTo(ISeq arglist) {
-//        return AFn.applyToHelper(this, Util.ret1(arglist,arglist = null));
+//        return AFn.applyToHelper(this, clojure.lang.Util.ret1(arglist,arglist = null));
 //    }
     default Object applyTo(ISeq arglist) {
         ISeq seq = arglist;

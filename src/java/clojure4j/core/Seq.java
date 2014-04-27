@@ -9,4 +9,12 @@ public class Seq<T> extends AbstractSequential<T> implements ISeq<T>{
     public final ISeq<T> conj(T value) {
         return new Seq<T>(Bridge.conj.invoke(getInternal(), value));
     }
+    
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public ISeq<T> into(IPersistentCollection<T> from) {
+        return (ISeq<T>) Bridge.into.invoke(getInternal(), from);
+    }
+
 }

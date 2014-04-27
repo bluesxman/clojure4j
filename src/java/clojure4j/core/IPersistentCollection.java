@@ -16,11 +16,10 @@ public interface IPersistentCollection<T> extends Internal {
     public T reduce(BinaryFn<T, T, T> fn, T initial);
     
     public IPersistentCollection<T> conj(T value);
-    
-//    @SuppressWarnings("unchecked")
-//    public IPersistentCollection<T> conj(T... values);
-    
+        
     public ISeq<T> cons(T value);
+    
+    public IPersistentCollection<T> into(IPersistentCollection<T> from);
     
     public int count();
     

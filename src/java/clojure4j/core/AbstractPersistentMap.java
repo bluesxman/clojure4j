@@ -70,4 +70,9 @@ extends AbstractPersistentCollection<IMapEntry<K, V>> implements IPersistentMap<
         return new MapEntry<>(Bridge.find.invoke(getInternal(), key));
     }
     
+    @SuppressWarnings("unchecked")
+    @Override
+    public IPersistentMap<K, V> into(IPersistentCollection<IMapEntry<K, V>> from) {
+        return (IPersistentMap<K, V>) Bridge.into.invoke(getInternal(), from);
+    }
 }

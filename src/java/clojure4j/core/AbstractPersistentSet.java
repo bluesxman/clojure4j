@@ -78,5 +78,10 @@ public abstract class AbstractPersistentSet<T> extends AbstractPersistentCollect
         return (boolean) Bridge.contains.invoke(getInternal(), value);
     }
 
+    @SuppressWarnings("unchecked")
+    @Override
+    public IPersistentSet<T> into(IPersistentCollection<T> from) {
+        return (IPersistentSet<T>) Bridge.into.invoke(getInternal(), from);
+    }
 
 }

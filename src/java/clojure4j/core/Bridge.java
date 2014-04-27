@@ -30,6 +30,7 @@ class Bridge {
     // Transform value
     public static final IFn conj = Clojure.var("clojure.core", "conj");
     public static final IFn cons = Clojure.var("clojure.core", "cons");
+    public static final IFn into = Clojure.var("clojure.core", "into");
     public static final IFn assoc = Clojure.var("clojure.core", "assoc");
     public static final IFn dissoc = Clojure.var("clojure.core", "dissoc");
     public static final IFn seq = Clojure.var("clojure.core", "seq");

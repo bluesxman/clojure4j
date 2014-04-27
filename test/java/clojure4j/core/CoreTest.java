@@ -317,4 +317,13 @@ public class CoreTest {
         assertEquals(3, x);
         
     }
+    
+    @Test
+    public void testInto() {
+//        (= (seq [1 3]) (keys (into {} [[1 2] [3 4]])))
+//        (into [] {1 2 3 4})
+//        (into () '(1 2 3))
+//        (into [] '(1 2 3))
+
+    }
 }
