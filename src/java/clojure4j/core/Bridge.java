@@ -91,6 +91,7 @@ class Bridge {
     public static final IFn sort = Clojure.var("clojure.core", "sort");
     public static final IFn sortBy = Clojure.var("clojure.core", "sort-by");
     //    public static final IFn  = Clojure.var("clojure.core", "");
+    public static final IFn str = Clojure.var("clojure.core", "str");
 
     public static final IFn eq = Clojure.var("clojure.core", "=");
     public static final IFn noteq = Clojure.var("clojure.core", "not=");

@@ -20,7 +20,10 @@ public abstract class AbstractInternal implements Internal {
         
     @Override
     public boolean equals(Object o) {
-        if(o instanceof Internal) {
+        if(this == o) {
+            return true;
+        }
+        if(o != null && o instanceof Internal) {
             return (boolean) Bridge.eq.invoke(this.getInternal(), ((Internal) o).getInternal());
         }
         else {

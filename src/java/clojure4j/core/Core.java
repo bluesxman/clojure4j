@@ -306,4 +306,5 @@ public final class Core {
     public static final boolean isPos(int n) {
         return n > 0;
     }
+    
 }
