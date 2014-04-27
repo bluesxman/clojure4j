@@ -7,6 +7,11 @@ public abstract class AbstractInternal implements Internal {
     AbstractInternal(Object internal) {
         this.internal = internal;
     }
+
+    @Override
+    public final Object getInternal() {
+        return internal;
+    }
     
     @Override
     public String toString() {

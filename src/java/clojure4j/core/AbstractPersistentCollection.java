@@ -71,11 +71,6 @@ implements IPersistentCollection<T> {
     }
 
     @Override
-    public final Object getInternal() {
-        return internal;
-    }
-    
-    @Override
     public ISeq<T> seq() {
         return isEmpty() ? null : new Seq<T>(Bridge.seq.invoke(getInternal()));
     }

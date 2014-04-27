@@ -1,10 +1,9 @@
 package clojure4j.core;
 
-public class Atom<T> implements Internal {
-    private final Object internal;
+public class Atom<T> extends AbstractInternal {
     
     public Atom(T initialValue) {
-        internal = Bridge.atom.invoke(initialValue);
+        super(Bridge.atom.invoke(initialValue));
     }
     
     @SuppressWarnings("unchecked")
@@ -30,12 +29,6 @@ public class Atom<T> implements Internal {
     @SuppressWarnings("unchecked")
     public <X, Y> T swap(TernaryFn<T,X,Y,T> fn, X x, Y y) {
         return (T) Bridge.swap.invoke(internal, fn, x, y);
-    }
-
-    @Override
-    public final Object getInternal() {
-        return internal;
-    }
-    
+    }    
 
 }
