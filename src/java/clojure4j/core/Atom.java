@@ -33,7 +33,9 @@ public class Atom<T> implements Internal {
     }
 
     @Override
-    public Object getInternal() {
+    public final Object getInternal() {
         return internal;
     }
+    
+
 }

@@ -38,6 +38,25 @@ public final class Core {
         return new Seq<R>((clojure.lang.ISeq) Bridge.map.invoke(fn, col.getInternal()));
     }
     
+    public static final <T, U, R> ISeq<R> map(
+            BinaryFn<T, U, R> fn, 
+            IPersistentCollection<T> col1,
+            IPersistentCollection<U> col2) {
+        return new Seq<R>((clojure.lang.ISeq) Bridge.map.invoke(fn, col1.getInternal(), col2.getInternal()));
+    }
+    
+    public static final <T, R> ISeq<R> map(
+            TernaryFn<T, T, T, R> fn, 
+            IPersistentCollection<T> col1,
+            IPersistentCollection<T> col2,
+            IPersistentCollection<T> col3) {
+        return new Seq<R>((clojure.lang.ISeq) Bridge.map.invoke(
+                fn, 
+                col1.getInternal(), 
+                col2.getInternal(), 
+                col3.getInternal()));
+    }
+        
     public static final <T> ISeq<T> filter(UnaryFn<T, Boolean> pred, IPersistentCollection<T> col) {
         return new Seq<T>((clojure.lang.ISeq) Bridge.filter.invoke(pred, col.getInternal()));
     }
@@ -195,6 +214,10 @@ public final class Core {
 
     public static final <T> ISeq<T> sort(Comparator<T> comp, IPersistentCollection<T> col) {
         return col.sort(comp);
+    }
+    
+    public static final int add(int x, int y) {
+        return x + y;
     }
         
     public static final int add(int... ints) {

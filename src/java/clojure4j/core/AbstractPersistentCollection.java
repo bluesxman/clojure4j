@@ -3,15 +3,12 @@ package clojure4j.core;
 import java.util.Comparator;
 
 
-public abstract class AbstractPersistentCollection<T> implements IPersistentCollection<T> {
-    protected final Object internal;
+public abstract class AbstractPersistentCollection<T> 
+extends AbstractInternal
+implements IPersistentCollection<T> {
     
-    AbstractPersistentCollection(Object internal) {
-        this.internal = internal;
-    }
-        
-    public AbstractPersistentCollection(clojure.lang.ISeq list) {
-        internal = list;
+    public AbstractPersistentCollection(Object internal) {
+        super(internal);
     }
     
     @Override
@@ -107,10 +104,4 @@ public abstract class AbstractPersistentCollection<T> implements IPersistentColl
     public ISeq<T> sort(Comparator<T> comp) {
         return new Seq<T>(Bridge.sort.invoke(comp, getInternal()));
     }
-    
-    @Override
-    public String toString() {
-        return getInternal() == null ? "null" : getInternal().toString();
-    }
-
 }

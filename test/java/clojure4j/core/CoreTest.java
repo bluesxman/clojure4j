@@ -7,7 +7,10 @@ import static clojure4j.core.Core.count;
 import static clojure4j.core.Core.disj;
 import static clojure4j.core.Core.first;
 import static clojure4j.core.Core.hashSet;
+import static clojure4j.core.Core.iterate;
 import static clojure4j.core.Core.list;
+import static clojure4j.core.Core.map;
+import static clojure4j.core.Core.reduce;
 import static clojure4j.core.Core.rest;
 import static clojure4j.core.Core.seq;
 import static clojure4j.core.Core.sortedSet;
@@ -96,7 +99,7 @@ public class CoreTest {
         l = apply(addNumNumLambda, list(1, 2L, 3, 4.0));
         assertEquals(10L, l);
         
-        IPersistentList<Number> numList = new PersistentList<Number>(1, 2L, 3, 4.0);
+        IPersistentList<Number> numList = new PersistentList<>(1, 2L, 3, 4.0);
         l = numList.conj(5.0).apply(addNumNumLambda);
         assertEquals(15L, l);
         
@@ -106,7 +109,7 @@ public class CoreTest {
     
     @Test
     public void testHashMap() {
-        Associative<Integer, String> map = new PersistentHashMap<Integer, String>();
+        Associative<Integer, String> map = new PersistentHashMap<>();
         
         map = map.assoc(1, "a").assoc(2, "b").assoc(3, "c");
         assertEquals("a", map.get(1));
@@ -119,9 +122,8 @@ public class CoreTest {
     
     @Test 
     public void testAtom() {
-        Atom<Integer> intAtom = new Atom<Integer>(0);
-        Atom<IPersistentMap<String, Integer>> mapAtom = 
-                new Atom<IPersistentMap<String, Integer>>(new PersistentHashMap<String, Integer>());
+        Atom<Integer> intAtom = new Atom<>(0);
+        Atom<IPersistentMap<String, Integer>> mapAtom = new Atom<>(new PersistentHashMap<String, Integer>());
         
         assertEquals(new Integer(2), intAtom.swap(x -> x + 2));
         assertEquals(new Integer(2), intAtom.deref());
@@ -136,7 +138,7 @@ public class CoreTest {
         mapAtom.swap(Core::assoc, "two", 2);
         assertEquals(new Integer(1), mapAtom.deref().get("one"));
         assertEquals(new Integer(2), mapAtom.deref().get("two"));
-        mapAtom.reset(new PersistentHashMap<String, Integer>());
+        mapAtom.reset(new PersistentHashMap<>());
         assertNull(mapAtom.deref().get("one"));
         assertNull(mapAtom.deref().get("two"));
     }
@@ -247,16 +249,16 @@ public class CoreTest {
 
     @Test
     public void testPersistentHashSet() {
-        testSet(new PersistentHashSet<Integer>(),
-                new PersistentHashSet<String>(),
-                new PersistentHashSet<IPersistentMap<String, String>>());
+        testSet(new PersistentHashSet<>(),
+                new PersistentHashSet<>(),
+                new PersistentHashSet<>());
     }
     
     @Test
     public void testPersistentSortedSet() {
-        testSet(new PersistentSortedSet<Integer>(),
-                new PersistentSortedSet<String>(),
-                new PersistentSortedSet<IPersistentMap<String, String>>());        
+        testSet(new PersistentSortedSet<>(),
+                new PersistentSortedSet<>(),
+                new PersistentSortedSet<>());        
     }
     
     @Test
@@ -274,6 +276,14 @@ public class CoreTest {
     public void testNumberFns() {
 //        (map + [1 2 3] [4 5 6])
 //        => '(5 7 9)
+        
+//        Core.map(Core::add, vector(1,2,3), 1);
+        ISeq<Integer> intSeq = map(Core::add, vector(1,2,3), vector(4,5,6));
+        assertEquals(true, vector(5, 7, 9).seq().equals(intSeq));
+//        Core.map(Core::add, vector(1,2,3), vector(4,5,6), vector(7,8,9));
+        
+        //(map + [1 2 3] (iterate inc 1))
+        map(Core::add, vector(1,2,3), iterate(Core::inc, 1));        
     }
     
     @Test
@@ -300,5 +310,11 @@ public class CoreTest {
 //        ;= {:a 5, :b 6}
 //        (reduce hash-map [:a 5 :b 6])
 //        ;= {{{:a 5} :b} 6}
+        
+        int x = apply(Core::max, vector(1,2,3));
+        assertEquals(3, x);
+        x = reduce(Core::max, vector(1,2,3));
+        assertEquals(3, x);
+        
     }
 }
