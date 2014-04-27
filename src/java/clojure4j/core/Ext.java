@@ -25,16 +25,18 @@ public final class Ext {
         }
     }
     
-    public static final <T extends Comparable<T>> boolean gt(IPersistentCollection<T> col){
-        if(col.count() > 0) {
+    public static final <T extends Comparable<T>> boolean gt(Seqable<T> args){
+        ISeq<T> tail = args.seq();
+        
+        if(tail.first() != null) {
             boolean result = true;
             T hd;
-            IPersistentCollection<T> tail = col;
             
-            while(result && tail.count() > 1) {
-                hd = tail.first();
+            while(result && (hd = tail.first()) != null) {
                 tail = tail.rest();
-                result = result && gt(hd, tail.first());
+                if(tail.first() != null) {
+                    result = result && gt(hd, tail.first());
+                }
             }
             
             return result;

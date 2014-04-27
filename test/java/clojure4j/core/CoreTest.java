@@ -38,7 +38,7 @@ public class CoreTest {
         
     private void testComposition(IPersistentCollection<Integer> oneTwoThree) {        
         // add all the numbers together
-        assertEquals(6, oneTwoThree.apply((x, y) -> x + y));
+        assertEquals(6, (int) oneTwoThree.apply((x, y) -> x + y));
         
         // double the numbers and add them all
         assertEquals((Object) 12,
@@ -310,11 +310,15 @@ public class CoreTest {
 //        ;= {:a 5, :b 6}
 //        (reduce hash-map [:a 5 :b 6])
 //        ;= {{{:a 5} :b} 6}
+//        (apply (fn [x y] (> x y)) [3 2 1]) ;; wrong number args
         
         int x = apply(Core::max, vector(1,2,3));
         assertEquals(3, x);
         x = reduce(Core::max, vector(1,2,3));
         assertEquals(3, x);
+        
+        boolean isMaxToMin = apply(Ext::gt, vector(4, 3, 2, 1));
+        assertEquals(true, isMaxToMin);
         
     }
     

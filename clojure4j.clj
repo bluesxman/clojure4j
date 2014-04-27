@@ -29,3 +29,36 @@
 
 (every? > [4 3 2 1])
 (every? > [4 3 1 2])
+
+
+(apply > [4 3 1 2])
+(apply > [4 3 2 1])
+(apply > [4 3 2 1])
+(apply > (list 4 3 1 2))
+(apply > (list 4 3 2 1))
+(apply max [4 67 1 3])
+(reduce max [4 67 1 3])
+(reduce > (list 4 3 2 1))
+
+(first [])
+
+(rest [])
+
+(rest nil)
+
+(seq [])
+
+(seq nil)
+
+
+(first nil)
+
+(count nil)
+
+(= (seq [1 3]) (keys (into {} [[1 2] [3 4]])))
+(= (seq [1 3]) (keys (into {} [[1 "a"] [3 "b"]])))
+(into [] {1 2 3 4})
+(into () '(1 2 3))
+(into [] '(1 2 3))
+
+(map + [1 2 3] [4 5 6] [7 8 9])

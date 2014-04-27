@@ -33,7 +33,13 @@ implements IPersistentCollection<T> {
     
     @SuppressWarnings("unchecked")
     @Override
-    public <R> R apply(BinaryFn<T, T, R> fn) {
+    public <R extends T> R apply(BinaryFn<T, T, R> fn) {
+        return (R) Bridge.apply.invoke(fn, getInternal());
+    }
+    
+    @SuppressWarnings("unchecked")
+    @Override
+    public <R> R apply(SeqFn<T, R> fn) {
         return (R) Bridge.apply.invoke(fn, getInternal());
     }
     

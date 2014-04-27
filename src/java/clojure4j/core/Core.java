@@ -65,7 +65,11 @@ public final class Core {
         return new Seq<T>((clojure.lang.ISeq) Bridge.remove.invoke(pred, col.getInternal()));
     }
     
-    public static final <T, R> R apply(BinaryFn<T, T, R> fn, IPersistentCollection<T> col) {
+    public static final <T, R extends T> R apply(BinaryFn<T, T, R> fn, IPersistentCollection<T> col) {
+        return col.apply(fn);
+    }
+
+    public static final  <T, R> R apply(SeqFn<T, R> fn, IPersistentCollection<T> col) {
         return col.apply(fn);
     }
 
@@ -305,6 +309,10 @@ public final class Core {
     
     public static final boolean isPos(int n) {
         return n > 0;
+    }
+    
+    public static final boolean isNull(Object o) {
+        return o == null;
     }
     
 }

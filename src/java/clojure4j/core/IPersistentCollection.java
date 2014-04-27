@@ -4,9 +4,10 @@ import java.util.Comparator;
 
 // REVIEW support multiple args for fns like apply and map? E.g.:
 // public <R> ISeq<R> map(UnaryFn<T, R> fn, IPersistentCollection<T>... colls);
-public interface IPersistentCollection<T> extends Internal {
+public interface IPersistentCollection<T> extends Internal, Seqable<T> {
     
-    public <R> R apply(BinaryFn<T, T, R> fn);
+    public <R extends T> R apply(BinaryFn<T, T, R> fn);
+    public <R> R apply(SeqFn<T, R> fn);
     
     public ISeq<T> filter(UnaryFn<T, Boolean> pred);
     
@@ -28,8 +29,6 @@ public interface IPersistentCollection<T> extends Internal {
     public T first();
     
     public ISeq<T> rest();
-    
-    public ISeq<T> seq();
     
     public ISeq<T> cycle();
     
