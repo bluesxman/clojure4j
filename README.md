@@ -20,51 +20,28 @@ Persistent data
 A big piece that is missing from Java 8 is persistent data structures.  This API hopes to fill in that gap.  
 
 ### Why a Clojure binding?
-By making the API a Clojure binding, a large pool of support and 
-documentation is already in place.  For example, a web search for 
-functions in this API already has years of Q&A on various websites.  
-Furthermore, Clojure has strong decision making is behind its design and 
-implementation.  Developing a similar API of the same quality from 
-scratch would take a lot of time (and talent).
+By making the API a Clojure binding, a large pool of support and documentation is already in place.  For example, a web search for functions in this API already has years of questions and answers on various websites.  Furthermore, Clojure has strong decision making behind its design and implementation.  Developing a similar API of the same quality from scratch would take a lot of time (and talent).
 
 ### Are Clojure4J collections compatible with java.util collections?
-Yes, in the same way that "unmodifiable" collections work in 
-java.util.Collections.  I.e. they behave as read-only java.util.Collections.
+Yes, in the same way that "unmodifiable" collections work in java.util.Collections.  I.e. they behave as read-only java.util.Collections.
 
 ### What are the tradeoffs?
-As a rule of thumb, you are trading performance for the safety of 
-treating collections as values.  Clojure4J's collection operations tend to 
-be 2-3x slower than java.util.  
+As a rule of thumb, you are trading performance for the safety of treating collections as values.  Clojure4J's collection operations tend to be 2-3x slower than java.util.  
 
 ## FAQ for Clojure developers
 
 ### Why are clojure fns object methods on persistent collections?
-This makes up for the lack of "->" and "->>" in the API.  Furthermore, 
-it makes the API more accessible since the developer does not have to 
-reason on whether thread-first or thread-last is the right choice.  
-Finally, with clojure4j.core.Core most functions are also available as static 
-methods without the object "chaperone".
+This makes up for the lack of "->" and "->>" in the API.  Furthermore, it makes the API more accessible since the developer does not have to reason on whether thread-first or thread-last is the right choice.  Finally, with clojure4j.core.Core most functions are also available as static methods without the object "chaperone".
 
 ### Why typed collections?
-It is assumed that a traditional Java shop might resist using this API 
-without typed collections, seeing it as a step backwards to pre-1.5 Java.  
-The hope is that this choice helps lower the barrier to incorporating some 
-elements of functional programming into traditional Java projects by 
-avoiding those arguments.
+It is assumed that a traditional Java shop might resist using this API without typed collections, seeing it as a step backwards to pre-1.5 Java.  The hope is that this choice helps lower the barrier to incorporating some 
+elements of functional programming into traditional Java projects by avoiding those arguments.
 
 ### Is Clojure4J slower than Clojure?
-The current implementation wraps Clojure objects and IFns.  In tests, 
-Clojure4J  collections tend to be a few percentage points slower than 
-calling Clojure 1.6's Java API directly.  A direct comparison to native 
-Clojure has not been performed, but performance relative to Java's 
-collections seems to be inline with Clojure's claims about persistent data 
-structures.
+The current implementation wraps Clojure objects and IFns.  In tests, Clojure4J collections tend to be a few percentage points slower than calling Clojure 1.6's Java API directly.  A direct comparison to native Clojure has not been performed, but performance relative to Java's collections seems to be inline with Clojure's claims about persistent data structures.
 
 ### Why not just use Clojure?
-For a variety of reasons, incorporating Clojure into an existing Java 
-project is not always allowed/possible.  Hopefully, though, usage of this 
-API might help break down some of those barriers, serving as a small 
-stepping stone to incorporating functional languages and style.  
+For a variety of reasons, incorporating Clojure into an existing Java project is not always allowed/possible.  Hopefully, though, usage of this API might help break down some of those barriers, serving as a small stepping stone to incorporating functional programming or languages such as Clojure.  
 
 
 ## License
