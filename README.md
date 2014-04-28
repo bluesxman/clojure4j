@@ -11,13 +11,7 @@ FIXME
 ## FAQ for Java developers
 
 ### Why should I care?
-Java developers basically have two choices:  mutable collections (e.g. 
-java.util) and write-once-read-many immutable collections (e.g. Google's
-Guava).  However, this API attempts to provide a third choice by 
-bringing persistent data structures to Java.  This provides the safety 
-and simplicity of immutable collections but with the ability to create 
-new versions of those collections with elements added or removed without 
-doing full copies of the original.
+Java developers basically have two choices:  mutable collections (e.g. java.util) and write-once-read-many immutable collections (e.g. Google's Guava).  However, this API attempts to provide a third choice by bringing persistent data structures to Java.  This provides the safety and simplicity of immutable collections but with the ability to create new versions of those collections with elements added or removed without doing full copies of the original.
 
 ### What are persistent data structures?
 Persistent data 
