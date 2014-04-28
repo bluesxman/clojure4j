@@ -1,8 +1,6 @@
 # clojure4j
 
-Clojure4J is a partial Java binding to the Clojure programming language.  
-The primary purpose of the library is to provide Java with a library for 
-“persistent data structures” and a functional API for working with them.
+Clojure4J is a partial Java binding to the Clojure programming language.  The primary purpose of the library is to provide Java with a library for ï¿½persistent data structuresï¿½ and a functional API for working with them.
 
 
 
@@ -14,17 +12,17 @@ FIXME
 
 ### Why should I care?
 Java developers basically have two choices:  mutable collections (e.g. 
-java.util) and write-once-read-many immutable collections (e.g. Google’s
+java.util) and write-once-read-many immutable collections (e.g. Googleï¿½s
 Guava).  However, this API attempts to provide a third choice by 
 bringing persistent data structures to Java.  This provides the safety 
 and simplicity of immutable collections but with the ability to create 
 new versions of those collections with elements added or removed without 
 doing full copies of the original.
 
-### What are “persistent data structures”?
+### What are ï¿½persistent data structuresï¿½?
 Persistent data 
 
-### Is this API redundant given Java 8’s functional features (e.g. java.util.streams)?
+### Is this API redundant given Java 8ï¿½s functional features (e.g. java.util.streams)?
 A big piece that is missing from Java 8 is persistent data structures.  
 This API hopes to fill in that gap.  
 
@@ -37,22 +35,22 @@ implementation.  Developing a similar API of the same quality from
 scratch would take a lot of time (and talent).
 
 ### Are Clojure4J collections compatible with java.util collections?
-Yes, in the same way that “unmodifiable” collections work in 
+Yes, in the same way that ï¿½unmodifiableï¿½ collections work in 
 java.util.Collections.  I.e. they behave as read-only java.util.Collections.
 
 ### What are the tradeoffs?
-As a rule of thumb, you’re trading performance for the safety of 
-treating collections as values.  Clojure4J’s collection operations tend to 
+As a rule of thumb, youï¿½re trading performance for the safety of 
+treating collections as values.  Clojure4Jï¿½s collection operations tend to 
 be 2-3x slower than java.util.  
 
 ## FAQ for Clojure developers
 
 ### Why are clojure fns object methods on persistent collections?
-This makes up for the lack of “->” and “->>” in the API.  Furthermore, 
-it makes the API more accessible since the developer doesn’t have to 
+This makes up for the lack of ï¿½->ï¿½ and ï¿½->>ï¿½ in the API.  Furthermore, 
+it makes the API more accessible since the developer doesnï¿½t have to 
 reason on whether thread-first or thread-last is the right choice.  
-Finally, with clojure4j.core.Core most fn’s are also available as static 
-methods without the object “chaperone”.
+Finally, with clojure4j.core.Core most fnï¿½s are also available as static 
+methods without the object ï¿½chaperoneï¿½.
 
 ### Why typed collections?
 It is assumed that a traditional Java shop might resist using this API 
@@ -64,14 +62,14 @@ avoiding those arguments.
 ### Is Clojure4J slower than Clojure?
 The current implementation wraps Clojure objects and IFns.  In tests, 
 Clojure4J  collections tend to be a few percentage points slower than 
-calling Clojure 1.6’s Java API directly.  A direct comparison to native 
-Clojure has not been performed, but performance relative to Java’s 
-collections seems to be inline with Clojure’s claims about persistent data 
+calling Clojure 1.6ï¿½s Java API directly.  A direct comparison to native 
+Clojure has not been performed, but performance relative to Javaï¿½s 
+collections seems to be inline with Clojureï¿½s claims about persistent data 
 structures.
 
 ### Why not just use Clojure?
 For a variety of reasons, incorporating Clojure into an existing Java 
-project isn’t always allowed/possible.  Hopefully, though, usage of this 
+project isnï¿½t always allowed/possible.  Hopefully, though, usage of this 
 API might help break down some of those barriers, serving as a small 
 stepping stone to incorporating functional languages and style.  
 
