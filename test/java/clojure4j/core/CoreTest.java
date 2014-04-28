@@ -319,6 +319,12 @@ public class CoreTest {
         
         boolean isMaxToMin = apply(Ext::gt, vector(4, 3, 2, 1));
         assertEquals(true, isMaxToMin);
+        isMaxToMin = apply(Ext::gt, vector(4, 2, 3, 1));
+        assertEquals(false, isMaxToMin);
+        isMaxToMin = apply(Ext::gt, vector("d", "c", "b", "a"));
+        assertEquals(true, isMaxToMin);
+        isMaxToMin = apply(Ext::gt, vector("d", "b", "c", "a"));
+        assertEquals(false, isMaxToMin);
         
     }
     
