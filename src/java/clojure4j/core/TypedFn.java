@@ -1,8 +1,6 @@
 package clojure4j.core;
 
-import clojure.lang.AFn;
 import clojure.lang.IFn;
-import clojure.lang.IPersistentCollection;
 import clojure.lang.ISeq;
 
 public interface TypedFn<R> extends IFn {
@@ -155,25 +153,15 @@ public interface TypedFn<R> extends IFn {
     }
 
     @Override
-//    default Object applyTo(ISeq arglist) {
-//        return AFn.applyToHelper(this, clojure.lang.Util.ret1(arglist,arglist = null));
-//    }
     default Object applyTo(ISeq arglist) {
-        //REVIEW What if we made NaryFn's only unimpl'd method a method that took a ISeq or a IPersistentCollection?
-        // Then, applyTo would target that method if this Fn is of instance TypedFn.  That or NaryFn overrides applyTo
-        if(arglist.count() == 1 && arglist.first() instanceof IPersistentCollection){
-            return invoke(arglist.first());
-        }
-        else {
-            ISeq seq = arglist;
-            Object accum = arglist.first();
+        ISeq seq = arglist;
+        Object accum = arglist.first();
 
-            while((seq = seq.next()) != null) {
-                accum = invoke(accum, seq.first());
-            }
-
-            return accum;
+        while((seq = seq.next()) != null) {
+            accum = invoke(accum, seq.first());
         }
+
+        return accum;
     }
 }
     
