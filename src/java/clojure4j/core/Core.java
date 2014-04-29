@@ -95,6 +95,23 @@ public final class Core {
         return col.cons(value);
     }
     
+    public static final <T> IPersistentList<T> into(IPersistentList<T> to, IPersistentCollection<T> from) {
+        return to.into(from);
+    }
+    
+    public static final <K, V> 
+    IPersistentMap<K, V> into(IPersistentMap<K, V> to, IPersistentCollection<IMapEntry<K, V>> from) {
+        return to.into(from);
+    }
+    
+    public static final <T> IPersistentVector<T> into(IPersistentVector<T> to, IPersistentCollection<T> from) {
+        return to.into(from);
+    }
+    
+    public static final <T> IPersistentSet<T> into(IPersistentSet<T> to, IPersistentCollection<T> from) {
+        return to.into(from);
+    }
+    
     public static final <T> IPersistentSet<T> disj(IPersistentSet<T> set, T key) {
         return set.disj(key);
     }

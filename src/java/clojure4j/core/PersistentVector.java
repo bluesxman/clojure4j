@@ -1,6 +1,6 @@
 package clojure4j.core;
 
-public final class PersistentVector<T> 
+public class PersistentVector<T> 
     extends AbstractSequential<T>
     implements IPersistentVector<T> {
     
@@ -67,10 +67,9 @@ public final class PersistentVector<T>
         return new Seq<>(Bridge.rseq.invoke(getInternal()));
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public IPersistentVector<T> into(IPersistentCollection<T> from) {
-        return (IPersistentVector<T>) Bridge.into.invoke(getInternal(), from);
+        return new PersistentVector<>(Bridge.into.invoke(getInternal(), from.getInternal()));
     }
 
 }

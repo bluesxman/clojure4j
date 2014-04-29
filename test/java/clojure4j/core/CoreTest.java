@@ -316,6 +316,10 @@ public class CoreTest {
         assertEquals(3, x);
         x = reduce(Core::max, vector(1,2,3));
         assertEquals(3, x);
+        x = apply(Core::add, vector(1,2,3,4));
+        assertEquals(10, x);
+        x = reduce(Core::add, vector(1,2,3,4));
+        assertEquals(10, x);
         
         boolean isMaxToMin = apply(Ext::gt, vector(4, 3, 2, 1));
         assertEquals(true, isMaxToMin);
@@ -325,6 +329,7 @@ public class CoreTest {
         assertEquals(true, isMaxToMin);
         isMaxToMin = apply(Ext::gt, vector("d", "b", "c", "a"));
         assertEquals(false, isMaxToMin);
+
         
     }
     
@@ -334,6 +339,16 @@ public class CoreTest {
 //        (into [] {1 2 3 4})
 //        (into () '(1 2 3))
 //        (into [] '(1 2 3))
+        
+//        IPersistentMap<Integer,Integer> emptyMap = new PersistentHashMap<>();
+        IPersistentVector<Integer> emptyVec = new PersistentVector<>();
+        IPersistentList<Integer> emptyList = new PersistentList<>();
+        
+        assertEquals(true, list(3,2,1).equals(Core.into(emptyList, list(1,2,3))));
+        assertEquals(true, vector(1,2,3).equals(Core.into(emptyVec, list(1,2,3))));
+        
+        //REVIEW Support vectors as map entries?  heterogeneous? i.e. IPersistentVector<Object>
+//        assertEquals(true, vector(1,3).seq().equals(Core.keys(Core.into(emptyMap, vector(vector(1,2), vector(3,4)))));
 
     }
 }

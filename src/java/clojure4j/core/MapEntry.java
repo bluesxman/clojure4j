@@ -25,4 +25,19 @@ public class MapEntry<K, V> implements IMapEntry<K, V> {
     public V val() {
         return val;
     }
+
+    @Override
+    public K getKey() {
+        return key();
+    }
+
+    @Override
+    public final V getValue() {
+        return val();
+    }
+
+    @Override
+    public V setValue(V value) {
+        throw new UnsupportedOperationException("MapEntry is immutable.");
+    }
 }

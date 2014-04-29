@@ -55,10 +55,14 @@
 
 (count nil)
 
-(= (seq [1 3]) (keys (into {} [[1 2] [3 4]])))
+(= (seq [1 3]) (keys (into {} [[1 2 3] [3 4]])))
 (= (seq [1 3]) (keys (into {} [[1 "a"] [3 "b"]])))
 (into [] {1 2 3 4})
 (into () '(1 2 3))
 (into [] '(1 2 3))
 
 (map + [1 2 3] [4 5 6] [7 8 9])
+
+(type(first (seq {1 2 3 4})))
+
+(reduce conj [] '(1 2 3 4) )

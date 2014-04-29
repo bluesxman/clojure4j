@@ -6,6 +6,9 @@ public interface IPersistentSet<T> extends IPersistentCollection<T> {
     
     @Override
     public IPersistentSet<T> conj(T value);
+    @Override
+    public IPersistentSet<T> into(IPersistentCollection<T> from);
+
     public IPersistentSet<T> disj(T value);
     public IPersistentSet<T> disj(@SuppressWarnings("unchecked") T... values);
     public boolean contains(T value);
