@@ -17,7 +17,7 @@ Java developers basically have two choices:  mutable collections (e.g. java.util
 Persistent data 
 
 ### Is this API redundant given Java 8's java.util.streams?
-A big piece that is missing from Java 8 is persistent data structures.  This API hopes to fill in that gap.  
+In Java 8, it is still difficult to treat collections as values.  This API helps with that problem.
 
 ### Why a Clojure binding?
 By making the API a Clojure binding, a large pool of support and documentation is already in place.  For example, a web search for functions in this API already has years of questions and answers on various websites.  Furthermore, Clojure has strong decision making behind its design and implementation.  Developing a similar API of the same quality from scratch would take a lot of time (and talent).
@@ -41,15 +41,14 @@ elements of functional programming into traditional Java projects by avoiding th
 The current implementation wraps Clojure objects and IFns.  In tests, Clojure4J collections tend to be a few percentage points slower than calling Clojure 1.6's Java API directly.  A direct comparison to native Clojure has not been performed, but performance relative to Java's collections seems to be inline with Clojure's claims about persistent data structures.
 
 ### Why not just use Clojure?
-For a variety of reasons, incorporating Clojure into an existing Java project is not always allowed/possible.  Hopefully, though, usage of this API might help break down some of those barriers, serving as a small stepping stone to incorporating functional programming or languages such as Clojure.  
+If using Clojure is an option for you, then by all means use it.  This API is definitely not a substitute for Clojure.  However, there are cases where people may want to use Clojure (or a functional language) at work, but they cannot.  This API offers a means for programming with “values” and functions without leaving Java.  It might also serve as a means to expose management or peers to some of the benefits of functional programming, opening the door to functional languages such as Clojure.
 
 
 ## License
 
-Copyright © 2014 FIXME
+Copyright © 2014 Jonathan Newton
 
-Distributed under the Eclipse Public License either version 1.0 or (at
-your option) any later version.
+Distributed under the Eclipse Public License either version 1.0
 
 
 
