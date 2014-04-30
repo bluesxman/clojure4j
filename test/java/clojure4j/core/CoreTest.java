@@ -15,11 +15,11 @@ import static clojure4j.core.Core.rest;
 import static clojure4j.core.Core.seq;
 import static clojure4j.core.Core.sortedSet;
 import static clojure4j.core.Core.vector;
-import static clojure4j.core.Ext.entry;
 import static clojure4j.core.Set.difference;
 import static clojure4j.core.Set.intersection;
 import static clojure4j.core.Set.select;
 import static clojure4j.core.Set.union;
+import static clojure4j.ext.Ext.entry;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
@@ -27,6 +27,7 @@ import org.junit.Test;
 
 import clojure.java.api.Clojure;
 import clojure.lang.IFn;
+import clojure4j.ext.Ext;
 
 public class CoreTest {
 
