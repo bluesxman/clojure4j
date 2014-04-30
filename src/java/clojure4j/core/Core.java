@@ -171,7 +171,7 @@ public final class Core {
         return col == null ? null : col.first();
     }
     
-    public static final <T> IPersistentCollection<T> rest(IPersistentCollection<T> col) {
+    public static final <T> ISeq<T> rest(IPersistentCollection<T> col) {
         return col == null ? null : col.rest();
     }
     
