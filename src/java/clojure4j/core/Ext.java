@@ -66,5 +66,7 @@ public final class Ext {
         return left.compareTo(right) <= 0;
     }
     
-
+    public static final <K, V> IMapEntry<K, V> entry(K key, V val) {
+        return new MapEntry<>(key, val);
+    }
 }

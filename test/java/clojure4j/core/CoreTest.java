@@ -15,6 +15,7 @@ import static clojure4j.core.Core.rest;
 import static clojure4j.core.Core.seq;
 import static clojure4j.core.Core.sortedSet;
 import static clojure4j.core.Core.vector;
+import static clojure4j.core.Ext.entry;
 import static clojure4j.core.Set.difference;
 import static clojure4j.core.Set.intersection;
 import static clojure4j.core.Set.select;
@@ -340,7 +341,7 @@ public class CoreTest {
 //        (into () '(1 2 3))
 //        (into [] '(1 2 3))
         
-//        IPersistentMap<Integer,Integer> emptyMap = new PersistentHashMap<>();
+        IPersistentMap<Integer,Integer> emptyMap = new PersistentHashMap<>();
         IPersistentVector<Integer> emptyVec = new PersistentVector<>();
         IPersistentList<Integer> emptyList = new PersistentList<>();
         
@@ -348,7 +349,7 @@ public class CoreTest {
         assertEquals(true, vector(1,2,3).equals(Core.into(emptyVec, list(1,2,3))));
         
         //REVIEW Support vectors as map entries?  heterogeneous? i.e. IPersistentVector<Object>
-//        assertEquals(true, vector(1,3).seq().equals(Core.keys(Core.into(emptyMap, vector(vector(1,2), vector(3,4)))));
+        assertEquals(true, vector(1,3).seq().equals(Core.keys(Core.into(emptyMap, vector(entry(1,2), entry(3,4))))));
 
     }
 }

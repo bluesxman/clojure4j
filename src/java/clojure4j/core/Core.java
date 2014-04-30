@@ -30,6 +30,10 @@ public final class Core {
         return new PersistentHashMap<K, V>(key, val);
     }
 
+    public static final <K, V> IPersistentMap<K, V> hashMap(IMapEntry<K, V> entry) {
+        return new PersistentHashMap<K, V>(entry);
+    }
+    
     public static final <K, V> IPersistentMap<K, V> sortedMap(K key, V val) {
         return new PersistentSortedMap<K, V>(key, val);
     }
@@ -81,9 +85,36 @@ public final class Core {
         return col.reduce(fn, initial);
     }
     
-    @SuppressWarnings("unchecked")
-    public static final <T extends IPersistentCollection<E>, E> T conj(T col, E value) {
-        return (T) col.conj(value);
+    // REVIEW what about doing 1 method per type of persistent collection
+    public static final <T> IPersistentCollection<T> conj(IPersistentCollection<T> col, T value) {
+        return col != null ? col.conj(value) : list(value);
+    }
+    
+    public static final <T> IPersistentSet<T> conj(IPersistentSet<T> col, T value) {
+        return col != null ? col.conj(value) : hashSet(value);
+    }
+    
+    
+    public static final <K, V> IPersistentMap<K, V> conj(IPersistentMap<K, V> col, IMapEntry<K, V> value) {
+        return col != null ? col.conj(value) : hashMap(value);
+    }
+    
+    public static final <T> IPersistentMap<T, T> conj(IPersistentMap<T, T> map, IPersistentVector<T> vec) {
+        if(vec.count() == 2) {
+            return map.assoc(vec.get(0L), vec.get(1L));
+        }
+        else {
+            throw new IllegalArgumentException("vec must have two elements");
+        }
+    }
+    
+    public static final <T> IPersistentVector<T> conj(IPersistentVector<T> col, T value) {
+        return col != null ? col.conj(value) : vector(value);
+    }
+    
+    
+    public static final <T> ISeq<T> conj(ISeq<T> col, T value) {
+        return col != null ? col.conj(value) : new Seq<>(value);
     }
     
 //    @SuppressWarnings("unchecked")
@@ -146,6 +177,14 @@ public final class Core {
     
     public static final <T> ISeq<T> seq(IPersistentCollection<T> col) {
         return col == null ? null : col.seq();
+    }
+    
+    public static final <K, V> ISeq<K> keys(IPersistentMap<K, V> map) {
+        return map.keys();
+    }
+    
+    public static final <K, V> ISeq<V> vals(IPersistentMap<K, V> map) {
+        return map.vals();
     }
     
     public static final boolean isOdd(int n) {

@@ -50,6 +50,7 @@
 
 (seq nil)
 
+(type (conj nil 1 2))
 
 (first nil)
 
@@ -66,3 +67,13 @@
 (type(first (seq {1 2 3 4})))
 
 (reduce conj [] '(1 2 3 4) )
+
+(into {} '([1 2] [3 4] [5 6]))
+
+(conj {} [1 2] [3 4] [5 6])
+
+(conj {} nil)
+
+(type (conj (seq [1 2 3]) 4))
+
+(conj {} [1 2])

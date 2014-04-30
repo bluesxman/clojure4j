@@ -40,9 +40,8 @@ extends AbstractPersistentCollection<IMapEntry<K, V>> implements IPersistentMap<
     }
 
     @Override
-    public IPersistentMap<K, V> conj(IMapEntry<K, V> value) {
-        // TODO Auto-generated method stub
-        return null;
+    public IPersistentMap<K, V> conj(IMapEntry<K, V> entry) {
+        return assoc(entry.key(), entry.val());
     }
 
     @Override
