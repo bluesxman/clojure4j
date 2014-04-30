@@ -7,7 +7,7 @@ import java.util.Comparator;
 public interface IPersistentCollection<T> extends Internal, Seqable<T> {
     
     public <R extends T> R apply(BinaryFn<T, T, R> fn);
-    public <R> R apply(SeqFn<T, R> fn);
+    public <R> R apply(ApplySeqFn<T, R> fn);
     
     public ISeq<T> filter(UnaryFn<T, Boolean> pred);
     

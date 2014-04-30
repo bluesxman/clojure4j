@@ -268,7 +268,6 @@ public class CoreTest {
 //        assertEquals(false, list("a", "b", "c").apply(Ext::gt));
         assertEquals(false, Ext.gt("a", "b", "c"));
         assertEquals(true, Ext.gt("c", "b", "a"));
-        assertEquals(true, Ext.gt(list("c", "b", "a")));
         
 //        IPersistentList<String> l = list("c", "b", "a");
 //        assertEquals(true, l.apply(Ext::gt));

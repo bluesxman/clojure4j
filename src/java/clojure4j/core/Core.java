@@ -73,7 +73,7 @@ public final class Core {
         return col.apply(fn);
     }
 
-    public static final <T, R> R apply(SeqFn<T, R> fn, IPersistentCollection<T> col) {
+    public static final <T, R> R apply(ApplySeqFn<T, R> fn, IPersistentCollection<T> col) {
         return col.apply(fn);
     }
 

@@ -1,5 +1,6 @@
 package clojure4j.ext;
 
+import clojure4j.core.ApplySeq;
 import clojure4j.core.IMapEntry;
 import clojure4j.core.ISeq;
 import clojure4j.core.MapEntry;
@@ -30,7 +31,7 @@ public final class Ext {
         }
     }
     
-    public static final <T extends Comparable<T>> boolean gt(Seqable<T> args){
+    public static final <T extends Comparable<T>> boolean gt(ApplySeq<T> args){
         ISeq<T> tail = args.seq();
         
         if(tail.first() != null) {

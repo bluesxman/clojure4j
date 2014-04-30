@@ -39,7 +39,7 @@ implements IPersistentCollection<T> {
     
     @SuppressWarnings("unchecked")
     @Override
-    public <R> R apply(SeqFn<T, R> fn) {
+    public <R> R apply(ApplySeqFn<T, R> fn) {
         return (R) Bridge.apply.invoke(fn, getInternal());
     }
     
