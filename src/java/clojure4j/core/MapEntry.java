@@ -1,5 +1,6 @@
 package clojure4j.core;
 
+// REVIEW May want to actually wrap a clojure MapEntry and extend vector similar to clojure
 public class MapEntry<K, V> implements IMapEntry<K, V> {
     private K key;
     private V val;
@@ -39,5 +40,20 @@ public class MapEntry<K, V> implements IMapEntry<K, V> {
     @Override
     public V setValue(V value) {
         throw new UnsupportedOperationException("MapEntry is immutable.");
+    }
+    
+    @SuppressWarnings("unchecked")
+    @Override
+    public boolean equals(Object o) {
+        if(this == o) return true;
+        if(o instanceof MapEntry) {
+            return ((MapEntry<K,V>) o).key().equals(key()) && ((MapEntry<K,V>) o).val().equals(val());
+        }
+        return false;
+    }
+    
+    @Override
+    public String toString() {
+        return "[" + key() + ", " + val() + "]";
     }
 }

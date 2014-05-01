@@ -6,6 +6,7 @@ import static clojure4j.core.Core.contains;
 import static clojure4j.core.Core.count;
 import static clojure4j.core.Core.disj;
 import static clojure4j.core.Core.first;
+import static clojure4j.core.Core.hashMap;
 import static clojure4j.core.Core.hashSet;
 import static clojure4j.core.Core.iterate;
 import static clojure4j.core.Core.list;
@@ -13,6 +14,7 @@ import static clojure4j.core.Core.map;
 import static clojure4j.core.Core.reduce;
 import static clojure4j.core.Core.rest;
 import static clojure4j.core.Core.seq;
+import static clojure4j.core.Core.sortedMap;
 import static clojure4j.core.Core.sortedSet;
 import static clojure4j.core.Core.vector;
 import static clojure4j.core.Set.difference;
@@ -21,8 +23,11 @@ import static clojure4j.core.Set.select;
 import static clojure4j.core.Set.union;
 import static clojure4j.ext.Ext.entry;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 import clojure.java.api.Clojure;
@@ -156,72 +161,72 @@ public class CoreTest {
         
         // count & contains
         assertEquals(4, count(set1234));
-        assertEquals(true, contains(set1234, 2));
-        assertEquals(false, contains(set1234, 5));
+        assertTrue(contains(set1234, 2));
+        assertFalse(contains(set1234, 5));
         assertEquals(4, set1234.count());
-        assertEquals(true, set1234.contains(2));
-        assertEquals(false, set1234.contains(5));
+        assertTrue(set1234.contains(2));
+        assertFalse(set1234.contains(5));
         
         // conj & disj
-        assertEquals(true, contains(conj(set1234, 13), 13));
-        assertEquals(true, contains(disj(set1234, 2), 4));
-        assertEquals(false, contains(disj(set1234, 2), 2));
+        assertTrue(contains(conj(set1234, 13), 13));
+        assertTrue(contains(disj(set1234, 2), 4));
+        assertFalse(contains(disj(set1234, 2), 2));
         assertEquals(4, count(disj(set1234, 7)));
         assertEquals(1, count(disj(set1234, 2, 3, 4)));
-        assertEquals(true, contains(disj(set1234, 2, 3, 4), 1));        
-        assertEquals(true, set1234.conj(5).contains(5));
-        assertEquals(true, set1234.disj(2).contains(4));
-        assertEquals(false, set1234.disj(2).contains(2));
+        assertTrue(contains(disj(set1234, 2, 3, 4), 1));        
+        assertTrue(set1234.conj(5).contains(5));
+        assertTrue(set1234.disj(2).contains(4));
+        assertFalse(set1234.disj(2).contains(2));
         assertEquals(3, set1234.disj(2).count());
         assertEquals(1, set1234.disj(2,3,4).count());
-        assertEquals(true, set1234.disj(2,3,4).contains(1));
+        assertTrue(set1234.disj(2,3,4).contains(1));
         
         // select
-        assertEquals(true, set1234.select(x -> x % 2 == 0).contains(4));
-        assertEquals(true, contains(select(x -> x % 2 == 1, set1234), 1));
-        assertEquals(false, animals.select(x -> x.endsWith("at")).contains("dog"));
-        assertEquals(false, contains(select(x -> x.endsWith("at"), animals), "dog"));
+        assertTrue(set1234.select(x -> x % 2 == 0).contains(4));
+        assertTrue(contains(select(x -> x % 2 == 1, set1234), 1));
+        assertFalse(animals.select(x -> x.endsWith("at")).contains("dog"));
+        assertFalse(contains(select(x -> x.endsWith("at"), animals), "dog"));
         
         // union
         IPersistentSet<String> animalsSuper = union(animals, animals2);
-        assertEquals(true, animalsSuper.contains("dog"));
-        assertEquals(true, animalsSuper.contains("elk"));
-        assertEquals(false, animalsSuper.contains("rock"));
+        assertTrue(animalsSuper.contains("dog"));
+        assertTrue(animalsSuper.contains("elk"));
+        assertFalse(animalsSuper.contains("rock"));
         assertEquals(count(animals) + count(animals2), count(animalsSuper));
         
         // difference
         IPersistentSet<String> animalsMinus = difference(animalsSuper, hashSet("dog", "elk"));
-        assertEquals(true, animalsMinus.contains("cat"));
-        assertEquals(false, animalsMinus.contains("dog"));
-        assertEquals(false, animalsMinus.contains("elk"));
+        assertTrue(animalsMinus.contains("cat"));
+        assertFalse(animalsMinus.contains("dog"));
+        assertFalse(animalsMinus.contains("elk"));
         
         // intersection
         IPersistentSet<String> animalsInt = intersection(animalsMinus, animals2);
-        assertEquals(true, animalsInt.contains("fox"));
-        assertEquals(true, animalsInt.contains("owl"));
-        assertEquals(true, animalsInt.contains("frog"));
-        assertEquals(false, animalsInt.contains("dog"));
-        assertEquals(false, animalsInt.contains("elk"));
+        assertTrue(animalsInt.contains("fox"));
+        assertTrue(animalsInt.contains("owl"));
+        assertTrue(animalsInt.contains("frog"));
+        assertFalse(animalsInt.contains("dog"));
+        assertFalse(animalsInt.contains("elk"));
         
         // subset
-        assertEquals(true, animalsInt.isSubset(animalsSuper));
-        assertEquals(true, animalsMinus.isSubset(animalsSuper));
-        assertEquals(false, animalsSuper.isSubset(animalsInt));
-        assertEquals(false, animalsSuper.isSubset(animalsMinus));
-        assertEquals(false, animals.isSubset(animals2));
-        assertEquals(false, animals2.isSubset(animals));
-        assertEquals(false, animals2.isSubset(animalsInt));
-        assertEquals(true, animalsInt.isSubset(animals2));
+        assertTrue(animalsInt.isSubset(animalsSuper));
+        assertTrue(animalsMinus.isSubset(animalsSuper));
+        assertFalse(animalsSuper.isSubset(animalsInt));
+        assertFalse(animalsSuper.isSubset(animalsMinus));
+        assertFalse(animals.isSubset(animals2));
+        assertFalse(animals2.isSubset(animals));
+        assertFalse(animals2.isSubset(animalsInt));
+        assertTrue(animalsInt.isSubset(animals2));
         
         // superset
-        assertEquals(false, animalsInt.isSuperset(animalsSuper));
-        assertEquals(false, animalsMinus.isSuperset(animalsSuper));
-        assertEquals(true, animalsSuper.isSuperset(animalsInt));
-        assertEquals(true, animalsSuper.isSuperset(animalsMinus));
-        assertEquals(false, animals.isSuperset(animals2));
-        assertEquals(false, animals2.isSuperset(animals));
-        assertEquals(false, animals2.isSubset(animalsInt));
-        assertEquals(false, animalsInt.isSuperset(animals2));
+        assertFalse(animalsInt.isSuperset(animalsSuper));
+        assertFalse(animalsMinus.isSuperset(animalsSuper));
+        assertTrue(animalsSuper.isSuperset(animalsInt));
+        assertTrue(animalsSuper.isSuperset(animalsMinus));
+        assertFalse(animals.isSuperset(animals2));
+        assertFalse(animals2.isSuperset(animals));
+        assertFalse(animals2.isSubset(animalsInt));
+        assertFalse(animalsInt.isSuperset(animals2));
   
 //        IPersistentSet<IPersistentMap<String, String>> root = new PersistentHashSet<>();
 //        IPersistentSet<IPersistentMap<String, String>> livestock =
@@ -265,12 +270,12 @@ public class CoreTest {
     
     @Test
     public void testComparableFns() {
-//        assertEquals(false, list("a", "b", "c").apply(Ext::gt));
-        assertEquals(false, Ext.gt("a", "b", "c"));
-        assertEquals(true, Ext.gt("c", "b", "a"));
+//        assertFalse(list("a", "b", "c").apply(Ext::gt));
+        assertFalse(Ext.gt("a", "b", "c"));
+        assertTrue(Ext.gt("c", "b", "a"));
         
 //        IPersistentList<String> l = list("c", "b", "a");
-//        assertEquals(true, l.apply(Ext::gt));
+//        assertTrue(l.apply(Ext::gt));
     }
     
     @Test 
@@ -280,7 +285,7 @@ public class CoreTest {
         
 //        Core.map(Core::add, vector(1,2,3), 1);
         ISeq<Integer> intSeq = map(Core::add, vector(1,2,3), vector(4,5,6));
-        assertEquals(true, vector(5, 7, 9).seq().equals(intSeq));
+        assertTrue(vector(5, 7, 9).seq().equals(intSeq));
 //        Core.map(Core::add, vector(1,2,3), vector(4,5,6), vector(7,8,9));
         
         //(map + [1 2 3] (iterate inc 1))
@@ -294,8 +299,8 @@ public class CoreTest {
         assertNull(seq(null));
         
         assertNull(vector().first());
-        assertEquals(true, vector().rest() != null);
-        assertEquals(true, vector().rest() instanceof ISeq<?>);
+        assertTrue(vector().rest() != null);
+        assertTrue(vector().rest() instanceof ISeq<?>);
         assertNull(rest(null));
         assertNull(first(null));
         
@@ -323,15 +328,13 @@ public class CoreTest {
         assertEquals(10, x);
         
         boolean isMaxToMin = apply(Ext::gt, vector(4, 3, 2, 1));
-        assertEquals(true, isMaxToMin);
+        assertTrue(isMaxToMin);
         isMaxToMin = apply(Ext::gt, vector(4, 2, 3, 1));
-        assertEquals(false, isMaxToMin);
+        assertFalse(isMaxToMin);
         isMaxToMin = apply(Ext::gt, vector("d", "c", "b", "a"));
-        assertEquals(true, isMaxToMin);
+        assertTrue(isMaxToMin);
         isMaxToMin = apply(Ext::gt, vector("d", "b", "c", "a"));
-        assertEquals(false, isMaxToMin);
-
-        
+        assertFalse(isMaxToMin);        
     }
     
     @Test
@@ -345,11 +348,48 @@ public class CoreTest {
         IPersistentVector<Integer> emptyVec = new PersistentVector<>();
         IPersistentList<Integer> emptyList = new PersistentList<>();
         
-        assertEquals(true, list(3,2,1).equals(Core.into(emptyList, list(1,2,3))));
-        assertEquals(true, vector(1,2,3).equals(Core.into(emptyVec, list(1,2,3))));
+        assertTrue(list(3,2,1).equals(Core.into(emptyList, list(1,2,3))));
+        assertTrue(vector(1,2,3).equals(Core.into(emptyVec, list(1,2,3))));
         
         //REVIEW Support vectors as map entries?  heterogeneous? i.e. IPersistentVector<Object>
-        assertEquals(true, vector(1,3).seq().equals(Core.keys(Core.into(emptyMap, vector(entry(1,2), entry(3,4))))));
+        assertTrue(vector(1,3).seq().equals(Core.keys(Core.into(emptyMap, vector(entry(1,2), entry(3,4))))));
 
+    }
+    
+    @Test
+    public void testEquality() {
+        Assert.assertNotSame(list(1,2,3), list(1,2,3));
+        Assert.assertEquals(list(1,2,3), list(1,2,3));
+
+        Assert.assertNotSame(vector("a", "b", "c"), vector("a", "b", "c"));
+        Assert.assertEquals(vector("a", "b", "c"), vector("a", "b", "c"));
+        
+        Assert.assertNotSame(
+                hashMap(entry("weight", 180.5), entry("age", 21), entry("height", 1.8)), 
+                hashMap(entry("weight", 180.5), entry("age", 21), entry("height", 1.8)));
+        Assert.assertEquals(
+                hashMap(entry("weight", 180.5), entry("age", 21), entry("height", 1.8)), 
+                hashMap(entry("weight", 180.5), entry("age", 21), entry("height", 1.8)));
+        
+        Assert.assertNotSame(
+                sortedMap(entry("weight", 180.5), entry("age", 21), entry("height", 1.8)), 
+                sortedMap(entry("weight", 180.5), entry("age", 21), entry("height", 1.8)));
+        Assert.assertEquals(
+                sortedMap(entry("weight", 180.5), entry("age", 21), entry("height", 1.8)), 
+                sortedMap(entry("weight", 180.5), entry("age", 21), entry("height", 1.8)));
+        
+        Assert.assertNotSame(hashSet('c','b','a'), hashSet('c','b','a'));
+        Assert.assertEquals(hashSet('c','b','a'), hashSet('c','b','a'));
+        
+        Assert.assertNotSame(sortedSet('c','b','a'), sortedSet('c','b','a'));
+        Assert.assertEquals(sortedSet('c','b','a'), sortedSet('c','b','a'));
+        
+        Assert.assertNotSame(vector(1,2,3), vector(1,2,3));
+        Assert.assertEquals(vector(1,2,3), vector(1,2,3));
+        
+        Assert.assertEquals(vector(1,2,3).seq(), list(1,2,3).seq());
+        Assert.assertEquals(list(1,2,3).seq(), sortedSet(1,2,3).seq());
+        Assert.assertEquals(vector(1,2,3).seq(), sortedSet(1,2,3).seq());
+        
     }
 }

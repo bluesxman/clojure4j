@@ -4,7 +4,6 @@ import clojure4j.core.ApplySeq;
 import clojure4j.core.IMapEntry;
 import clojure4j.core.ISeq;
 import clojure4j.core.MapEntry;
-import clojure4j.core.Seqable;
 
 /**
  * This class contains fns that are neither part of clojure, the clojure ecosystem, nor any 3rd-party clojure libraries.

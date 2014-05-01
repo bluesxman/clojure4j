@@ -12,9 +12,17 @@ public final class PersistentSortedMap<K, V> extends AbstractPersistentMap<K, V>
         super(Bridge.sortedMapBy.invoke(comparator));
     }
     
+    public PersistentSortedMap(K key, V val) {
+        super(Bridge.sortedMap.invoke(key, val));
+    }
+    
+    public PersistentSortedMap(IMapEntry<K,V> entry) {
+        this(entry.key(), entry.val());
+    }
+
     @SafeVarargs
-    public <KV extends Object> PersistentSortedMap(KV... keyvals) {
-        super(buildFromVarArgs(Bridge.sortedMap.invoke(), keyvals));
+    public PersistentSortedMap(IMapEntry<K,V>... entries) {
+        super(buildFromVarArgs(Bridge.sortedMap.invoke(), entries));
     }
     
     // REVIEW This constructor should probably be package visibility for everything

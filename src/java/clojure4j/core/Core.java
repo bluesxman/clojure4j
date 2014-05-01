@@ -30,14 +30,20 @@ public final class Core {
         return new PersistentHashMap<K, V>(key, val);
     }
 
-    public static final <K, V> IPersistentMap<K, V> hashMap(IMapEntry<K, V> entry) {
-        return new PersistentHashMap<K, V>(entry);
+    @SafeVarargs
+    public static final <K, V> IPersistentMap<K, V> hashMap(IMapEntry<K, V>... entries) {
+        return new PersistentHashMap<>(entries);
     }
     
     public static final <K, V> IPersistentMap<K, V> sortedMap(K key, V val) {
         return new PersistentSortedMap<K, V>(key, val);
     }
 
+    @SafeVarargs
+    public static final <K, V> IPersistentMap<K, V> sortedMap(IMapEntry<K, V>... entries) {
+        return new PersistentSortedMap<K, V>(entries);
+    }
+    
     public static final <T, R> ISeq<R> map(UnaryFn<T, R> fn, IPersistentCollection<T> col) {
         return new Seq<R>((clojure.lang.ISeq) Bridge.map.invoke(fn, col.getInternal()));
     }
@@ -77,6 +83,11 @@ public final class Core {
         return col.apply(fn);
     }
 
+    @SafeVarargs
+    public static final <T, R> R apply(ApplySeqFn<T, R> fn, T... args) {
+        return list(args).apply(fn);  // TODO Use special collection for arrays or reuse clojure arrayseq or something?
+    }
+    
     public static final <T> T reduce(BinaryFn<T, T, T> fn, IPersistentCollection<T> col) {
         return col.reduce(fn);
     }

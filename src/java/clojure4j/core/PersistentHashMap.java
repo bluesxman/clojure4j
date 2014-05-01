@@ -6,10 +6,18 @@ public final class PersistentHashMap<K, V> extends AbstractPersistentMap<K, V> {
     public PersistentHashMap() {
         super(Bridge.hashMap.invoke());
     }
+    
+    public PersistentHashMap(K key, V val) {
+        super(Bridge.hashMap.invoke(key, val));
+    }
+    
+    public PersistentHashMap(IMapEntry<K,V> entry) {
+        this(entry.key(), entry.val());
+    }
 
     @SafeVarargs
-    public <KV extends Object> PersistentHashMap(KV... keyvals) {
-        super(buildFromVarArgs(Bridge.hashMap.invoke(), keyvals));
+    public PersistentHashMap(IMapEntry<K,V>... entries) {
+        super(buildFromVarArgs(Bridge.hashMap.invoke(), entries));
     }
     
     // REVIEW This constructor should probably be package visibility for everything

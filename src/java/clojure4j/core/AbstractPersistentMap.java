@@ -16,6 +16,15 @@ extends AbstractPersistentCollection<IMapEntry<K, V>> implements IPersistentMap<
         return m;
     }
 
+    @SafeVarargs
+    protected final static <K, V> Object buildFromVarArgs(Object m, IMapEntry<K, V>... entries) {
+        for(int i = 0; i < entries.length; i++) {
+            m = Bridge.assoc.invoke(m, entries[i].key(), entries[i].val());
+        }
+        
+        return m;
+    }
+    
     @SuppressWarnings("unchecked")
     @Override
     public V get(K key) {
