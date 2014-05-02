@@ -24,6 +24,7 @@ import static clojure4j.core.Set.union;
 import static clojure4j.ext.Ext.entry;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
@@ -299,7 +300,7 @@ public class CoreTest {
         assertNull(seq(null));
         
         assertNull(vector().first());
-        assertTrue(vector().rest() != null);
+        assertNotNull(vector().rest());
         assertTrue(vector().rest() instanceof ISeq<?>);
         assertNull(rest(null));
         assertNull(first(null));

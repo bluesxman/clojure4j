@@ -31,6 +31,12 @@ extends AbstractPersistentCollection<IMapEntry<K, V>> implements IPersistentMap<
         return (V) Bridge.get.invoke(getInternal(), key);
     }
 
+    @SuppressWarnings("unchecked")
+    @Override
+    public V get(K key, V notFound) {
+        return (V) Bridge.get.invoke(getInternal(), key, notFound);
+    }
+    
 //    @SuppressWarnings("unchecked")
 //    @Override
 //    public IPersistentCollection<IMapEntry<K, V>> conj(IMapEntry<K, V>... values) {

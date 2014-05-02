@@ -22,6 +22,11 @@ public class PersistentVector<T>
         return (T) Bridge.get.invoke(getInternal(), key);
     }
    
+    @SuppressWarnings("unchecked")
+    public T get(Long key, T notFound) {
+        return (T) Bridge.get.invoke(getInternal(), key, notFound);
+    }
+    
     @Override
     public final IPersistentVector<T> conj(final T value) {
         return new PersistentVector<T>(Bridge.conj.invoke(getInternal(), value));

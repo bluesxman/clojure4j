@@ -210,6 +210,10 @@ public final class Core {
         return col.nth(i);
     }
     
+    public static final <T> T nth(Sequential<T> col, int i, T notFound) {
+        return col.nth(i, notFound);
+    }
+    
     public static final boolean isOdd(int n) {
         return n % 2 == 0; // TODO use faster method than modulo
     }
