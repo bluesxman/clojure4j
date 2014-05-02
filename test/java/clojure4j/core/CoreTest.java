@@ -8,10 +8,12 @@ import static clojure4j.core.Core.disj;
 import static clojure4j.core.Core.first;
 import static clojure4j.core.Core.hashMap;
 import static clojure4j.core.Core.hashSet;
+import static clojure4j.core.Core.isZero;
 import static clojure4j.core.Core.iterate;
 import static clojure4j.core.Core.list;
 import static clojure4j.core.Core.map;
 import static clojure4j.core.Core.reduce;
+import static clojure4j.core.Core.remove;
 import static clojure4j.core.Core.rest;
 import static clojure4j.core.Core.seq;
 import static clojure4j.core.Core.sortedMap;
@@ -25,10 +27,10 @@ import static clojure4j.ext.Ext.entry;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
-import org.junit.Assert;
 import org.junit.Test;
 
 import clojure.java.api.Clojure;
@@ -359,38 +361,54 @@ public class CoreTest {
     
     @Test
     public void testEquality() {
-        Assert.assertNotSame(list(1,2,3), list(1,2,3));
-        Assert.assertEquals(list(1,2,3), list(1,2,3));
+        assertNotSame(list(1,2,3), list(1,2,3));
+        assertEquals(list(1,2,3), list(1,2,3));
 
-        Assert.assertNotSame(vector("a", "b", "c"), vector("a", "b", "c"));
-        Assert.assertEquals(vector("a", "b", "c"), vector("a", "b", "c"));
+        assertNotSame(vector("a", "b", "c"), vector("a", "b", "c"));
+        assertEquals(vector("a", "b", "c"), vector("a", "b", "c"));
         
-        Assert.assertNotSame(
+        assertNotSame(
                 hashMap(entry("weight", 180.5), entry("age", 21), entry("height", 1.8)), 
                 hashMap(entry("weight", 180.5), entry("age", 21), entry("height", 1.8)));
-        Assert.assertEquals(
+        assertEquals(
                 hashMap(entry("weight", 180.5), entry("age", 21), entry("height", 1.8)), 
                 hashMap(entry("weight", 180.5), entry("age", 21), entry("height", 1.8)));
         
-        Assert.assertNotSame(
+        assertNotSame(
                 sortedMap(entry("weight", 180.5), entry("age", 21), entry("height", 1.8)), 
                 sortedMap(entry("weight", 180.5), entry("age", 21), entry("height", 1.8)));
-        Assert.assertEquals(
+        assertEquals(
                 sortedMap(entry("weight", 180.5), entry("age", 21), entry("height", 1.8)), 
                 sortedMap(entry("weight", 180.5), entry("age", 21), entry("height", 1.8)));
         
-        Assert.assertNotSame(hashSet('c','b','a'), hashSet('c','b','a'));
-        Assert.assertEquals(hashSet('c','b','a'), hashSet('c','b','a'));
+        assertNotSame(hashSet('c','b','a'), hashSet('c','b','a'));
+        assertEquals(hashSet('c','b','a'), hashSet('c','b','a'));
         
-        Assert.assertNotSame(sortedSet('c','b','a'), sortedSet('c','b','a'));
-        Assert.assertEquals(sortedSet('c','b','a'), sortedSet('c','b','a'));
+        assertNotSame(sortedSet('c','b','a'), sortedSet('c','b','a'));
+        assertEquals(sortedSet('c','b','a'), sortedSet('c','b','a'));
         
-        Assert.assertNotSame(vector(1,2,3), vector(1,2,3));
-        Assert.assertEquals(vector(1,2,3), vector(1,2,3));
+        assertNotSame(vector(1,2,3), vector(1,2,3));
+        assertEquals(vector(1,2,3), vector(1,2,3));
         
-        Assert.assertEquals(vector(1,2,3).seq(), list(1,2,3).seq());
-        Assert.assertEquals(list(1,2,3).seq(), sortedSet(1,2,3).seq());
-        Assert.assertEquals(vector(1,2,3).seq(), sortedSet(1,2,3).seq());
-        
+        assertEquals(vector(1,2,3).seq(), list(1,2,3).seq());
+        assertEquals(list(1,2,3).seq(), sortedSet(1,2,3).seq());
+        assertEquals(vector(1,2,3).seq(), sortedSet(1,2,3).seq());
+    }
+    
+    @Test
+    public void testPredicates() {
+        assertTrue(isZero(0));
+        assertTrue(isZero(0L));
+        assertTrue(isZero(0f));
+        assertTrue(isZero(0.0));
+        assertFalse(isZero(-1));
+        assertFalse(isZero(-1L));
+        assertFalse(isZero(-1f));
+        assertFalse(isZero(-1.1));
+        assertFalse(isZero(10));
+        assertFalse(isZero(10L));
+        assertFalse(isZero(10f));
+        assertFalse(isZero(10.0));
+        assertEquals(vector(1, 2, 3), apply(Core::vector, remove(Core::isZero, vector(1,0,2,0,3))));
     }
 }

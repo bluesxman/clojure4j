@@ -4,17 +4,21 @@ public class PersistentVector<T>
     extends AbstractSequential<T>
     implements IPersistentVector<T> {
     
-    public PersistentVector(Object internal) {
+    PersistentVector(Object internal) {
         super(internal);
     }
 
     public PersistentVector() {
         super(Bridge.vector.invoke());
     }
-        
+
     @SafeVarargs
     public PersistentVector(T... elements) {
         super(Util.arrayToClojureVector(elements));
+    }
+
+    public PersistentVector(ApplySeq<T> elements) {
+        super(Bridge.apply.invoke(Bridge.vector, elements.getInternal()));
     }
     
     @SuppressWarnings("unchecked")

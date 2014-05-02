@@ -16,6 +16,10 @@ public final class Core {
         return new PersistentVector<T>(elements);
     }
     
+    public static final <T> IPersistentVector<T> vector(ApplySeq<T> elements){
+        return new PersistentVector<T>(elements);
+    }
+    
     @SafeVarargs
     public static final <T> IPersistentSet<T> hashSet(T... elements){
         return new PersistentHashSet<T>(elements);
@@ -68,7 +72,7 @@ public final class Core {
     }
         
     public static final <T> ISeq<T> filter(UnaryFn<T, Boolean> pred, IPersistentCollection<T> col) {
-        return new Seq<T>((clojure.lang.ISeq) Bridge.filter.invoke(pred, col.getInternal()));
+        return new Seq<T>(Bridge.filter.invoke(pred, col.getInternal()));
     }
     
     public static final <T> ISeq<T> remove(UnaryFn<T, Boolean> pred, IPersistentCollection<T> col) {
@@ -214,22 +218,6 @@ public final class Core {
         return col.nth(i, notFound);
     }
     
-    public static final boolean isOdd(int n) {
-        return n % 2 == 0; // TODO use faster method than modulo
-    }
-    
-    public static final boolean isOdd(long n) {
-        return n % 2 == 0;
-    }
-    
-    public static final boolean isEven(int n) {
-        return n % 2 == 0;
-    }
-
-    public static final boolean isEven(long n) {
-        return n % 2 == 0;
-    }
-
     // TODO: Does F# have an equiv?  If so, what's the typing look like?
 //    public <K, V> IPersistentMap<K, V> assocIn(IPersistentMap<K, V> map, IPersistentVector<K> ks, V value){}
 //    public <K, V> IPersistentMap<K, V> updateIn(IPersistentMap<K, V> map, IPersistentVector<K> ks, UnaryFn<V, V> fn){}
@@ -386,7 +374,31 @@ public final class Core {
         return n == 0;
     }
     
+    public static final boolean isZero(long n) {
+        return n == 0;
+    }
+    
+    public static final boolean isZero(float n) {
+        return n == 0;
+    }
+    
+    public static final boolean isZero(double n) {
+        return n == 0;
+    }
+    
     public static final boolean isNeg(int n) {
+        return n < 0;
+    }
+    
+    public static final boolean isNeg(long n) {
+        return n < 0;
+    }
+    
+    public static final boolean isNeg(float n) {
+        return n < 0;
+    }
+    
+    public static final boolean isNeg(double n) {
         return n < 0;
     }
     
@@ -394,8 +406,36 @@ public final class Core {
         return n > 0;
     }
     
+    public static final boolean isPos(long n) {
+        return n > 0;
+    }
+    
+    public static final boolean isPos(float n) {
+        return n > 0;
+    }
+    
+    public static final boolean isPos(double n) {
+        return n > 0;
+    }
+    
     public static final boolean isNull(Object o) {
         return o == null;
     }
     
+    public static final boolean isOdd(int n) {
+        return n % 2 == 0; // TODO use faster method than modulo
+    }
+    
+    public static final boolean isOdd(long n) {
+        return n % 2 == 0;
+    }
+    
+    public static final boolean isEven(int n) {
+        return n % 2 == 0;
+    }
+
+    public static final boolean isEven(long n) {
+        return n % 2 == 0;
+    }
+
 }
