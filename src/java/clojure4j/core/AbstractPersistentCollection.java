@@ -71,6 +71,12 @@ implements IPersistentCollection<T> {
         return (T) Bridge.first.invoke(getInternal());
     }
     
+    @SuppressWarnings("unchecked")
+    @Override
+    public T second() {
+        return (T) Bridge.second.invoke(getInternal());
+    }
+    
     @Override 
     public ISeq<T> rest() {
         return new Seq<>(Bridge.rest.invoke(getInternal()));

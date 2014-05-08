@@ -160,6 +160,12 @@ public interface TypedFn<R> extends IFn {
         while((seq = seq.next()) != null) {
             accum = invoke(accum, seq.first());
         }
+        
+        //TODO need to handle map entries.  More generally, we need to handle clojure types that we wrap.
+        // E.g. a java lambda is passed that takes a MapEntry.  When it comes back from clojure to be invoked,
+        // clojure is passing a sequence of clojure MapEntries but on the Java side, we're trying to cast it to
+        // a clojure4j.core.IMapEntry.
+        // Possible solution: Check the type here and wrap as necessary?  Seems dirty plus lots of boxing
 
         return accum;
     }

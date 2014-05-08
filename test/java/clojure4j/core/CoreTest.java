@@ -4,10 +4,13 @@ import static clojure4j.core.Core.apply;
 import static clojure4j.core.Core.conj;
 import static clojure4j.core.Core.contains;
 import static clojure4j.core.Core.count;
+import static clojure4j.core.Core.dec;
 import static clojure4j.core.Core.disj;
 import static clojure4j.core.Core.first;
+import static clojure4j.core.Core.get;
 import static clojure4j.core.Core.hashMap;
 import static clojure4j.core.Core.hashSet;
+import static clojure4j.core.Core.inc;
 import static clojure4j.core.Core.isZero;
 import static clojure4j.core.Core.iterate;
 import static clojure4j.core.Core.list;
@@ -16,9 +19,11 @@ import static clojure4j.core.Core.range;
 import static clojure4j.core.Core.reduce;
 import static clojure4j.core.Core.remove;
 import static clojure4j.core.Core.rest;
+import static clojure4j.core.Core.second;
 import static clojure4j.core.Core.seq;
 import static clojure4j.core.Core.sortedMap;
 import static clojure4j.core.Core.sortedSet;
+import static clojure4j.core.Core.take;
 import static clojure4j.core.Core.vector;
 import static clojure4j.core.Set.difference;
 import static clojure4j.core.Set.intersection;
@@ -129,6 +134,11 @@ public class CoreTest {
         
         map = map.dissoc(2);
         assertNull(map.get(2));
+    }
+    
+    @Test 
+    public void testVector() {
+        assertEquals(new Integer(2), get(vector(1, 2, 3), 1));
     }
     
     @Test 
@@ -306,7 +316,10 @@ public class CoreTest {
         assertNotNull(vector().rest());
         assertTrue(vector().rest() instanceof ISeq<?>);
         assertNull(rest(null));
-        assertNull(first(null));
+        assertNull(first((IPersistentCollection<Object>) null));
+        assertNull(first((IMapEntry<Object,Object>) null));
+        assertNull(second((IPersistentCollection<Object>) null));
+        assertNull(second((IMapEntry<Object,Object>) null));
         
         assertEquals(0, count(null));
     }
@@ -344,6 +357,18 @@ public class CoreTest {
         assertEquals(list(0,1,2,3,4), apply(Core::list, range(5)));
         assertEquals(hashSet(0,1,2,3,4), apply(Core::hashSet, range(5)));
         assertEquals(sortedSet(0,1,2,3,4), apply(Core::hashSet, range(5)));
+    }
+    
+    @Test
+    public void testMapFunction() {
+        assertEquals(vector(2,3,4,5).seq(), map(Core::inc, list(1,2,3,4)));
+        assertEquals(vector(5,7,9).seq(), map(Core::add, vector(1,2,3), vector(4,5,6)));
+        assertEquals(vector(2,4,6).seq(), map(Core::add, vector(1,2,3), iterate(Core::inc, 1)));
+        
+        assertEquals(
+                vector(entry("a", 2), entry("b", 4), entry("c", 6)),
+                map(x -> vector(first(x), 2 * second(x)),
+                        hashMap(entry("a", 1), entry("b", 2), entry("c", 3))));
     }
     
     @Test
@@ -417,4 +442,29 @@ public class CoreTest {
         assertFalse(isZero(10.0));
         assertEquals(vector(1, 2, 3), apply(Core::vector, remove(Core::isZero, vector(1,0,2,0,3))));
     }
+    
+    @Test
+    public void testLazyInfinite() {
+        ISeq<Integer> posInts = iterate(Core::inc, 0);
+        assertEquals(new Integer(0), posInts.first());
+        assertEquals(new Integer(2), posInts.rest().rest().first());
+        assertEquals(vector(0,1,2,3,4), apply(Core::vector, take(5, iterate(Core::inc, 0))));
+    }
+    
+    @Test 
+    public void testMisc() {
+        assertEquals(1, inc(0));
+        assertEquals(0, inc(-1));
+        assertEquals(-2, dec(-1));
+        assertEquals(-1, dec(0));
+        assertEquals(0, dec(1));
+    }
+    
+    @Test
+    public void testLambdasOnInternal() {
+        // TODO Breaks JVM?  Eclipse bug? Identify problem
+//        assertEquals(2, second(map(x -> get(x, 1L), list(vector(1,2,3)))));
+    }
+    
+    
 }

@@ -1,30 +1,25 @@
 package clojure4j.core;
 
-// REVIEW May want to actually wrap a clojure MapEntry and extend vector similar to clojure
-public class MapEntry<K, V> implements IMapEntry<K, V> {
-    private K key;
-    private V val;
+public class MapEntry<K, V> extends AbstractInternal implements IMapEntry<K, V> {
     
     public MapEntry(K key, V val) {
-        this.key = key;
-        this.val = val;
+        super(Bridge.vector.invoke(key, val));
     }
     
-    @SuppressWarnings("unchecked")
     MapEntry(Object internal) {
-        clojure.lang.IMapEntry entry = (clojure.lang.IMapEntry) internal;
-        key = (K) entry.key();
-        val = (V) entry.val();
+        super(internal);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
-    public K key() {
-        return key;
+    public final K key() {
+        return (K) Bridge.get.invoke(getInternal(), 0);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
-    public V val() {
-        return val;
+    public final V val() {
+        return (V) Bridge.get.invoke(getInternal(), 1);
     }
 
     @Override
@@ -41,19 +36,14 @@ public class MapEntry<K, V> implements IMapEntry<K, V> {
     public V setValue(V value) {
         throw new UnsupportedOperationException("MapEntry is immutable.");
     }
-    
-    @SuppressWarnings("unchecked")
+        
     @Override
-    public boolean equals(Object o) {
-        if(this == o) return true;
-        if(o instanceof MapEntry) {
-            return ((MapEntry<K,V>) o).key().equals(key()) && ((MapEntry<K,V>) o).val().equals(val());
-        }
-        return false;
+    public final K first() {
+        return key();
     }
-    
+
     @Override
-    public String toString() {
-        return "[" + key() + ", " + val() + "]";
+    public final V second() {
+        return val();
     }
 }

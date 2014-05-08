@@ -198,6 +198,18 @@ public final class Core {
         return col == null ? null : col.first();
     }
     
+    public static final <T> T second(IPersistentCollection<T> col) {
+        return col == null ? null : col.second();
+    }
+    
+    public static final <K, V> K first(IMapEntry<K,V> entry) {
+        return entry == null ? null : entry.first();
+    }
+    
+    public static final <K, V> V second(IMapEntry<K,V> entry) {
+        return entry == null ? null : entry.second();
+    }
+    
     public static final <T> ISeq<T> rest(IPersistentCollection<T> col) {
         return col == null ? null : col.rest();
     }
@@ -214,8 +226,16 @@ public final class Core {
         return map.vals();
     }
     
-    public static final <K, V> V get(IPersistentMap<K, V> map, K key) {
-        return map.get(key);
+    public static final <K, V> V get(Associative<K, V> assoc, K key) {
+        return assoc.get(key);
+    }
+    
+    public static final <T> T get(IPersistentVector<T> vec, long index) {
+        return vec.get(index);
+    }
+    
+    public static final <T> T get(IPersistentVector<T> vec, int index) {
+        return vec.get(index);
     }
     
     public static final <K, V> IMapEntry<K, V> find(IPersistentMap<K, V> map, K key) {
@@ -227,6 +247,14 @@ public final class Core {
     }
     
     public static final <T> T nth(Sequential<T> col, int i, T notFound) {
+        return col.nth(i, notFound);
+    }
+    
+    public static final <T> T nth(Sequential<T> col, long i) {
+        return col.nth(i);
+    }
+    
+    public static final <T> T nth(Sequential<T> col, long i, T notFound) {
         return col.nth(i, notFound);
     }
     
@@ -367,11 +395,11 @@ public final class Core {
     }
     
     public static final int inc(int n) {
-        return n++;
+        return n + 1;
     }
     
     public static final int dec(int n) {
-        return n--;
+        return n - 1;
     }
     
     public static final int min(int x, int y) {

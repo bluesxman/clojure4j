@@ -27,6 +27,7 @@ public interface IPersistentCollection<T> extends Internal, Seqable<T> {
     public boolean isEmpty();
     
     public T first();
+    public T second();
     
     public ISeq<T> rest();
     

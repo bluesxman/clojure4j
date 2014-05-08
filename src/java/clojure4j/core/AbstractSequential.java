@@ -22,6 +22,18 @@ extends AbstractPersistentCollection<T> implements Sequential<T> {
         return (T) Bridge.nth.invoke(getInternal(), idx, notFound);
     }
     
+    @SuppressWarnings("unchecked")
+    @Override
+    public T nth(long idx) {
+        return (T) Bridge.nth.invoke(getInternal(), idx);
+    }
+    
+    @SuppressWarnings("unchecked")
+    @Override
+    public T nth(long idx, T notFound) {
+        return (T) Bridge.nth.invoke(getInternal(), idx, notFound);
+    }
+    
     @Override
     public boolean containsIndex(long idx) {
         return (boolean) Bridge.contains.invoke(getInternal(), idx);

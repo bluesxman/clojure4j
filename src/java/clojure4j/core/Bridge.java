@@ -35,6 +35,7 @@ class Bridge {
     public static final IFn dissoc = Clojure.var("clojure.core", "dissoc");
     public static final IFn seq = Clojure.var("clojure.core", "seq");
     public static final IFn first = Clojure.var("clojure.core", "first");
+    public static final IFn second = Clojure.var("clojure.core", "second");
     public static final IFn rest = Clojure.var("clojure.core", "rest");
     public static final IFn pop = Clojure.var("clojure.core", "pop");
     public static final IFn peek = Clojure.var("clojure.core", "peek");

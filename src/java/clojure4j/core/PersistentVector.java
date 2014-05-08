@@ -31,6 +31,19 @@ public class PersistentVector<T>
         return (T) Bridge.get.invoke(getInternal(), key, notFound);
     }
     
+    
+    @SuppressWarnings("unchecked")
+    @Override
+    public T get(int key) {
+        return (T) Bridge.get.invoke(getInternal(), key);
+    }
+    
+    @SuppressWarnings("unchecked")
+    @Override
+    public T get(int key, T notFound) {
+        return (T) Bridge.get.invoke(getInternal(), key, notFound);
+    }
+    
     @Override
     public final IPersistentVector<T> conj(final T value) {
         return new PersistentVector<T>(Bridge.conj.invoke(getInternal(), value));
@@ -80,5 +93,4 @@ public class PersistentVector<T>
     public IPersistentVector<T> into(IPersistentCollection<T> from) {
         return new PersistentVector<>(Bridge.into.invoke(getInternal(), from.getInternal()));
     }
-
 }

@@ -107,3 +107,21 @@
 (rest [])
 
 (cons nil (seq [1 2 3]))
+
+(apply map vector [[:a :b] [:c :d]])
+
+(map vector [:a :b] [:c :d])
+
+
+
+(vector (seq [[:a :b] [:c :d]]))
+
+(map vector (seq [[:a :b] [:c :d]]))
+
+(map (seq vector [[:a :b] [:c :d]]))
+(seq [:a :b] [:c :d])
+
+(sequence 1 2 3 4 5)
+
+(seq 1 2 3)
+
