@@ -12,7 +12,11 @@ public class PersistentHashSet<T> extends AbstractPersistentSet<T> {
 
     @SafeVarargs
     public PersistentHashSet(T... elements) {
-        super(Util.arrayToClojureVector(elements));
+        super(Bridge.apply.invoke(Bridge.hashSet, new ArraySeq(elements)));
+    }
+    
+    public PersistentHashSet(ApplySeq<T> elements) {
+        super(Bridge.apply.invoke(Bridge.hashSet, elements.getInternal()));
     }
     
     @Override

@@ -22,6 +22,8 @@ final class Util {
         return arrayToClojure(elements, Bridge.sortedSet.invoke());
     }
     
+    // REVIEW probably broken for list; should we make ArraySeq to wrap a T... and pass to clojure:
+    // e.g. (apply (list xs))
     private static final Object arrayToClojure(Object[] elements, Object clojureColl) {
         for(Object element : elements) {
             clojureColl = Bridge.conj.invoke(clojureColl, element);

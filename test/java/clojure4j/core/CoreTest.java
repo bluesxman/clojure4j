@@ -12,6 +12,7 @@ import static clojure4j.core.Core.isZero;
 import static clojure4j.core.Core.iterate;
 import static clojure4j.core.Core.list;
 import static clojure4j.core.Core.map;
+import static clojure4j.core.Core.range;
 import static clojure4j.core.Core.reduce;
 import static clojure4j.core.Core.remove;
 import static clojure4j.core.Core.rest;
@@ -337,7 +338,12 @@ public class CoreTest {
         isMaxToMin = apply(Ext::gt, vector("d", "c", "b", "a"));
         assertTrue(isMaxToMin);
         isMaxToMin = apply(Ext::gt, vector("d", "b", "c", "a"));
-        assertFalse(isMaxToMin);        
+        assertFalse(isMaxToMin);   
+        
+        assertEquals(vector(0,1,2,3,4), apply(Core::vector, range(5)));
+        assertEquals(list(0,1,2,3,4), apply(Core::list, range(5)));
+        assertEquals(hashSet(0,1,2,3,4), apply(Core::hashSet, range(5)));
+        assertEquals(sortedSet(0,1,2,3,4), apply(Core::hashSet, range(5)));
     }
     
     @Test

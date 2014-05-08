@@ -66,6 +66,11 @@
 
 (type(first (seq {1 2 3 4})))
 
+(> '(1 2 3))
+(apply > '(1 2 3))
+
+(apply list [1 2 3])
+
 (reduce conj [] '(1 2 3 4) )
 
 (into {} '([1 2] [3 4] [5 6]))
@@ -77,3 +82,28 @@
 (type (conj (seq [1 2 3]) 4))
 
 (conj {} [1 2])
+
+(> '(3 2 1) '(3 2 1))
+
+(hash-map 1 2)
+
+(hash 1)
+
+(.hashCode [1 2])
+
+(.hashCode (first {1,2}))
+
+(get '(1 2 3 4 5 6) 1)
+
+(apply vector (range 5))
+
+(apply map vector [[:a :b] [:c :d]])
+(map vector (seq [[:a :b] [:c :d]]))
+
+(apply hash-set [1 2 3 4])
+(apply hash-set )
+
+
+(rest [])
+
+(cons nil (seq [1 2 3]))

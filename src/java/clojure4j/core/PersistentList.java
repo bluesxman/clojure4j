@@ -7,11 +7,15 @@ public class PersistentList<T>
     
     @SafeVarargs
     public PersistentList(T... elements) {
-        super(arrayToClojureList(elements));
+        super(arrayToClojureList(elements));  // REVIEW use ArraySeq?
     }
     
     public PersistentList(Object internal) {
         super(internal);
+    }
+    
+    public PersistentList(ApplySeq<T> elements) {
+        super(Bridge.apply.invoke(Bridge.list, elements.getInternal()));
     }
     
     private static final Object arrayToClojureList(Object[] elements) {

@@ -11,6 +11,10 @@ public final class Core {
         return new PersistentList<T>(elements);
     }
     
+    public static final <T> IPersistentList<T> list(ApplySeq<T> elements){
+        return new PersistentList<T>(elements);
+    }
+    
     @SafeVarargs
     public static final <T> IPersistentVector<T> vector(T... elements){
         return new PersistentVector<T>(elements);
@@ -25,8 +29,16 @@ public final class Core {
         return new PersistentHashSet<T>(elements);
     }
 
+    public static final <T> IPersistentSet<T> hashSet(ApplySeq<T> elements){
+        return new PersistentHashSet<T>(elements);
+    }
+    
     @SafeVarargs
     public static final <T> IPersistentSet<T> sortedSet(T... elements){
+        return new PersistentSortedSet<T>(elements);
+    }
+    
+    public static final <T> IPersistentSet<T> sortedSet(ApplySeq<T> elements){
         return new PersistentSortedSet<T>(elements);
     }
     
@@ -423,11 +435,11 @@ public final class Core {
     }
     
     public static final boolean isOdd(int n) {
-        return n % 2 == 0; // TODO use faster method than modulo
+        return Math.abs(n % 2) == 0; // TODO use faster method than modulo
     }
     
     public static final boolean isOdd(long n) {
-        return n % 2 == 0;
+        return Math.abs(n % 2) == 0;
     }
     
     public static final boolean isEven(int n) {

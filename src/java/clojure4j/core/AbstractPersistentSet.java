@@ -1,17 +1,13 @@
 package clojure4j.core;
 
 
+
 public abstract class AbstractPersistentSet<T> extends AbstractPersistentCollection<T> implements IPersistentSet<T> {
 
     public AbstractPersistentSet(Object set) {
         super(set);
     }
-
-    @SafeVarargs
-    public AbstractPersistentSet(T... elements) {
-        super(Util.arrayToClojureVector(elements));
-    }
-
+    
     @Override
     public IPersistentSet<T> conj(T value) {
         return wrap(Bridge.conj.invoke(getInternal(), value));
