@@ -230,6 +230,7 @@ public final class Core {
         return assoc.get(key);
     }
     
+    // REVIEW double check generics doc and confirm that IPersistentVector doesnt extend Associative in this case
     public static final <T> T get(IPersistentVector<T> vec, long index) {
         return vec.get(index);
     }

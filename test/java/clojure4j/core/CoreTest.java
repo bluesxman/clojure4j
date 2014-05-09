@@ -365,6 +365,11 @@ public class CoreTest {
         assertEquals(vector(5,7,9).seq(), map(Core::add, vector(1,2,3), vector(4,5,6)));
         assertEquals(vector(2,4,6).seq(), map(Core::add, vector(1,2,3), iterate(Core::inc, 1)));
         
+        ISeq<IPersistentVector<String>> vecSeq = map(Core::vector, vector("a", "b"), vector("c", "d"));
+        assertEquals(vector("a", "c"), first(vecSeq));
+        assertEquals(vector("b", "d"), second(vecSeq));
+        
+        // TODO Fix it; see TypedFn applyTo
         assertEquals(
                 vector(entry("a", 2), entry("b", 4), entry("c", 6)),
                 map(x -> vector(first(x), 2 * second(x)),
