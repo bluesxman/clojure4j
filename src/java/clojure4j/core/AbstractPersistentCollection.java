@@ -65,6 +65,11 @@ implements IPersistentCollection<T> {
         return (boolean) Bridge.isEmpty.invoke(getInternal());
     }
     
+    @Override
+    public boolean isSome(UnaryFn<T,Boolean> fn) {
+        return Bridge.isSome.invoke(fn, getInternal()) != null;
+    }
+    
     @SuppressWarnings("unchecked")
     @Override
     public T first() {

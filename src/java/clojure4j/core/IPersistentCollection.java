@@ -25,6 +25,7 @@ public interface IPersistentCollection<T> extends Internal, Seqable<T> {
     public int count();
     
     public boolean isEmpty();
+    public boolean isSome(UnaryFn<T,Boolean> fn);
     
     public T first();
     public T second();

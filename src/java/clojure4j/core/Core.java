@@ -479,4 +479,11 @@ public final class Core {
         return n % 2 == 0;
     }
 
+    public static final <T> boolean isEmpty(IPersistentCollection<T> col) {
+        return col.isEmpty();
+    }
+    
+    public static final <T> boolean isSome(UnaryFn<T,Boolean> fn, IPersistentCollection<T> col) {
+        return col.isSome(fn);
+    }
 }

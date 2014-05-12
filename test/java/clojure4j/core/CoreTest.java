@@ -465,6 +465,10 @@ public class CoreTest {
         assertFalse(isZero(10f));
         assertFalse(isZero(10.0));
         assertEquals(vector(1, 2, 3), apply(Core::vector, remove(Core::isZero, vector(1,0,2,0,3))));
+        
+        assertTrue(Core.isSome(x -> x > 3, hashSet(1,2,3,4,5)));
+        assertTrue(Core.isSome(Core::isEven, range(4)));
+        assertFalse(Core.isSome(Core::isEven, range(1, 8, 2)));
     }
     
     @Test

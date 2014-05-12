@@ -55,6 +55,7 @@ class Bridge {
 
     public static final IFn count = Clojure.var("clojure.core", "count");
     public static final IFn isEmpty = Clojure.var("clojure.core", "empty?");
+    public static final IFn isSome = Clojure.var("clojure.core", "some");
     
     // Set fns
     public static final IFn join = Clojure.var("clojure.set", "join");
