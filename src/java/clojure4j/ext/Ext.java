@@ -1,8 +1,8 @@
 package clojure4j.ext;
 
-import clojure4j.core.ApplySeq;
+import clojure4j.core.ArrayVarArgs;
 import clojure4j.core.IMapEntry;
-import clojure4j.core.ISeq;
+import clojure4j.core.IVarArgs;
 import clojure4j.core.MapEntry;
 
 /**
@@ -10,6 +10,11 @@ import clojure4j.core.MapEntry;
  */
 public final class Ext {
 
+    @SuppressWarnings("unchecked")
+    public static final <T> IVarArgs<T> args(T... arglist) {
+        return new ArrayVarArgs<T>(arglist);
+    }
+    
     public static final <T extends Comparable<T>> boolean gt(T left, T right) {
         return left.compareTo(right) > 0;
     }
@@ -30,17 +35,17 @@ public final class Ext {
         }
     }
     
-    public static final <T extends Comparable<T>> boolean gt(ApplySeq<T> args){
-        ISeq<T> tail = args.seq();
+    public static final <T extends Comparable<T>> boolean gt(IVarArgs<T> args){
         
-        if(tail.first() != null) {
+        if(args.hasElements()) {
             boolean result = true;
             T hd;
             
-            while(result && (hd = tail.first()) != null) {
-                tail = tail.rest();
-                if(tail.first() != null) {
-                    result = result && gt(hd, tail.first());
+            while(result && args.hasElements()) {
+                hd = args.head();
+                args = args.tail();
+                if(args.hasElements()) {
+                    result = result && gt(hd, args.head());
                 }
             }
             

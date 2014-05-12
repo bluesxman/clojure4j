@@ -2,6 +2,8 @@ package clojure4j.core;
 
 import java.util.Comparator;
 
+import clojure4j.ext.Ext;
+
 
 public final class Core {
     
@@ -11,7 +13,7 @@ public final class Core {
         return new PersistentList<T>(elements);
     }
     
-    public static final <T> IPersistentList<T> list(ApplySeq<T> elements){
+    public static final <T> IPersistentList<T> list(IVarArgs<T> elements){
         return new PersistentList<T>(elements);
     }
     
@@ -20,7 +22,7 @@ public final class Core {
         return new PersistentVector<T>(elements);
     }
     
-    public static final <T> IPersistentVector<T> vector(ApplySeq<T> elements){
+    public static final <T> IPersistentVector<T> vector(IVarArgs<T> elements){
         return new PersistentVector<T>(elements);
     }
     
@@ -29,7 +31,7 @@ public final class Core {
         return new PersistentHashSet<T>(elements);
     }
 
-    public static final <T> IPersistentSet<T> hashSet(ApplySeq<T> elements){
+    public static final <T> IPersistentSet<T> hashSet(IVarArgs<T> elements){
         return new PersistentHashSet<T>(elements);
     }
     
@@ -38,7 +40,7 @@ public final class Core {
         return new PersistentSortedSet<T>(elements);
     }
     
-    public static final <T> IPersistentSet<T> sortedSet(ApplySeq<T> elements){
+    public static final <T> IPersistentSet<T> sortedSet(IVarArgs<T> elements){
         return new PersistentSortedSet<T>(elements);
     }
     
@@ -91,17 +93,26 @@ public final class Core {
         return new Seq<T>((clojure.lang.ISeq) Bridge.remove.invoke(pred, col.getInternal()));
     }
     
-    public static final <T, R extends T> R apply(BinaryFn<T, T, R> fn, IPersistentCollection<T> col) {
-        return col.apply(fn);
-    }
-
-    public static final <T, R> R apply(ApplySeqFn<T, R> fn, IPersistentCollection<T> col) {
-        return col.apply(fn);
-    }
-
+//    public static final <T, R extends T> R apply(BinaryFn<T, T, R> fn, IPersistentCollection<T> col) {
+//        return col.apply(fn);
+//    }
+//
+//    public static final <T, R> R apply(ApplySeqFn<T, R> fn, IPersistentCollection<T> col) {
+//        return col.apply(fn);
+//    }
+//
+//    @SafeVarargs
+//    public static final <T, R> R apply(ApplySeqFn<T, R> fn, T... args) {
+//        return list(args).apply(fn);  // TODO Use special collection for arrays or reuse clojure arrayseq or something?
+//    }
+//    
     @SafeVarargs
-    public static final <T, R> R apply(ApplySeqFn<T, R> fn, T... args) {
-        return list(args).apply(fn);  // TODO Use special collection for arrays or reuse clojure arrayseq or something?
+    public static final <T, R> R apply(VariadicFn<T,R> fn, T... args) {
+        return fn.apply(Ext.args(args));  // TODO Use special collection for arrays or reuse clojure arrayseq or something?
+    }
+    
+    public static final <T,R> R apply(VariadicFn<T,R> fn, IPersistentCollection<T> col){
+        return col.apply(fn);
     }
     
     public static final <T> T reduce(BinaryFn<T, T, T> fn, IPersistentCollection<T> col) {
@@ -336,13 +347,30 @@ public final class Core {
         return x + y;
     }
         
-    public static final int add(int... ints) {
-        int result = 0;
-        for(int i : ints) {
-            result += i;
-        }
-        return result;
-    }
+//    public static final int add(int... ints) {
+//        int result = 0;
+//        for(int i : ints) {
+//            result += i;
+//        }
+//        return result;
+//    }
+//    
+//    @SuppressWarnings("unchecked")
+//    public static final <T extends Number> double add(T... nums) {
+//        double result = 0;
+//        for(T i : nums) {
+//            result += i.doubleValue();
+//        }
+//        return result;        
+//    }
+//    
+//    public static final long add(long... nums) {
+//        int result = 0;
+//        for(long i : nums) {
+//            result += i;
+//        }
+//        return result;
+//    }
     
     public static final int sub(int... ints) {
         if(ints.length > 0) {
@@ -376,23 +404,6 @@ public final class Core {
         else {
             throw new IllegalArgumentException("1 or more arguments expected");
         }
-    }
-    
-    @SuppressWarnings("unchecked")
-    public static final <T extends Number> double add(T... nums) {
-        double result = 0;
-        for(T i : nums) {
-            result += i.doubleValue();
-        }
-        return result;        
-    }
-    
-    public static final long add(long... nums) {
-        int result = 0;
-        for(long i : nums) {
-            result += i;
-        }
-        return result;
     }
     
     public static final int inc(int n) {

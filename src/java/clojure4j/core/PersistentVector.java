@@ -17,7 +17,7 @@ public class PersistentVector<T>
         super(Util.arrayToClojureVector(elements));
     }
 
-    public PersistentVector(ApplySeq<T> elements) {
+    public PersistentVector(IPersistentCollection<T> elements) {
         super(Bridge.apply.invoke(Bridge.vector, elements.getInternal()));
     }
     

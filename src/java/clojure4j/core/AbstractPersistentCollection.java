@@ -1,6 +1,7 @@
 package clojure4j.core;
 
 import java.util.Comparator;
+import java.util.NoSuchElementException;
 
 
 public abstract class AbstractPersistentCollection<T> 
@@ -33,13 +34,7 @@ implements IPersistentCollection<T> {
     
     @SuppressWarnings("unchecked")
     @Override
-    public <R extends T> R apply(BinaryFn<T, T, R> fn) {
-        return (R) Bridge.apply.invoke(fn, getInternal());
-    }
-    
-    @SuppressWarnings("unchecked")
-    @Override
-    public <R> R apply(ApplySeqFn<T, R> fn) {
+    public <R> R apply(VariadicFn<T, R> fn) {
         return (R) Bridge.apply.invoke(fn, getInternal());
     }
     
@@ -110,5 +105,30 @@ implements IPersistentCollection<T> {
     @Override
     public ISeq<T> sort(Comparator<T> comp) {
         return new Seq<T>(Bridge.sort.invoke(comp, getInternal()));
+    }
+    
+    @Override
+    public T head() {
+        if(isEmpty()) {
+            throw new NoSuchElementException("Cannot call head on empty IVarArgs.");
+        }
+        else {
+            return first();
+        }
+    }
+
+    @Override
+    public IVarArgs<T> tail() {
+        if(isEmpty()) {
+            throw new NoSuchElementException("Cannot call tail on empty IVarArgs.");
+        }
+        else {
+            return rest();
+        }
+    }
+
+    @Override
+    public boolean hasElements() {
+        return count() > 0;
     }
 }

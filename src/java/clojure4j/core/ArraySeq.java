@@ -86,5 +86,9 @@ class ArraySeq implements clojure.lang.ISeq {
     public ISeq next() {
         return isRestEmpty() ? null : new ArraySeq(first + 1, elements);
     }
+    
+    Object[] toArray() {
+        return elements;
+    }
 
 }

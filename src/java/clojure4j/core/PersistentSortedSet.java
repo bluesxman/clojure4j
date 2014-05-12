@@ -10,7 +10,7 @@ public class PersistentSortedSet<T> extends AbstractPersistentSet<T> {
         super(set);
     }
     
-    public PersistentSortedSet(ApplySeq<T> elements) {
+    public PersistentSortedSet(IPersistentCollection<T> elements) {
         super(Bridge.apply.invoke(Bridge.sortedSet, elements.getInternal()));
     }
 

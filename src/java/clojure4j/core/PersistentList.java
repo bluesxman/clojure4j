@@ -14,7 +14,7 @@ public class PersistentList<T>
         super(internal);
     }
     
-    public PersistentList(ApplySeq<T> elements) {
+    public PersistentList(IPersistentCollection<T> elements) {
         super(Bridge.apply.invoke(Bridge.list, elements.getInternal()));
     }
     
