@@ -1,4 +1,4 @@
-package clojure4j.core.exp;
+package clojure4j.experiment;
 
 import org.junit.Test;
 
@@ -75,8 +75,18 @@ public class LambdaExperiments {
         return null;
     }
     
+    // For apply...
+    // 1) The # of args must match the arity of the fn being applied.  
+    // 2) Only a variadic fn can be applied to var args
+
     @Test
     public void testLambdas() {
+
+    }
+    
+    @Test
+    public void testAmbiguousLambda() {
+        
         
     }
 }

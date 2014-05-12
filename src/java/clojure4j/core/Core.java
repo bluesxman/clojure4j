@@ -108,7 +108,7 @@ public final class Core {
 //    
     @SafeVarargs
     public static final <T, R> R apply(VariadicFn<T,R> fn, T... args) {
-        return fn.apply(Ext.args(args));  // TODO Use special collection for arrays or reuse clojure arrayseq or something?
+        return fn.apply(args);  // TODO Use special collection for arrays or reuse clojure arrayseq or something?
     }
     
     public static final <T,R> R apply(VariadicFn<T,R> fn, IPersistentCollection<T> col){
