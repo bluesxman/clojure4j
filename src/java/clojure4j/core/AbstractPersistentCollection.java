@@ -51,8 +51,8 @@ implements IPersistentCollection<T> {
     
     @SuppressWarnings("unchecked")
     @Override
-    public T reduce(BinaryFn<T, T, T> fn, T initial) {
-        return (T) Bridge.reduce.invoke(fn, initial, getInternal());
+    public <U> U reduce(BinaryFn<U, T, U> fn, U initial) {
+        return (U) Bridge.reduce.invoke(fn, initial, getInternal());
     }
     
     @Override

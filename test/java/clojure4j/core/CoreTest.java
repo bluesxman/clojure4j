@@ -326,15 +326,7 @@ public class CoreTest {
     
     // TODO Fix apply.  Definitely not right.  impl'd like reduce at the moment
     @Test
-    public void testApplyVsReduce() {
-        // (apply > [4 3 2 1) vs (reduce > [4 3 2 1])
-        
-//        (apply hash-map [:a 5 :b 6])
-//        ;= {:a 5, :b 6}
-//        (reduce hash-map [:a 5 :b 6])
-//        ;= {{{:a 5} :b} 6}
-//        (apply (fn [x y] (> x y)) [3 2 1]) ;; wrong number args
-        
+    public void testApply() {
         int x = apply(Core::max, vector(1,2,3));
         assertEquals(3, x);
         x = reduce(Core::max, vector(1,2,3));
@@ -357,6 +349,33 @@ public class CoreTest {
         assertEquals(list(0,1,2,3,4), apply(Core::list, range(5)));
         assertEquals(hashSet(0,1,2,3,4), apply(Core::hashSet, range(5)));
         assertEquals(sortedSet(0,1,2,3,4), apply(Core::hashSet, range(5)));
+    }
+    
+    @Test
+    public void testReduce() {
+        assertEquals(15, (int)reduce(Core::add, vector(1,2,3,4,5)));
+        assertEquals(20, 5, (int)reduce(Core::add, vector(1,2,3,4,5)));
+        assertEquals(list(5L,4L,3L,2L,1L), range(2,6).reduce((l, x) -> l.conj(x), list(1L)));
+        
+//                       (reduce
+//                         (fn [primes number]
+//                           (if (some zero? (map (partial mod number) primes))
+//                             primes
+//                             (conj primes number)))
+//                         [2]
+//                         (take 1000 (iterate inc 3)))
+
+//        reduce(
+//            (primes, number) -> {
+//                if(some(Core::isZero, map(partial(Core::mod, number), primes))) {
+//                    return primes;
+//                }
+//                else {
+//                    return conj(primes, number);
+//                }
+//            },
+//            vector(2),
+//            take(1000, iterate(Core::inc, 3)));
     }
     
     @Test
