@@ -8,7 +8,7 @@
   :plugins [[lein-junit "1.1.2"]]
   :source-paths ["src"]
   :java-source-paths ["src/java" "test/java"]
-  :javac-options ["-target" "1.8" "-source" "1.8"]
+  :javac-options ["-target" "8" "-source" "8"]
   :compile-path "classes"
   :target-path "jar"
   :jar-name "clojure4j.jar"
