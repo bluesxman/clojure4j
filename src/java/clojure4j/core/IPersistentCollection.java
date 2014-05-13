@@ -13,7 +13,7 @@ public interface IPersistentCollection<T> extends Internal, Seqable<T>, IVarArgs
     public <R> ISeq<R> map(UnaryFn<T, R> fn);
     
     public T reduce(BinaryFn<T, T, T> fn);
-    public T reduce(BinaryFn<T, T, T> fn, T initial);
+    public <U> U reduce(BinaryFn<U, T, U> fn, U initial);
     
     public IPersistentCollection<T> conj(T value);
         
@@ -24,6 +24,7 @@ public interface IPersistentCollection<T> extends Internal, Seqable<T>, IVarArgs
     public int count();
     
     public boolean isEmpty();
+    public boolean isSome(UnaryFn<T,Boolean> fn);
     
     public T first();
     public T second();

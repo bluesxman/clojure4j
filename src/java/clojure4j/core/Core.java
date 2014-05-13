@@ -119,7 +119,7 @@ public final class Core {
         return col.reduce(fn);
     }
     
-    public static final <T> T reduce(BinaryFn<T, T, T> fn, T initial, IPersistentCollection<T> col) {
+    public static final <T, U> U reduce(BinaryFn<U, T, U> fn, U initial, IPersistentCollection<T> col) {
         return col.reduce(fn, initial);
     }
     
@@ -279,20 +279,20 @@ public final class Core {
         return new Seq<>(Bridge.repeat.invoke(value));
     }
 
-    public static final <T extends Number> ISeq<T> range(T num) {
-        return new Seq<>(Bridge.range.invoke(num));
+    public static final ISeq<Long> range() {
+        return new Seq<>(Bridge.range.invoke());
     }
 
-    public static final <T extends Number> ISeq<T> range(T num, int end) {
-        return new Seq<>(Bridge.range.invoke(num, end));
+    public static final ISeq<Long> range(long end) {
+        return new Seq<>(Bridge.range.invoke(end));
     }
 
-    public static final <T extends Number> ISeq<T> range(T num, int start, int end) {
-        return new Seq<>(Bridge.range.invoke(num, start, end));
+    public static final ISeq<Long> range(long start, long end) {
+        return new Seq<>(Bridge.range.invoke(start, end));
     }
 
-    public static final <T extends Number> ISeq<T> range(T num, int start, int end, int step) {
-        return new Seq<>(Bridge.range.invoke(num, start, end, step));
+    public static final ISeq<Long> range(long start, long end, long step) {
+        return new Seq<>(Bridge.range.invoke(start, end, step));
     }
 
     public static final <T> ISeq<T> iterate(UnaryFn<T, T> fn, T initial) {
@@ -490,4 +490,11 @@ public final class Core {
         return n % 2 == 0;
     }
 
+    public static final <T> boolean isEmpty(IPersistentCollection<T> col) {
+        return col.isEmpty();
+    }
+    
+    public static final <T> boolean isSome(UnaryFn<T,Boolean> fn, IPersistentCollection<T> col) {
+        return col.isSome(fn);
+    }
 }
