@@ -10,7 +10,7 @@
   :java-source-paths ["src/java" "test/java"]
   :javac-options ["-target" "8" "-source" "8"]
   :compile-path "classes"
-  :target-path "jar"
+  :target-path "classes"
   :jar-name "clojure4j.jar"
   :junit ["test/java"]
   :aot [clojure4j.Core])

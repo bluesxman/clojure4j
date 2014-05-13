@@ -19,8 +19,9 @@ public final class Ext {
         return left.compareTo(right) > 0;
     }
 
+    // REVIEW Why can't return primitive?  Core.add works fine returning int.  Java bug?
     @SuppressWarnings("unchecked")
-    public static final <T extends Comparable<T>> boolean gt(T... comps){
+    public static final <T extends Comparable<T>> Boolean gt(T... comps){
         if(comps.length > 0) {
             boolean result = true;
             

@@ -1,5 +1,6 @@
 package clojure4j.core;
 
+import static clojure4j.core.Core.add;
 import static clojure4j.core.Core.apply;
 import static clojure4j.core.Core.conj;
 import static clojure4j.core.Core.contains;
@@ -29,7 +30,9 @@ import static clojure4j.core.Set.difference;
 import static clojure4j.core.Set.intersection;
 import static clojure4j.core.Set.select;
 import static clojure4j.core.Set.union;
+import static clojure4j.ext.Ext.args;
 import static clojure4j.ext.Ext.entry;
+import static clojure4j.ext.Ext.gt;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
@@ -337,6 +340,26 @@ public class CoreTest {
 //        (apply (fn [x y] (> x y)) [3 2 1]) ;; wrong number args
 
         int x;
+        Boolean bool;
+        
+//        x = apply(Core::add, vector(1,2,3,4));
+        VariadicFn<Integer,Integer> f = (Integer... args) -> args[0];
+        x = apply(args -> args[0], vector(1,2,3,4));
+        x = apply(Core::add, vector(1,2,3,4));
+        f.apply(1,2,3,4);
+        add(1,2,3,4,5);
+        
+        bool = gt(args(4,3,2,1));
+        bool = gt(4,3,2,1);
+        assertTrue(apply(Ext::gt, vector(4,3,2,1)));
+        
+        // Rules:
+        // 1) fns to be applied must take varargs of *objects* not primitives
+        
+        
+        
+        // PREVIOUS TESTS   ///////////////////////////
+        
 //        int x = apply(Core::max, vector(1,2,3));
 //        assertEquals(3, x);
         x = reduce(Core::max, vector(1,2,3));
@@ -346,14 +369,14 @@ public class CoreTest {
         x = reduce(Core::add, vector(1,2,3,4));
         assertEquals(10, x);
         
-        boolean isMaxToMin = apply(Ext::gt, vector(4, 3, 2, 1));
-        assertTrue(isMaxToMin);
-        isMaxToMin = apply(Ext::gt, vector(4, 2, 3, 1));
-        assertFalse(isMaxToMin);
-        isMaxToMin = apply(Ext::gt, vector("d", "c", "b", "a"));
-        assertTrue(isMaxToMin);
-        isMaxToMin = apply(Ext::gt, vector("d", "b", "c", "a"));
-        assertFalse(isMaxToMin);   
+//        boolean isMaxToMin = apply(Ext::gt, vector(4, 3, 2, 1));
+//        assertTrue(isMaxToMin);
+//        isMaxToMin = apply(Ext::gt, vector(4, 2, 3, 1));
+//        assertFalse(isMaxToMin);
+//        isMaxToMin = apply(Ext::gt, vector("d", "c", "b", "a"));
+//        assertTrue(isMaxToMin);
+//        isMaxToMin = apply(Ext::gt, vector("d", "b", "c", "a"));
+//        assertFalse(isMaxToMin);   
         
         assertEquals(vector(0,1,2,3,4), apply(Core::vector, range(5)));
         assertEquals(list(0,1,2,3,4), apply(Core::list, range(5)));

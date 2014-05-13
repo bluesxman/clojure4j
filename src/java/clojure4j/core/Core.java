@@ -106,10 +106,11 @@ public final class Core {
 //        return list(args).apply(fn);  // TODO Use special collection for arrays or reuse clojure arrayseq or something?
 //    }
 //    
-    @SafeVarargs
-    public static final <T, R> R apply(VariadicFn<T,R> fn, T... args) {
-        return fn.apply(args);  // TODO Use special collection for arrays or reuse clojure arrayseq or something?
-    }
+//    @SafeVarargs
+//    public static final <T, R> R apply(VariadicFn<T,R> fn, T... args) {
+//        return fn.apply(args);  // TODO Use special collection for arrays or reuse clojure arrayseq or something?
+//    }
+//    
     
     public static final <T,R> R apply(VariadicFn<T,R> fn, IPersistentCollection<T> col){
         return col.apply(fn);
@@ -347,12 +348,21 @@ public final class Core {
         return x + y;
     }
 
-    public static final int add(int... ints) {
+    public static final int add(Integer... ints) {
         int result = 0;
         for(int i : ints) {
             result += i;
         }
         return result;
+    }
+    
+    public static final int add(IVarArgs<Integer> args) {
+        int accum = 0;
+        while(args.hasElements()) {
+            accum += args.head();
+            args = args.tail();
+        }
+        return accum;
     }
     
 //    @SuppressWarnings("unchecked")

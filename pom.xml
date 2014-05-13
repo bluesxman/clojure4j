@@ -16,13 +16,10 @@
   <scm>
     <connection>scm:git:git://github.com/bluesxman/clojure4j.git</connection>
     <developerConnection>scm:git:ssh://git@github.com/bluesxman/clojure4j.git</developerConnection>
-    <tag>ff03876e64e1db4ae13d1ffad50077f60bc603c3</tag>
+    <tag>4495a2546982e2d57352edba4c8048639be0c7be
+</tag>
     <url>https://github.com/bluesxman/clojure4j</url>
   </scm>
-  <properties>
-    <maven.compiler.source>8</maven.compiler.source>
-    <maven.compiler.target>8</maven.compiler.target>
-  </properties>
   <build>
     <sourceDirectory>src</sourceDirectory>
     <testSourceDirectory>test</testSourceDirectory>
@@ -39,7 +36,7 @@
         <directory>resources</directory>
       </testResource>
     </testResources>
-    <directory>jar</directory>
+    <directory>classes</directory>
     <outputDirectory>classes</outputDirectory>
     <plugins>
       <plugin>
