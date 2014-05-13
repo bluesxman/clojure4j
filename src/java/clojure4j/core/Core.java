@@ -346,15 +346,15 @@ public final class Core {
     public static final int add(int x, int y) {
         return x + y;
     }
-        
-//    public static final int add(int... ints) {
-//        int result = 0;
-//        for(int i : ints) {
-//            result += i;
-//        }
-//        return result;
-//    }
-//    
+
+    public static final int add(int... ints) {
+        int result = 0;
+        for(int i : ints) {
+            result += i;
+        }
+        return result;
+    }
+    
 //    @SuppressWarnings("unchecked")
 //    public static final <T extends Number> double add(T... nums) {
 //        double result = 0;
