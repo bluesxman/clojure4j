@@ -54,18 +54,18 @@ public class CoreTest {
         
     private void testComposition(IPersistentCollection<Integer> oneTwoThree) {        
         // add all the numbers together
-        assertEquals(6, (int) oneTwoThree.apply((x, y) -> x + y));
+        assertEquals(6, (int) oneTwoThree.reduce((x, y) -> x + y));
         
         // double the numbers and add them all
         assertEquals((Object) 12,
                 oneTwoThree.map(x -> x * 2)
-                           .apply((x, y) -> x + y));
+                           .reduce((x, y) -> x + y));
         
         // take the odd numbers, double them, and then add them all
         assertEquals((Object) 8,
                 oneTwoThree.filter(x -> x % 2 == 1)
                            .map(x -> x * 2)
-                           .apply((x, y) -> x + y));
+                           .reduce((x, y) -> x + y));
     }
 
     @Test
@@ -101,10 +101,10 @@ public class CoreTest {
 
     @Test
     public void testGenericTypes() {
-        long l = list(1L, 2L, 3L, 4L).apply(CoreTest::addNumLong);
+        long l = list(1L, 2L, 3L, 4L).reduce(CoreTest::addNumLong);
         assertEquals(10L, l);
         
-        l = apply(CoreTest::addNumNum, list(1, 2L, 3, 4.0));
+        l = reduce(CoreTest::addNumNum, list(1, 2L, 3, 4.0));
         assertEquals(10L, l);
 
 //        l = list(1L, 2L, 3L, 4L).apply(addNumLongLambda);
@@ -112,11 +112,11 @@ public class CoreTest {
 //        l = (new PersistentList<Number>(1L, 2L, 3L, 4L)).apply(addNumLongLambda);
 //        assertEquals(10L, l);
 
-        l = apply(addNumNumLambda, list(1, 2L, 3, 4.0));
+        l = reduce(addNumNumLambda, list(1, 2L, 3, 4.0));
         assertEquals(10L, l);
         
         IPersistentList<Number> numList = new PersistentList<>(1, 2L, 3, 4.0);
-        l = numList.conj(5.0).apply(addNumNumLambda);
+        l = numList.conj(5.0).reduce(addNumNumLambda);
         assertEquals(15L, l);
         
         assertEquals(PersistentList.class, conj(numList, 0.5).getClass());
@@ -324,15 +324,14 @@ public class CoreTest {
         assertEquals(0, count(null));
     }
     
-    // TODO Fix apply.  Definitely not right.  impl'd like reduce at the moment
     @Test
     public void testApply() {
         int x = apply(Core::max, vector(1,2,3));
         assertEquals(3, x);
         x = reduce(Core::max, vector(1,2,3));
         assertEquals(3, x);
-        x = apply(Core::add, vector(1,2,3,4));
-        assertEquals(10, x);
+        double d = apply(Core::add, vector(1,2,3,4));
+        assertEquals(10.0, d, 0.001);
         x = reduce(Core::add, vector(1,2,3,4));
         assertEquals(10, x);
         
@@ -388,7 +387,7 @@ public class CoreTest {
         assertEquals(vector("a", "c"), first(vecSeq));
         assertEquals(vector("b", "d"), second(vecSeq));
         
-        // TODO Fix it; see TypedFn applyTo
+        // TODO Fix it; see TypedFn.applyTo()
 //        assertEquals(
 //                vector(entry("a", 2), entry("b", 4), entry("c", 6)),
 //                map(x -> vector(first(x), 2 * second(x)),
@@ -469,6 +468,7 @@ public class CoreTest {
         assertTrue(Core.isSome(x -> x > 3, hashSet(1,2,3,4,5)));
         assertTrue(Core.isSome(Core::isEven, range(4)));
         assertFalse(Core.isSome(Core::isEven, range(1, 8, 2)));
+        assertTrue(Core.isSome(Core::isOdd, range(1, 8, 2)));
     }
     
     @Test

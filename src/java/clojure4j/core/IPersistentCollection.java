@@ -6,14 +6,13 @@ import java.util.Comparator;
 // public <R> ISeq<R> map(UnaryFn<T, R> fn, IPersistentCollection<T>... colls);
 public interface IPersistentCollection<T> extends Internal, Seqable<T> {
     
-    public <R extends T> R apply(BinaryFn<T, T, R> fn);
     public <R> R apply(ApplySeqFn<T, R> fn);
     
     public ISeq<T> filter(UnaryFn<T, Boolean> pred);
     
     public <R> ISeq<R> map(UnaryFn<T, R> fn);
     
-    public T reduce(BinaryFn<T, T, T> fn);
+    public <R extends T> R reduce(BinaryFn<T, T, R> fn);
     public <U> U reduce(BinaryFn<U, T, U> fn, U initial);
     
     public IPersistentCollection<T> conj(T value);

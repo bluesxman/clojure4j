@@ -91,20 +91,16 @@ public final class Core {
         return new Seq<T>((clojure.lang.ISeq) Bridge.remove.invoke(pred, col.getInternal()));
     }
     
-    public static final <T, R extends T> R apply(BinaryFn<T, T, R> fn, IPersistentCollection<T> col) {
-        return col.apply(fn);
-    }
-
     public static final <T, R> R apply(ApplySeqFn<T, R> fn, IPersistentCollection<T> col) {
         return col.apply(fn);
     }
 
     @SafeVarargs
     public static final <T, R> R apply(ApplySeqFn<T, R> fn, T... args) {
-        return list(args).apply(fn);  // TODO Use special collection for arrays or reuse clojure arrayseq or something?
+        return fn.apply(new ApplySeq<T>(new ArraySeq(args)));
     }
     
-    public static final <T> T reduce(BinaryFn<T, T, T> fn, IPersistentCollection<T> col) {
+    public static final <T, R extends T> R reduce(BinaryFn<T, T, R> fn, IPersistentCollection<T> col) {
         return col.reduce(fn);
     }
     
@@ -112,7 +108,6 @@ public final class Core {
         return col.reduce(fn, initial);
     }
     
-    // REVIEW what about doing 1 method per type of persistent collection
     public static final <T> IPersistentCollection<T> conj(IPersistentCollection<T> col, T value) {
         return col != null ? col.conj(value) : list(value);
     }
@@ -387,6 +382,18 @@ public final class Core {
         return result;        
     }
     
+    public static final <T extends Number> double add(ApplySeq<T> nums) {
+        ISeq<T> seq = nums;
+        double accum = 0;
+
+        while(!seq.isEmpty()) {
+            accum += seq.first().doubleValue();
+            seq = seq.rest();
+        }
+        
+        return accum;
+    }
+    
     public static final long add(long... nums) {
         int result = 0;
         for(long i : nums) {
@@ -409,6 +416,10 @@ public final class Core {
     
     public static final int max(int x, int y) {
         return x > y ? x : y;
+    }
+    
+    public static final int max(ApplySeq<Integer> ints) {
+        return ints.reduce(Core::max);
     }
     
     public static final boolean isZero(int n) {
@@ -468,7 +479,7 @@ public final class Core {
     }
     
     public static final boolean isOdd(long n) {
-        return Math.abs(n % 2) == 0;
+        return Math.abs(n % 2) == 1;
     }
     
     public static final boolean isEven(int n) {

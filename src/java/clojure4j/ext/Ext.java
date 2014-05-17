@@ -33,11 +33,12 @@ public final class Ext {
     public static final <T extends Comparable<T>> boolean gt(ApplySeq<T> args){
         ISeq<T> tail = args.seq();
         
-        if(tail.first() != null) {
+        if(!tail.isEmpty()) {
             boolean result = true;
             T hd;
             
-            while(result && (hd = tail.first()) != null) {
+            while(!tail.isEmpty()) {
+                hd = tail.first();
                 tail = tail.rest();
                 if(tail.first() != null) {
                     result = result && gt(hd, tail.first());
