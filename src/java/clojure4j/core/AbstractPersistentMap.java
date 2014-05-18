@@ -80,6 +80,11 @@ extends AbstractPersistentCollection<IMapEntry<K, V>> implements IPersistentMap<
     }
     
     @Override
+    public ISeq<IMapEntry<K, V>> seq() {
+        return isEmpty() ? null : new EntrySeq<K, V>(Bridge.seq.invoke(getInternal()));
+    }
+    
+    @Override
     public IMapEntry<K, V> find(K key) {
         return new MapEntry<>(Bridge.find.invoke(getInternal(), key));
     }

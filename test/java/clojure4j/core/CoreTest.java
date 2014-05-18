@@ -388,6 +388,13 @@ public class CoreTest {
         assertEquals(vector("b", "d"), second(vecSeq));
         
         // TODO Fix it; see TypedFn.applyTo()
+        // A bigger problem of nested clojure data structs.  For example, IPersistentMaps have clojure maps internal
+        // with clojure map entries internal to those.  interacting with the maps using sequences or operating on the
+        // entries inside the map lead to class cast exceptions.  a java lambda is expecting the java IMapEntry,
+        // but intead getting the clojure map entry type.  Ideas:
+        // 1) Use conj instead of assoc to add java map entries to clojure
+        // 2) Write a type in clojure that extends the maps and handles the entry types correctly.  target those
+        //    rather than the standard clojure map types.
 //        assertEquals(
 //                vector(entry("a", 2), entry("b", 4), entry("c", 6)),
 //                map(x -> vector(first(x), 2 * second(x)),
