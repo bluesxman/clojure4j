@@ -335,6 +335,18 @@ public final class Core {
         return col.sort(comp);
     }
     
+    public static final <T, U, R> UnaryFn<U, R> partial(BinaryFn<T, U, R> fn, T t) {
+        return fn.partial(t);
+    }
+    
+    public static final <T, U, V, R> BinaryFn<U, V, R> partial(TernaryFn<T, U, V, R> fn, T t) {
+        return fn.partial(t);
+    }
+    
+    public static final <T, U, V, R> UnaryFn<V, R> partial(TernaryFn<T, U, V, R> fn, T t, U u) {
+        return fn.partial(t, u);
+    }    
+    
     public static final int add(int x, int y) {
         return x + y;
     }
@@ -379,6 +391,10 @@ public final class Core {
         else {
             throw new IllegalArgumentException("1 or more arguments expected");
         }
+    }
+    
+    public static final int mod(int x, int y) {
+        return x % y;
     }
     
     @SuppressWarnings("unchecked")

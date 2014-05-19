@@ -12,11 +12,13 @@ import static clojure4j.core.Core.hashMap;
 import static clojure4j.core.Core.hashSet;
 import static clojure4j.core.Core.inc;
 import static clojure4j.core.Core.isEmpty;
+import static clojure4j.core.Core.isSome;
 import static clojure4j.core.Core.isZero;
 import static clojure4j.core.Core.iterate;
 import static clojure4j.core.Core.key;
 import static clojure4j.core.Core.list;
 import static clojure4j.core.Core.map;
+import static clojure4j.core.Core.partial;
 import static clojure4j.core.Core.range;
 import static clojure4j.core.Core.reduce;
 import static clojure4j.core.Core.remove;
@@ -359,25 +361,27 @@ public class CoreTest {
         assertEquals(20, 5, (int)reduce(Core::add, vector(1,2,3,4,5)));
         assertEquals(list(5L,4L,3L,2L,1L), range(2,6).reduce((l, x) -> l.conj(x), list(1L)));
         
-//                       (reduce
-//                         (fn [primes number]
-//                           (if (some zero? (map (partial mod number) primes))
-//                             primes
-//                             (conj primes number)))
-//                         [2]
-//                         (take 1000 (iterate inc 3)))
+//       (reduce
+//         (fn [primes number]
+//           (if (some zero? (map (partial mod number) primes))
+//             primes
+//             (conj primes number)))
+//         [2]
+//         (take 1000 (iterate inc 3)))
 
-//        reduce(
-//            (primes, number) -> {
-//                if(some(Core::isZero, map(partial(Core::mod, number), primes))) {
-//                    return primes;
-//                }
-//                else {
-//                    return conj(primes, number);
-//                }
-//            },
-//            vector(2),
-//            take(1000, iterate(Core::inc, 3)));
+        IPersistentVector<Integer> primeVec = reduce(
+            (primes, number) -> {
+                if(isSome(Core::isZero, map(partial(Core::mod, number), primes))) {
+                    return primes;
+                }
+                else {
+                    return conj(primes, number);
+                }
+            },
+            vector(2),
+            take(1000, iterate(Core::inc, 3)));
+
+        assertEquals(vector(2,3,5,7,11).seq(), primeVec.take(5));
     }
     
     @Test
