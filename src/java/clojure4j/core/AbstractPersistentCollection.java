@@ -20,12 +20,21 @@ implements IPersistentCollection<T> {
         return wrapSeq(Bridge.filter.invoke(pred, internal));
     }
     
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
     public <R> ISeq<R> map(UnaryFn<T, R> fn) {
-        return new Seq<>((clojure.lang.ISeq) Bridge.map.invoke(fn, internal));
-//        return wrapSeq(Bridge.map.invoke(fn, internal));  // 
+        clojure.lang.ISeq seq = (clojure.lang.ISeq) Bridge.map.invoke(fn, internal);
+        if(seq.count() > 0 && seq.first() instanceof clojure.lang.IMapEntry) {
+            return (ISeq<R>) new EntrySeq(seq);
+        } else {
+            return new Seq<>(seq);
+        }
     }
     
+//    public <K,V> ISeq<IMapEntry<K,V>> map(UnaryFn<T, IMapEntry<K,V>> fn) {
+//        return new EntrySeq<>(Bridge.map.invoke(fn, internal));
+//    }
+//    
     @Override
     public ISeq<T> cons(T value) {
         return wrapSeq(Bridge.cons.invoke(value, getInternal()));

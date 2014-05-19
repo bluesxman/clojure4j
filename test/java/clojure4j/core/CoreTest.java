@@ -402,10 +402,8 @@ public class CoreTest {
         // 1) Use conj instead of assoc to add java map entries to clojure
         // 2) Write a type in clojure that extends the maps and handles the entry types correctly.  target those
         //    rather than the standard clojure map types.
-//        assertEquals(
-//                vector(entry("a", 2), entry("b", 4), entry("c", 6)),
-//                map(x -> vector(first(x), 2 * second(x)),
-//                        hashMap(entry("a", 1), entry("b", 2), entry("c", 3))));
+        ISeq<Integer> numSeq = map(x -> 2 * x.val(), hashMap(entry("a", 1), entry("b", 2), entry("c", 3))); 
+        assertEquals(4, (int)numSeq.second());
     }
     
     @Test
