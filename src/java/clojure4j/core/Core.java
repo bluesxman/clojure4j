@@ -42,9 +42,9 @@ public final class Core {
         return new PersistentSortedSet<T>(elements);
     }
     
-    public static final <K, V> IPersistentMap<K, V> hashMap(K key, V val) {
-        return new PersistentHashMap<K, V>(key, val);
-    }
+//    public static final <K, V> IPersistentMap<K, V> hashMap(K key, V val) {
+//        return new PersistentHashMap<K, V>(key, val);
+//    }
 
     @SafeVarargs
     public static final <K, V> IPersistentMap<K, V> hashMap(IMapEntry<K, V>... entries) {
@@ -197,14 +197,14 @@ public final class Core {
         return col == null ? null : col.second();
     }
     
-    public static final <K, V> K first(IMapEntry<K,V> entry) {
-        return entry == null ? null : entry.first();
-    }
-    
-    public static final <K, V> V second(IMapEntry<K,V> entry) {
-        return entry == null ? null : entry.second();
-    }
-    
+//    public static final <K, V> K first(IMapEntry<K,V> entry) {
+//        return entry == null ? null : entry.first();
+//    }
+//    
+//    public static final <K, V> V second(IMapEntry<K,V> entry) {
+//        return entry == null ? null : entry.second();
+//    }
+//    
     public static final <T> ISeq<T> rest(IPersistentCollection<T> col) {
         return col == null ? null : col.rest();
     }
@@ -223,6 +223,14 @@ public final class Core {
     
     public static final <K, V> V get(Associative<K, V> assoc, K key) {
         return assoc.get(key);
+    }
+    
+    public static final <K, V> K key(IMapEntry<K, V> entry) {
+        return entry.key();
+    }
+    
+    public static final <K, V> V val(IMapEntry<K, V> entry) {
+        return entry.val();
     }
     
     // REVIEW double check generics doc and confirm that IPersistentVector doesnt extend Associative in this case

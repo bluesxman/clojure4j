@@ -11,8 +11,10 @@ import static clojure4j.core.Core.get;
 import static clojure4j.core.Core.hashMap;
 import static clojure4j.core.Core.hashSet;
 import static clojure4j.core.Core.inc;
+import static clojure4j.core.Core.isEmpty;
 import static clojure4j.core.Core.isZero;
 import static clojure4j.core.Core.iterate;
+import static clojure4j.core.Core.key;
 import static clojure4j.core.Core.list;
 import static clojure4j.core.Core.map;
 import static clojure4j.core.Core.range;
@@ -24,6 +26,7 @@ import static clojure4j.core.Core.seq;
 import static clojure4j.core.Core.sortedMap;
 import static clojure4j.core.Core.sortedSet;
 import static clojure4j.core.Core.take;
+import static clojure4j.core.Core.val;
 import static clojure4j.core.Core.vector;
 import static clojure4j.core.Set.difference;
 import static clojure4j.core.Set.intersection;
@@ -164,7 +167,7 @@ public class CoreTest {
         assertNull(mapAtom.deref().get("two"));
     }
     
-    private void testSet(
+    private void testSets(
             IPersistentSet<Integer> emptyInt, 
             IPersistentSet<String> emptyString,
             IPersistentSet<IPersistentMap<String, String>> emptyMaps) {
@@ -270,14 +273,14 @@ public class CoreTest {
 
     @Test
     public void testPersistentHashSet() {
-        testSet(new PersistentHashSet<>(),
+        testSets(new PersistentHashSet<>(),
                 new PersistentHashSet<>(),
                 new PersistentHashSet<>());
     }
     
     @Test
     public void testPersistentSortedSet() {
-        testSet(new PersistentSortedSet<>(),
+        testSets(new PersistentSortedSet<>(),
                 new PersistentSortedSet<>(),
                 new PersistentSortedSet<>());        
     }
@@ -317,9 +320,9 @@ public class CoreTest {
         assertTrue(vector().rest() instanceof ISeq<?>);
         assertNull(rest(null));
         assertNull(first((IPersistentCollection<Object>) null));
-        assertNull(first((IMapEntry<Object,Object>) null));
+//        assertNull(first((IMapEntry<Object,Object>) null));
         assertNull(second((IPersistentCollection<Object>) null));
-        assertNull(second((IMapEntry<Object,Object>) null));
+//        assertNull(second((IMapEntry<Object,Object>) null));
         
         assertEquals(0, count(null));
     }
@@ -501,5 +504,37 @@ public class CoreTest {
 //        assertEquals(2, second(map(x -> get(x, 1L), list(vector(1,2,3)))));
     }
     
-    
+    @Test
+    public void testMapsAsCollections() {
+//        (conj {:a 1 :b 2} [:c 3])
+//        (key (first {:a 1}))
+//        (val (first {:a 1}))
+//        (empty? (rest {:a 1}))
+//        (= (seq [[:a 1]]) (seq {:a 1}))
+
+        IPersistentMap<String, Integer> m = hashMap(entry("a", 1), entry("b", 2)).conj(entry("c", 3));
+        assertTrue(m.contains("c"));
+        assertTrue(m.contains("a"));
+        assertEquals(3, (int) m.get("c"));
+        m = conj(m, entry("d", 4));
+        assertTrue(m.contains("d"));
+        assertTrue(m.contains("b"));
+        assertEquals(4, (int) m.get("d"));
+        
+        m = hashMap(entry("a", 1));
+        assertEquals("a", m.first().key());
+        assertEquals("a", key(first(m)));
+        assertEquals(1, (int) m.first().val());
+        assertEquals(1, (int) val(first(m)));
+        assertTrue(m.rest().isEmpty());
+        assertTrue(isEmpty(rest(m)));
+        
+//        assertEquals(vector(entry("a", 1)).seq(), m.seq());
+        
+        m = hashMap(entry("a", 1), entry("b", 2), entry("c", 3));
+        ISeq<IMapEntry<String, Integer>> s = m.seq();
+        assertEquals(2, (int) s.filter(x -> x.key() == "b").nth(0).val());
+        
+        // TODO Test map fn on seq from a map-collection
+    }
 }

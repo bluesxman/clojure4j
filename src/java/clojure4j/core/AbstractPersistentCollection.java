@@ -11,19 +11,24 @@ implements IPersistentCollection<T> {
         super(internal);
     }
     
+    protected ISeq<T> wrapSeq(Object internal) {
+        return new Seq<>(internal);
+    }
+    
     @Override
     public ISeq<T> filter(UnaryFn<T, Boolean> pred) {
-        return new Seq<T>((clojure.lang.ISeq) Bridge.filter.invoke(pred, internal));
+        return wrapSeq(Bridge.filter.invoke(pred, internal));
     }
     
     @Override
     public <R> ISeq<R> map(UnaryFn<T, R> fn) {
-        return new Seq<R>((clojure.lang.ISeq) Bridge.map.invoke(fn, internal));
+        return new Seq<>((clojure.lang.ISeq) Bridge.map.invoke(fn, internal));
+//        return wrapSeq(Bridge.map.invoke(fn, internal));  // 
     }
     
     @Override
     public ISeq<T> cons(T value) {
-        return new Seq<T>(Bridge.cons.invoke(value, getInternal()));
+        return wrapSeq(Bridge.cons.invoke(value, getInternal()));
     }
     
 //    @SuppressWarnings("hiding")
@@ -78,36 +83,36 @@ implements IPersistentCollection<T> {
     
     @Override 
     public ISeq<T> rest() {
-        return new Seq<>(Bridge.rest.invoke(getInternal()));
+        return wrapSeq(Bridge.rest.invoke(getInternal()));
     }
 
     @Override
     public ISeq<T> seq() {
-        return isEmpty() ? null : new Seq<T>(Bridge.seq.invoke(getInternal()));
+        return isEmpty() ? null : wrapSeq(Bridge.seq.invoke(getInternal()));
     }
     
     @Override
     public ISeq<T> cycle() {
-        return new Seq<T>(Bridge.cycle.invoke(getInternal()));
+        return wrapSeq(Bridge.cycle.invoke(getInternal()));
     }
 
     @Override
     public ISeq<T> take(int n) {
-        return new Seq<T>(Bridge.take.invoke(n, getInternal()));
+        return wrapSeq(Bridge.take.invoke(n, getInternal()));
     }
     
     @Override
     public ISeq<T> takeWhile(UnaryFn<? super T, Boolean> pred) {
-        return new Seq<T>(Bridge.takeWhile.invoke(pred, getInternal()));
+        return wrapSeq(Bridge.takeWhile.invoke(pred, getInternal()));
     }
 
     @Override
     public ISeq<T> distinct() {
-        return new Seq<T>(Bridge.distinct.invoke(getInternal()));
+        return wrapSeq(Bridge.distinct.invoke(getInternal()));
     }
 
     @Override
     public ISeq<T> sort(Comparator<T> comp) {
-        return new Seq<T>(Bridge.sort.invoke(comp, getInternal()));
+        return wrapSeq(Bridge.sort.invoke(comp, getInternal()));
     }
 }

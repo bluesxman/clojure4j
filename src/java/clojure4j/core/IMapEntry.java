@@ -7,6 +7,6 @@ public interface IMapEntry<K, V> extends Map.Entry<K,V>, Internal {
     public K key();
     public V val();
     
-    public K first();
-    public V second();
+//    public K first();
+//    public V second();
 }

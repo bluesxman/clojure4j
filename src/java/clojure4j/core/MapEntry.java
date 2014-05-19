@@ -37,13 +37,13 @@ public class MapEntry<K, V> extends AbstractInternal implements IMapEntry<K, V> 
         throw new UnsupportedOperationException("MapEntry is immutable.");
     }
         
-    @Override
-    public final K first() {
-        return key();
-    }
-
-    @Override
-    public final V second() {
-        return val();
-    }
+//    @Override
+//    public final K first() {
+//        return key();
+//    }
+//
+//    @Override
+//    public final V second() {
+//        return val();
+//    }
 }

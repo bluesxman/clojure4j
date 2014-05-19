@@ -93,4 +93,17 @@ extends AbstractPersistentCollection<IMapEntry<K, V>> implements IPersistentMap<
     public IPersistentMap<K, V> into(IPersistentCollection<IMapEntry<K, V>> from) {
         return wrap(Bridge.into.invoke(getInternal(), from.getInternal()));
     }
+    
+    // Handle collection methods involving map entries and seqs
+
+    @Override
+    public IMapEntry<K,V> first() {
+        return new MapEntry<>(Bridge.first.invoke(getInternal()));
+    }
+    
+    @Override
+    public IMapEntry<K,V> second() {
+        return new MapEntry<>(Bridge.second.invoke(getInternal()));
+    }
+    
 }
