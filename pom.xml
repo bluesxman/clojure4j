@@ -16,12 +16,12 @@
   <scm>
     <connection>scm:git:git://github.com/bluesxman/clojure4j.git</connection>
     <developerConnection>scm:git:ssh://git@github.com/bluesxman/clojure4j.git</developerConnection>
-    <tag>ff03876e64e1db4ae13d1ffad50077f60bc603c3</tag>
+    <tag>cbb1c078122b3d693184bee157a85977de9d10ef</tag>
     <url>https://github.com/bluesxman/clojure4j</url>
   </scm>
   <properties>
-    <maven.compiler.source>8</maven.compiler.source>
-    <maven.compiler.target>8</maven.compiler.target>
+	<maven.compiler.source>1.8</maven.compiler.source>
+	<maven.compiler.target>1.8</maven.compiler.target>
   </properties>
   <build>
     <sourceDirectory>src</sourceDirectory>
@@ -45,7 +45,7 @@
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>build-helper-maven-plugin</artifactId>
-        <version>1.7</version>
+        <version>1.8</version>
         <executions>
           <execution>
             <id>add-source</id>

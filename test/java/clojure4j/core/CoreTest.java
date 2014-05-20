@@ -495,7 +495,7 @@ public class CoreTest {
     @Test
     public void testLambdasOnInternal() {
         // TODO Breaks JVM?  Eclipse bug? Identify problem
-//        assertEquals(2, second(map(x -> get(x, 1L), list(vector(1,2,3)))));
+        assertEquals(2, second(map(x -> get(x, 1L), list(vector(1,2,3)))));
     }
     
     @Test

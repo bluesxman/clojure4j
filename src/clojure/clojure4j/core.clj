@@ -1,4 +1,4 @@
-(ns clojure4j.Core
+(ns clojure4j.CoreCLJ
   (:gen-class
      :methods
        [#^{:static true} [hello [] String]]

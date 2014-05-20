@@ -406,7 +406,7 @@ public final class Core {
         return result;        
     }
     
-    public static final <T extends Number> double add(ApplySeq<T> nums) {
+    public static final <T extends Number> Double add(ApplySeq<T> nums) {
         ISeq<T> seq = nums;
         double accum = 0;
 

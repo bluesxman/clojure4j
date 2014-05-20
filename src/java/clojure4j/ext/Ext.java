@@ -30,7 +30,7 @@ public final class Ext {
         }
     }
     
-    public static final <T extends Comparable<T>> boolean gt(ApplySeq<T> args){
+    public static final <T extends Comparable<T>> Boolean gt(ApplySeq<T> args){
         ISeq<T> tail = args.seq();
         
         if(!tail.isEmpty()) {
