@@ -319,6 +319,14 @@ public final class Core {
         return col.takeWhile(pred);
     }
 
+    public static final <T> ISeq<T> drop(int n, IPersistentCollection<T> col) {
+    	return col.drop(n);
+    }
+    
+    public static final <T> ISeq<T> dropWhile(UnaryFn<? super T, Boolean> pred, IPersistentCollection<T> col) {
+    	return col.dropWhile(pred);
+    }
+    
     public static final <T> ISeq<T> distinct(IPersistentCollection<T> col) {
         return col.distinct();
     }

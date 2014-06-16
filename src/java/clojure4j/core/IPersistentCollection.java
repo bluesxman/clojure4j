@@ -34,9 +34,11 @@ public interface IPersistentCollection<T> extends Internal, Seqable<T> {
     public ISeq<T> cycle();
     
     public ISeq<T> take(int n);
-    
     public ISeq<T> takeWhile(UnaryFn<? super T, Boolean> pred);
 
+    public ISeq<T> drop(int n);
+    public ISeq<T> dropWhile(UnaryFn<? super T, Boolean> pred);
+    
     public ISeq<T> distinct();
     
     public ISeq<T> sort(Comparator<T> comp);

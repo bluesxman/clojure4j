@@ -41,6 +41,8 @@ class Bridge {
     public static final IFn peek = Clojure.var("clojure.core", "peek");
     public static final IFn take = Clojure.var("clojure.core", "take");
     public static final IFn takeWhile = Clojure.var("clojure.core", "take-while");
+    public static final IFn drop = Clojure.var("clojure.core", "drop");
+    public static final IFn dropWhile = Clojure.var("clojure.core", "drop-while");
     public static final IFn distinct = Clojure.var("clojure.core", "distinct");
     
     // Reads

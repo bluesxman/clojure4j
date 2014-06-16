@@ -6,6 +6,8 @@ import static clojure4j.core.Core.contains;
 import static clojure4j.core.Core.count;
 import static clojure4j.core.Core.dec;
 import static clojure4j.core.Core.disj;
+import static clojure4j.core.Core.drop;
+import static clojure4j.core.Core.dropWhile;
 import static clojure4j.core.Core.first;
 import static clojure4j.core.Core.get;
 import static clojure4j.core.Core.hashMap;
@@ -494,8 +496,8 @@ public class CoreTest {
     
     @Test
     public void testLambdasOnInternal() {
-        // TODO Breaks JVM?  Eclipse bug? Identify problem
-        assertEquals(2, first(map(x -> get(x, 1), list(vector(1,2,3)))));
+        // REVIEW Works with maven+javac+java; breaks in Eclipse "java.lang.VerifyError: Bad type on operand stack"
+//        assertEquals(2, first(map(x -> get(x, 1), list(vector(1,2,3)))));
     }
     
     @Test
@@ -529,5 +531,25 @@ public class CoreTest {
         ISeq<IMapEntry<String, Integer>> s = m.seq();
         assertEquals(2, (int) s.filter(x -> x.key() == "b").nth(0).val());
         
+    }
+    
+    @Test
+    public void testSeqFunctions() {
+    	//(drop-while neg? [-1 -2 -6 -7 1 2 3 4 -5 -6 0 1])
+//    	(1 2 3 4 -5 -6 0 1)
+
+    	assertEquals(
+    			vector(1, 2, 3, 4, -5, -6, 0, 1), 
+    			vector(-1, -2, -6, -7, 1, 2, 3, 4, -5, -6, 0, 1).dropWhile(Core::isNeg));
+    	assertEquals(
+    			vector(1, 2, 3, 4, -5, -6, 0, 1), 
+    			dropWhile(Core::isNeg, vector(-1, -2, -6, -7, 1, 2, 3, 4, -5, -6, 0, 1)));
+    	
+    	IPersistentVector<Integer> nums = vector(1,2,3,4);
+    	assertEquals(nums, nums.drop(-1));
+    	assertEquals(nums, drop(0, nums));
+    	assertEquals(vector(3, 4), drop(2, nums));
+    	assertEquals(vector(), drop(5, nums));
+    	
     }
 }

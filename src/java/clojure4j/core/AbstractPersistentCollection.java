@@ -116,6 +116,16 @@ implements IPersistentCollection<T> {
     }
 
     @Override
+    public ISeq<T> drop(int n) {
+    	return wrapSeq(Bridge.drop.invoke(n, getInternal()));
+    }
+    
+    @Override
+    public ISeq<T> dropWhile(UnaryFn<? super T, Boolean> pred) {
+    	return wrapSeq(Bridge.dropWhile.invoke(pred, getInternal()));
+    }
+    
+    @Override
     public ISeq<T> distinct() {
         return wrapSeq(Bridge.distinct.invoke(getInternal()));
     }
