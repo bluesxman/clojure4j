@@ -134,4 +134,27 @@ implements IPersistentCollection<T> {
     public ISeq<T> sort(Comparator<T> comp) {
         return wrapSeq(Bridge.sort.invoke(comp, getInternal()));
     }
+    
+    @Override
+    public ISeq<T> concat(IPersistentCollection<T> col) {
+    	return wrapSeq(Bridge.concat.invoke(this.getInternal(), col.getInternal()));
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public ISeq<T> concat(IPersistentCollection<T>... colls) {
+    	//REVIEW: More efficient solution
+    	if(colls.length == 0)
+    		return (new PersistentList<T>()).seq();
+    	else {
+    		ISeq<T> rval = this.seq();
+
+    		for(int i = 1; i < colls.length; i++) {
+    			rval = concat(rval, colls[i]);
+    		}
+
+    		return rval;
+    	}
+    }
+
 }

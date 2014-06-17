@@ -139,6 +139,36 @@ public final class Core {
         return col != null ? col.conj(value) : new Seq<>(value);
     }
     
+    public static final <T> ISeq<T> concat(IPersistentCollection<T> left, IPersistentCollection<T> right) {
+    	if(left != null)
+    		return left.concat(right);
+    	else 
+    		return new Seq<>();
+    }
+    
+    //REVIEW: More efficient solution
+    @SuppressWarnings("unchecked")
+	public static final <T> ISeq<T> concat(IPersistentCollection<T>... cols) {
+    	if(cols.length == 0)
+    		return (new PersistentList<T>()).seq();
+    	else {
+    		ISeq<T> rval = cols[0].seq();
+    		
+    		for(int i = 1; i < cols.length; i++) {
+    			rval = concat(rval, cols[i]);
+    		}
+    		
+    		return rval;
+    	}
+    }
+
+    @SuppressWarnings("unchecked")
+	public static final <T, U extends IPersistentCollection<T>, R> 
+    ISeq<R> mapcat(UnaryFn<T, R> fn, IPersistentCollection<U> colls) {
+    	ISeq<Object> internals = map(i -> i.getInternal(), colls);
+    	return (ISeq<R>) Bridge.mapcat.invoke(fn, internals.getInternal());
+    }
+    
 //    @SuppressWarnings("unchecked")
 //    public static final <T extends IPersistentCollection<E>, E> T conj(T col, E... values) {
 //        return (T) col.conj(values);

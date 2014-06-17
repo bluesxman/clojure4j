@@ -1,8 +1,13 @@
 package clojure4j.core;
 
 public class Seq<T> extends AbstractSequential<T> implements ISeq<T>{
+	
     Seq(Object internal) {
         super(internal);
+    }
+    
+    Seq() {
+    	super(Bridge.EMPTY_SEQ);
     }
 
     @Override

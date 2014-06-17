@@ -43,5 +43,9 @@ public interface IPersistentCollection<T> extends Internal, Seqable<T> {
     
     public ISeq<T> sort(Comparator<T> comp);
     
+    public ISeq<T> concat(IPersistentCollection<T> col);
+    @SuppressWarnings("unchecked")
+	public ISeq<T> concat(IPersistentCollection<T>... col);
+    
 //    public IPersistentCollection<T> wrap(Object internal);
 }

@@ -4,7 +4,7 @@ package clojure4j.core;
 public class PersistentList<T> 
     extends AbstractSequential<T> 
     implements IPersistentList<T> {
-    
+	
     @SafeVarargs
     public PersistentList(T... elements) {
         super(arrayToClojureList(elements));  // REVIEW use ArraySeq?
@@ -28,6 +28,10 @@ public class PersistentList<T>
     
     public PersistentList(clojure.lang.ISeq seq) {
         super(seq);
+    }
+    
+    public PersistentList() {
+    	super(Bridge.EMPTY_LIST);
     }
     
     @Override 

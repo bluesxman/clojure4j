@@ -1,6 +1,7 @@
 package clojure4j.core;
 
 import static clojure4j.core.Core.apply;
+import static clojure4j.core.Core.concat;
 import static clojure4j.core.Core.conj;
 import static clojure4j.core.Core.contains;
 import static clojure4j.core.Core.count;
@@ -13,6 +14,7 @@ import static clojure4j.core.Core.get;
 import static clojure4j.core.Core.hashMap;
 import static clojure4j.core.Core.hashSet;
 import static clojure4j.core.Core.inc;
+import static clojure4j.core.Core.into;
 import static clojure4j.core.Core.isEmpty;
 import static clojure4j.core.Core.isSome;
 import static clojure4j.core.Core.isZero;
@@ -533,7 +535,8 @@ public class CoreTest {
         
     }
     
-    @Test
+    @SuppressWarnings("unchecked")
+	@Test
     public void testSeqFunctions() {
     	//(drop-while neg? [-1 -2 -6 -7 1 2 3 4 -5 -6 0 1])
 //    	(1 2 3 4 -5 -6 0 1)
@@ -551,5 +554,10 @@ public class CoreTest {
     	assertEquals(vector(3, 4), drop(2, nums));
     	assertEquals(vector(), drop(5, nums));
     	
+    	assertEquals(vector(1, 2, 3, 4).seq(), concat(vector(1, 2), vector(3, 4)));
+    	assertEquals(vector(1, 2, 3, 4), into(vector(), concat(vector(1, 2), vector(3, 4))));
+    	assertEquals(
+    			vector(1, 2, 3, 4, 5, 6, 7, 8, 9, 10).seq(), 
+    			concat(vector(1), vector(2), list(3, 4), vector(5, 6, 7), sortedSet(9, 10, 8)));
     }
 }

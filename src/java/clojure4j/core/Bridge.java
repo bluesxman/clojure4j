@@ -44,6 +44,8 @@ class Bridge {
     public static final IFn drop = Clojure.var("clojure.core", "drop");
     public static final IFn dropWhile = Clojure.var("clojure.core", "drop-while");
     public static final IFn distinct = Clojure.var("clojure.core", "distinct");
+    public static final IFn concat = Clojure.var("clojure.core", "concat");
+    public static final IFn mapcat = Clojure.var("clojure.core", "mapcat");
     
     // Reads
     public static final IFn get = Clojure.var("clojure.core", "get");
@@ -101,4 +103,12 @@ class Bridge {
     public static final IFn eq = Clojure.var("clojure.core", "=");
     public static final IFn noteq = Clojure.var("clojure.core", "not=");
 
+    public static final Object EMPTY_LIST = list.invoke();
+    public static final Object EMPTY_SEQ = seq.invoke(EMPTY_LIST);
+    public static final Object EMPTY_VECTOR = vector.invoke();
+    public static final Object EMPTY_HASH_MAP = hashMap.invoke();
+    public static final Object EMPTY_HASH_SET = hashSet.invoke();
+    public static final Object EMPTY_SORTED_MAP = sortedMap.invoke();
+    public static final Object EMPTY_SORTED_SET = sortedSet.invoke();
 }
+
