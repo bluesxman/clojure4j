@@ -46,6 +46,10 @@ public interface IPersistentCollection<T> extends Internal, Seqable<T> {
     public ISeq<T> concat(IPersistentCollection<T> col);
     @SuppressWarnings("unchecked")
 	public ISeq<T> concat(IPersistentCollection<T>... col);
+    public <U> ISeq<U> flatten();
+    public <U> ISeq<U> mapcat(UnaryFn<T, U> fn);
+    
+    public ISeq<T> reverse();
     
 //    public IPersistentCollection<T> wrap(Object internal);
 }

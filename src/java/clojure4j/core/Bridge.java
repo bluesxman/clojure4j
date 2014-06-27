@@ -45,6 +45,7 @@ class Bridge {
     public static final IFn dropWhile = Clojure.var("clojure.core", "drop-while");
     public static final IFn distinct = Clojure.var("clojure.core", "distinct");
     public static final IFn concat = Clojure.var("clojure.core", "concat");
+    public static final IFn flatten = Clojure.var("clojure.core", "flatten");
     public static final IFn mapcat = Clojure.var("clojure.core", "mapcat");
     
     // Reads

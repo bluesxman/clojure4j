@@ -162,11 +162,24 @@ public final class Core {
     	}
     }
 
+    
+    
     @SuppressWarnings("unchecked")
 	public static final <T, U extends IPersistentCollection<T>, R> 
-    ISeq<R> mapcat(UnaryFn<T, R> fn, IPersistentCollection<U> colls) {
-    	ISeq<Object> internals = map(i -> i.getInternal(), colls);
-    	return (ISeq<R>) Bridge.mapcat.invoke(fn, internals.getInternal());
+    ISeq<R> mapcat(UnaryFn<U, R> fn, IPersistentCollection<U> colls) {
+        return (ISeq<R>) reduce(Core::concat, new Seq<R>(), map(fn, colls));
+    //                  (reduce concat nil (map reverse [[1 2] [3 4]]))
+    
+        
+//        return colls.mapcat(fn);
+        
+//    	UnaryFn<IPersistentCollection<T>, Object> toInternal = i -> i.getInternal(); 
+//    	Object internals = Bridge.map.invoke(toInternal, colls.getInternal());
+//    	return (ISeq<T>) Bridge.mapcat.invoke(fn, internals);
+    }
+    
+    public static final <T> ISeq<T> reverse(IPersistentCollection<T> col) {
+    	return col.reverse();
     }
     
 //    @SuppressWarnings("unchecked")

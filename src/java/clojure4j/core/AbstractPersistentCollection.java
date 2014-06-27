@@ -156,5 +156,23 @@ implements IPersistentCollection<T> {
     		return rval;
     	}
     }
+    
+    @Override
+    public <U> ISeq<U> flatten() {
+        
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public <U> ISeq<U> mapcat(UnaryFn<T, U> fn){
+        UnaryFn<T, ISeq<U>> c = Core::concat;
+        return Core.reduce(c, null, map(fn));
+    }
+
+    
+    @Override
+    public ISeq<T> reverse() {
+    	return wrapSeq(Bridge.reverse.invoke(getInternal()));
+    }
 
 }
