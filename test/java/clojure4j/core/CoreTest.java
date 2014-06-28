@@ -10,6 +10,7 @@ import static clojure4j.core.Core.disj;
 import static clojure4j.core.Core.drop;
 import static clojure4j.core.Core.dropWhile;
 import static clojure4j.core.Core.first;
+import static clojure4j.core.Core.flatten;
 import static clojure4j.core.Core.get;
 import static clojure4j.core.Core.hashMap;
 import static clojure4j.core.Core.hashSet;
@@ -22,11 +23,13 @@ import static clojure4j.core.Core.iterate;
 import static clojure4j.core.Core.key;
 import static clojure4j.core.Core.list;
 import static clojure4j.core.Core.map;
+import static clojure4j.core.Core.mapcat;
 import static clojure4j.core.Core.partial;
 import static clojure4j.core.Core.range;
 import static clojure4j.core.Core.reduce;
 import static clojure4j.core.Core.remove;
 import static clojure4j.core.Core.rest;
+import static clojure4j.core.Core.reverse;
 import static clojure4j.core.Core.second;
 import static clojure4j.core.Core.seq;
 import static clojure4j.core.Core.sortedMap;
@@ -561,15 +564,15 @@ public class CoreTest {
     			concat(vector(1), vector(2), list(3, 4), vector(5, 6, 7), sortedSet(9, 10, 8)));
   
     	
-    	assertEquals(vector(1,2,3).seq(), Core.reverse(vector(3, 2, 1)));
-//    	IPersistentCollection<Integer> intVecs = vector(vector(3, 2, 1, 0), vector(6, 5, 4), vector(9, 8, 7));
+    	assertEquals(vector(1,2,3).seq(), reverse(vector(3, 2, 1)));
     	
     	//REVIEW: Eclipse bug, unnecessary declaration
     	UnaryFn<IPersistentCollection<Integer>, IPersistentCollection<Integer>> r = Core::reverse;
     	assertEquals(
     			vector(0, 1, 2, 3, 4, 5, 6, 7, 8, 9).seq(),
-    			Core.mapcat(r, vector(vector(3, 2, 1, 0), vector(6, 5, 4), vector(9, 8, 7))));
-    	
+    			mapcat(r, vector(vector(3, 2, 1, 0), vector(6, 5, 4), vector(9, 8, 7))));
+
+    	assertEquals(list(1, 2, 3, 4, 5, 6, 7, 8).seq(), flatten(vector(vector(1, 2, 3, 4), vector(5, 6, 7, 8))));
     	
     }
 }

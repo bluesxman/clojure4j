@@ -166,6 +166,11 @@ public final class Core {
         ISeq<R> empty = new Seq<R>(); // REVIEW: Eclipse bug; shouldn't have to declare empty
         return reduce(Core::concat, empty, map(fn, col));
     }
+    
+    public static final <R> ISeq<R> flatten(IPersistentCollection<IPersistentCollection<R>> colls) {
+        ISeq<R> empty = new Seq<R>(); // REVIEW: Eclipse bug; shouldn't have to declare empty
+        return reduce(Core::concat, empty, colls);
+    }
         
     public static final <T> ISeq<T> reverse(IPersistentCollection<T> col) {
     	return col.reverse();
