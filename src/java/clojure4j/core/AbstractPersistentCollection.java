@@ -157,16 +157,15 @@ implements IPersistentCollection<T> {
     	}
     }
     
-    @Override
-    public <U> ISeq<U> flatten() {
-        
-    }
+//    @Override
+//    public <U> ISeq<U> flatten() {
+//        
+//    }
 
     @SuppressWarnings("unchecked")
     @Override
-    public <U> ISeq<U> mapcat(UnaryFn<T, U> fn){
-        UnaryFn<T, ISeq<U>> c = Core::concat;
-        return Core.reduce(c, null, map(fn));
+    public <R> ISeq<R> mapcat(UnaryFn<T, IPersistentCollection<R>> fn){
+        return Core.mapcat(fn, this);
     }
 
     

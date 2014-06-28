@@ -162,22 +162,11 @@ public final class Core {
     	}
     }
 
-    
-    
-    @SuppressWarnings("unchecked")
-	public static final <T, U extends IPersistentCollection<T>, R> 
-    ISeq<R> mapcat(UnaryFn<U, R> fn, IPersistentCollection<U> colls) {
-        return (ISeq<R>) reduce(Core::concat, new Seq<R>(), map(fn, colls));
-    //                  (reduce concat nil (map reverse [[1 2] [3 4]]))
-    
-        
-//        return colls.mapcat(fn);
-        
-//    	UnaryFn<IPersistentCollection<T>, Object> toInternal = i -> i.getInternal(); 
-//    	Object internals = Bridge.map.invoke(toInternal, colls.getInternal());
-//    	return (ISeq<T>) Bridge.mapcat.invoke(fn, internals);
+    public static final <T, R> ISeq<R> mapcat(UnaryFn<T, IPersistentCollection<R>> fn, IPersistentCollection<T> col) {
+        ISeq<R> empty = new Seq<R>(); // REVIEW: Eclipse bug; shouldn't have to declare empty
+        return reduce(Core::concat, empty, map(fn, col));
     }
-    
+        
     public static final <T> ISeq<T> reverse(IPersistentCollection<T> col) {
     	return col.reverse();
     }
@@ -346,9 +335,9 @@ public final class Core {
         return col.cycle();
     }
     
-    public static final <T> ISeq<T> reverse(Reversible<T> rev) {
-        return rev.reverse();
-    }
+//    public static final <T> ISeq<T> reverse(Reversible<T> rev) {
+//        return rev.reverse();
+//    }
     
     public static final <T> ISeq<T> rseq(Reversible<T> rev) {
         return rev.rseq();

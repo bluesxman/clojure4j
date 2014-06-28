@@ -559,10 +559,16 @@ public class CoreTest {
     	assertEquals(
     			vector(1, 2, 3, 4, 5, 6, 7, 8, 9, 10).seq(), 
     			concat(vector(1), vector(2), list(3, 4), vector(5, 6, 7), sortedSet(9, 10, 8)));
+  
     	
+    	assertEquals(vector(1,2,3).seq(), Core.reverse(vector(3, 2, 1)));
+//    	IPersistentCollection<Integer> intVecs = vector(vector(3, 2, 1, 0), vector(6, 5, 4), vector(9, 8, 7));
+    	
+    	//REVIEW: Eclipse bug, unnecessary declaration
+    	UnaryFn<IPersistentCollection<Integer>, IPersistentCollection<Integer>> r = Core::reverse;
     	assertEquals(
     			vector(0, 1, 2, 3, 4, 5, 6, 7, 8, 9).seq(),
-    			Core.mapcat(Core::reverse, (IPersistentCollection) vector(vector(3, 2, 1, 0), vector(6, 5, 4), vector(9, 8, 7))));
+    			Core.mapcat(r, vector(vector(3, 2, 1, 0), vector(6, 5, 4), vector(9, 8, 7))));
     	
     	
     }
